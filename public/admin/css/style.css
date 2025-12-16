@@ -30174,3 +30174,88 @@ new-task label input[type=checkbox] {
 }
 
 /**====== user card css end ======**/
+
+
+ .image-uploader {
+            position: relative;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        .image-drop-area {
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .image-preview-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .image-thumbnail {
+            position: relative;
+        }
+
+        .remove-image-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(255, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .remove-image-btn:hover {
+            background: red;
+        }
+
+        .image-uploader {
+            position: relative;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s ease;
+        }
+
+        .image-drop-area {
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .image-preview-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .image-thumbnail {
+            position: relative;
+        }
+
+        .remove-image-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgba(255, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .remove-image-btn:hover {
+            background: red;
+        }

@@ -364,3 +364,76 @@ $(function() {
 });
 // [ tot-lead ] end
 }
+
+
+ // Initialize CKEditor for product description
+        ClassicEditor
+            .create(document.querySelector('#productDescription'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        // Image Preview on File Selection
+        document.getElementById('productImages').addEventListener('change', function (e) {
+            const previewContainer = document.getElementById('imagePreview');
+            previewContainer.innerHTML = ''; // Clear previous previews
+
+            const files = e.target.files;
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const imgElement = document.createElement('div');
+                    imgElement.classList.add('image-thumbnail');
+                    imgElement.innerHTML = `
+                    <img src="${event.target.result}" class="img-thumbnail" alt="Image preview" style="max-width: 100px; max-height: 100px;">
+                    <button type="button" class="remove-image-btn" onclick="removeImage(this)">Remove</button>
+                `;
+                    previewContainer.appendChild(imgElement);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // Remove image from preview
+        function removeImage(button) {
+            button.parentElement.remove();
+        }
+
+        // Add Variation Field (Color, Size, etc.)
+        let variationCount = 0;
+        function addVariationField() {
+            variationCount++;
+
+            const variationDiv = document.createElement('div');
+            variationDiv.classList.add('variation-field');
+            variationDiv.id = `variationField_${variationCount}`;
+
+            variationDiv.innerHTML = `
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="variationType_${variationCount}">Variation Type</label>
+                        <input type="text" class="form-control" id="variationType_${variationCount}" name="variations[${variationCount}][type]" placeholder="e.g. Color, Size, Material" required>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="variationOptions_${variationCount}">Options (comma separated)</label>
+                        <input type="text" class="form-control" id="variationOptions_${variationCount}" name="variations[${variationCount}][options]" placeholder="e.g. Red, Blue, Green" required>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-danger" onclick="removeVariationField(${variationCount})">Remove Variation</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+            document.getElementById('variationsContainer').appendChild(variationDiv);
+        }
+
+        // Remove Variation Field
+        function removeVariationField(id) {
+            document.getElementById(`variationField_${id}`).remove();
+        }

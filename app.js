@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var dotenv = require('dotenv');
 dotenv.config()
-var homeRouter = require('./routes/home');
+var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 
 var app = express();
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', homeRouter);
+app.use('/', userRouter);
 app.use('/admin/', adminRouter);
 
 

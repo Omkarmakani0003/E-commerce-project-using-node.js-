@@ -1,0 +1,208 @@
+<%- include('../layouts/header')%>
+    <div class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Add new product</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#!">Add product</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Add New Product</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/add-product" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <!-- Product Name -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="productName">Product Name</label>
+                                        <input type="text" class="form-control" id="productName" name="productName"
+                                            placeholder="Enter product name" required>
+                                    </div>
+                                </div>
+
+                                <!-- Category -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="category">Category</label>
+                                        <select class="form-control" id="category" name="category" required>
+                                            <option value="">Select Category</option>
+                                            <option value="electronics">Electronics</option>
+                                            <option value="fashion">Fashion</option>
+                                            <option value="home">Home</option>
+                                            <option value="sports">Sports</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Sub-category -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="subCategory">Sub-category</label>
+                                        <select class="form-control" id="subCategory" name="subCategory" required>
+                                            <option value="">Select Sub-category</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Child Category -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="childCategory">Child Category</label>
+                                        <select class="form-control" id="childCategory" name="childCategory" required>
+                                            <option value="">Select Child Category</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Price -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="price">Price ($)</label>
+                                        <input type="number" class="form-control" id="price" name="price"
+                                            placeholder="Enter price" required>
+                                    </div>
+                                </div>
+
+                                <!-- Stock Quantity -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="stockQuantity">Stock Quantity</label>
+                                        <input type="number" class="form-control" id="stockQuantity"
+                                            name="stockQuantity" placeholder="Enter stock quantity" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="discountPrice">Discount Price ($)</label>
+                                        <input type="number" class="form-control" id="discountPrice"
+                                            name="discountPrice" placeholder="Enter discount price">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="shippingFee">Shipping Fee ($)</label>
+                                        <input type="number" class="form-control" id="shippingFee" name="shippingFee"
+                                            placeholder="Enter shipping fee">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="brandName">Brand Name</label>
+                                        <input type="text" class="form-control" id="brandName" name="brandName"
+                                            placeholder="Enter brand name" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="productCondition">Condition</label>
+                                        <select class="form-control" id="productCondition" name="productCondition"
+                                            required>
+                                            <option value="new">New</option>
+                                            <option value="refurbished">Refurbished</option>
+                                            <option value="used">Used</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="sku">SKU (Stock Keeping Unit)</label>
+                                        <input type="text" class="form-control" id="sku" name="sku"
+                                            placeholder="Enter SKU" required>
+                                    </div>
+                                </div>
+                                <!-- Product Tags -->
+                                <div class="col-sm-4 p-0">
+                                    <div class="form-group">
+                                        <label for="tags">Product Tags (optional)</label>
+                                        <input type="text" class="form-control" id="tags" name="tags"
+                                            placeholder="Enter tags (comma separated)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Variations Section -->
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="productVariations">Product Variations</label>
+                                        <div id="variationsContainer">
+                                            <!-- Dynamic variation fields will be added here -->
+                                            <button type="button" class="btn btn-secondary"
+                                                onclick="addVariationField()">Add Variation</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Redesigned Image Uploader -->
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="productImages">Product Images</label>
+                                        <div id="imageUploader" class="image-uploader">
+                                            <div id="imageDropArea" class="image-drop-area"
+                                                onclick="document.getElementById('productImages').click()">
+                                                <p>Drag & Drop your images here or click to select files</p>
+                                                <input type="file" class="form-control-file" id="productImages"
+                                                    name="productImages[]" multiple accept="image/*"
+                                                    style="display: none;">
+                                            </div>
+                                            <div id="imagePreview" class="image-preview-container">
+                                                <!-- Image previews will appear here -->
+                                            </div>
+                                        </div>
+                                        <small class="form-text text-muted">You can upload multiple images.</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Description -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="productDescription">Product Description</label>
+                                        <textarea class="form-control" id="productDescription" name="productDescription"
+                                            rows="5" placeholder="Enter product description" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-primary">Add Product</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </div>
+
+    <%- include('../layouts/footer')%>
