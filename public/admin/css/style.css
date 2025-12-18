@@ -27638,7 +27638,7 @@ text.highcharts-drilldown-data-label {
     min-width: 100%;
     min-height: 100vh;
     background: #1abc9c;
-    background-image: url("../images/auth/img-auth-big.jpg");
+    /* background-image: url("../images/auth/img-auth-big.jpg"); */
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -30203,7 +30203,7 @@ new-task label input[type=checkbox] {
         }
 
         .remove-image-btn {
-            position: absolute;
+            /* position: absolute;
             top: 0;
             right: 0;
             background: rgba(255, 0, 0, 0.6);
@@ -30211,7 +30211,16 @@ new-task label input[type=checkbox] {
             border: none;
             padding: 5px;
             cursor: pointer;
-            border-radius: 50%;
+            border-radius: 50%; */
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: rgb(255 0 0);
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 0;
         }
 
         .remove-image-btn:hover {
@@ -30244,7 +30253,7 @@ new-task label input[type=checkbox] {
             position: relative;
         }
 
-        .remove-image-btn {
+        /* .remove-image-btn {
             position: absolute;
             top: 0;
             right: 0;
@@ -30254,7 +30263,7 @@ new-task label input[type=checkbox] {
             padding: 5px;
             cursor: pointer;
             border-radius: 50%;
-        }
+        } */
 
         .remove-image-btn:hover {
             background: red;

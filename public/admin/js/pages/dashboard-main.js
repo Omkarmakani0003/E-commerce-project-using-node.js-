@@ -385,7 +385,7 @@ $(function() {
                     const imgElement = document.createElement('div');
                     imgElement.classList.add('image-thumbnail');
                     imgElement.innerHTML = `
-                    <img src="${event.target.result}" class="img-thumbnail" alt="Image preview" style="max-width: 100px; max-height: 100px;">
+                    <img src="${event.target.result}" class="img-thumbnail" alt="Image preview" style="max-width: 250px; max-height: auto;">
                     <button type="button" class="remove-image-btn" onclick="removeImage(this)">Remove</button>
                 `;
                     previewContainer.appendChild(imgElement);
