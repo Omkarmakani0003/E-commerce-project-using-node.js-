@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var {loginform, login, dashboard} = require("../controllers/adminControllers/DashboardController")
-var { create } = require("../controllers/adminControllers/ProductController")
+var { ProductCreate } = require("../controllers/adminControllers/ProductController")
+var { CategoryCreate, CategoryStore } = require("../controllers/adminControllers/CategoriesController")
 const {CheckAuthentication} = require('../middleware/authentication')
 
 
@@ -22,6 +23,12 @@ router.use(CheckAuthentication)
 router.get('/dashboard',dashboard)
 
 //Product routes
-router.get('/prouct-create',create)
+router.get('/prouct-create',ProductCreate)
+
+
+//categories routes
+router.get('/category-create',CategoryCreate)
+router.post('/category-store',CategoryStore)
+
 
 module.exports = router;

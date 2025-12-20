@@ -1,5 +1,4 @@
-var express = require('express');
 
-exports.create = (req,res) => {
+exports.ProductCreate = (req,res) => {
      res.render('admin/product/create'); 
 }  
