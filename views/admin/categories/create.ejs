@@ -21,54 +21,65 @@
             <!-- [ breadcrumb ] end -->
             <!-- [ Main Content ] start -->
             <div class="col-sm-12">
-                <% if (error && error.length> 0) { %>
-                    <div class="alert alert-danger">
-                        <%= error %>
+                <!-- <% if (success && success.length> 0) { %>
+                            <div class="alert alert-success">
+                                <%= success %>
+                            </div>
+                            <% } %> -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Add New category</h5>
                     </div>
-                <% } %>
-                <% if (success && success.length> 0) { %>
-                    <div class="alert alert-success">
-                        <%= success %>
-                    </div>
-                <% } %>
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5>Add New category</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <form action="category-store" method="POST">
-                                            <div class="row">
-                                                <!-- Category Name -->
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label for="categoryname">Category Name</label>
-                                                        <input type="text" class="form-control" id="categoryname"
-                                                            name="categoryname" placeholder="Enter category name"
-                                                            required>
-                                                    </div>
-                                                </div>
+                    <div class="card-body">
+                        <form action="category-store" method="POST">
+                            <div class="row">
+                                <!-- Category Name -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="categoryname">Category Name</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'category_name'){ %>
 
-                                                <!-- Status -->
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <label for="status">Status</label>
-                                                        <select class="form-control" id="status" name="status" required>
-                                                            <option selected disabled>Select Category</option>
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Deactive</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Submit Button -->
-                                            <div class="row">
-                                                <div class="col-sm-12 d-flex justify-content-end">
-                                                    <button type="submit" class="btn btn-primary">Add Category</button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                            <p class="text-danger m-1">
+                                                <%= e.msg %>
+                                            </p>
+                                            <% } }) } %>
+
+                                                <input type="text" class="form-control" id="categoryname"
+                                                    name="category_name" placeholder="Enter category name" required>
                                     </div>
                                 </div>
+
+                                <!-- Status -->
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'status'){ %>
+
+                                            <p class="text-danger m-1">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <select class="form-control" id="status" name="status" required>
+                                            <option selected disabled>Select Category</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">Deactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Submit Button -->
+                            <div class="row">
+                                <div class="col-sm-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Add Category</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <!-- [ Main Content ] end -->
         </div>

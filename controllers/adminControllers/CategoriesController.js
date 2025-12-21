@@ -1,26 +1,33 @@
 const { category } = require('../../models/admin/category')
+const { validationResult } = require('express-validator')
 
 exports.CategoryCreate = (req,res) => {
      res.render('admin/categories/create',{error : req.flash('errors'), success : req.flash('success')}); 
 }  
 
 exports.CategoryStore = async(req,res) => {
-     const {categoryname, status} = req.body;
+ 
+     const errors = validationResult(req)
 
-     if(!categoryname){
-        req.flash('errors',"Category is require")
-        return res.redirect('category-create')
-     }
-     if(!status){
-        req.flash('errors',"Status is require")
-        return res.redirect('category-create')
-     }
+     if(!errors.isEmpty()){
+       errors.array().forEach(e=>{
+          req.flash("errors", e)
+       })
+       return res.redirect('category-create')
+     } 
+
+     const {category_name, status} = req.body;
 
      const categories = await category.create({
-          category_name : categoryname,
+          category_name : category_name,
           status : status 
      })
 
-      req.flash('success',"New category create")
-      return res.redirect('category-create')
+     req.flash('success',"New category create")
+     return res.redirect('category-create')
 }  
+
+exports.CategoryList = async(req,res) => {
+      const categories = await category.find()
+      return res.render('admin/categories/index',{categories})
+}

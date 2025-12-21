@@ -9,6 +9,7 @@ const category = new mongoose.Schema({
         type : Boolean,
         require : true
     },
+    
 }) 
 module.exports.category = mongoose.model('category',category)
 

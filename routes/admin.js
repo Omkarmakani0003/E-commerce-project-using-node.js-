@@ -2,7 +2,10 @@ var express = require('express');
 var router = express.Router();
 var {loginform, login, dashboard} = require("../controllers/adminControllers/DashboardController")
 var { ProductCreate } = require("../controllers/adminControllers/ProductController")
-var { CategoryCreate, CategoryStore } = require("../controllers/adminControllers/CategoriesController")
+
+var{CategoryValidator } = require('../middleware/validators/categoryValidators')
+var { CategoryCreate, CategoryStore, CategoryList} = require("../controllers/adminControllers/CategoriesController")
+
 const {CheckAuthentication} = require('../middleware/authentication')
 
 
@@ -28,7 +31,8 @@ router.get('/prouct-create',ProductCreate)
 
 //categories routes
 router.get('/category-create',CategoryCreate)
-router.post('/category-store',CategoryStore)
+router.post('/category-store',CategoryValidator,CategoryStore)
+router.get('/categories',CategoryList)
 
 
 module.exports = router;

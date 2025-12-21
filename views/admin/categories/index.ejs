@@ -1,3 +1,56 @@
-<%- include('layouts/header')%>
-   <h1>this is product list page</h1>
-<%- include('layouts/footer')%>
+<%- include('../layouts/header')%>
+ <div class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Category List</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#!">Categories</a></li>
+                            <li class="breadcrumb-item"><a href="#!">Category List</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+   <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Category List</h5>
+                    </div>
+                    <div class="card-body table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Category Name</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 <% if(categories && categories.length> 0) {
+                                   categories.forEach((e,i)=>{
+                                 %>
+                                    <tr>
+                                        <td><%= i+1 %></td>
+                                        <td><%= e.category_name %></td>
+                                        <td><%= e.status == 1 ? 'Active' : 'Deactive' %></td>
+                                        <td><a href="!#" class="btn btn-icon btn-outline-primary mr-2"><i class="feather icon-edit"></i></a><a href="#!" class="btn btn-icon btn-outline-danger mr-2"><i class="feather icon-trash"></i></a></td>
+                                    </tr>
+                                    <%  })} %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+         </div>
+<%- include('../layouts/footer')%>
