@@ -31,3 +31,34 @@ exports.CategoryList = async(req,res) => {
       const categories = await category.find()
       return res.render('admin/categories/index',{categories})
 }
+
+exports.CategoryEdit = async(req,res) => {
+     const categories = await category.findById(req.params.id)
+     return res.render('admin/categories/update',{error : req.flash('errors'), success : req.flash('success'),categories})
+}
+
+exports.CategoryUpdate = async(req,res) => {
+
+     const errors = validationResult(req)
+     
+     if(!errors.isEmpty()){
+       errors.array().forEach(e=>{
+          req.flash("errors", e)
+       })
+       return res.redirect(`/admin/category-edit/${req.params.id}`)
+     } 
+
+     const {category_name, status} = req.body;
+
+      await category.findByIdAndUpdate(
+        req.params.id,
+        {
+            category_name,
+            status
+        },
+        { new: true }
+    );
+
+     req.flash('success',"Category update successfully")
+     return res.redirect(`/admin/categories`)
+}

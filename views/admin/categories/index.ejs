@@ -42,7 +42,7 @@
                                         <td><%= i+1 %></td>
                                         <td><%= e.category_name %></td>
                                         <td><%= e.status == 1 ? 'Active' : 'Deactive' %></td>
-                                        <td><a href="!#" class="btn btn-icon btn-outline-primary mr-2"><i class="feather icon-edit"></i></a><a href="#!" class="btn btn-icon btn-outline-danger mr-2"><i class="feather icon-trash"></i></a></td>
+                                        <td><a href="category-edit/<%= e._id %>" class="btn btn-icon btn-outline-primary mr-2"><i class="feather icon-edit"></i></a><a href="#!" class="btn btn-icon btn-outline-danger mr-2"><i class="feather icon-trash"></i></a></td>
                                     </tr>
                                     <%  })} %>
                                 </tbody>

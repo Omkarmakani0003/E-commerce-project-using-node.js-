@@ -4,7 +4,7 @@ var {loginform, login, dashboard} = require("../controllers/adminControllers/Das
 var { ProductCreate } = require("../controllers/adminControllers/ProductController")
 
 var{CategoryValidator } = require('../middleware/validators/categoryValidators')
-var { CategoryCreate, CategoryStore, CategoryList} = require("../controllers/adminControllers/CategoriesController")
+var { CategoryCreate, CategoryStore, CategoryList, CategoryEdit, CategoryUpdate} = require("../controllers/adminControllers/CategoriesController")
 
 const {CheckAuthentication} = require('../middleware/authentication')
 
@@ -33,6 +33,8 @@ router.get('/prouct-create',ProductCreate)
 router.get('/category-create',CategoryCreate)
 router.post('/category-store',CategoryValidator,CategoryStore)
 router.get('/categories',CategoryList)
+router.get('/category-edit/:id',CategoryEdit)
+router.post('/category-update/:id',CategoryValidator,CategoryUpdate)
 
 
 module.exports = router;
