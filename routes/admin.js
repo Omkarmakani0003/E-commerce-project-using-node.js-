@@ -3,11 +3,9 @@ var router = express.Router();
 var {loginform, login, dashboard} = require("../controllers/adminControllers/DashboardController")
 var { ProductCreate } = require("../controllers/adminControllers/ProductController")
 
-var{CategoryValidator } = require('../middleware/validators/categoryValidators')
-var { CategoryCreate, CategoryStore, CategoryList, CategoryEdit, CategoryUpdate} = require("../controllers/adminControllers/CategoriesController")
-
+var{ CategoryValidator, SubCategoryValidator } = require('../middleware/validators/categoryValidators')
+var CategoryController = require("../controllers/adminControllers/CategoriesController")
 const {CheckAuthentication} = require('../middleware/authentication')
-
 
 // check admin is already logged in or not
 const Isloggein = (req,res,next) =>{
@@ -28,13 +26,15 @@ router.get('/dashboard',dashboard)
 //Product routes
 router.get('/prouct-create',ProductCreate)
 
-
 //categories routes
-router.get('/category-create',CategoryCreate)
-router.post('/category-store',CategoryValidator,CategoryStore)
-router.get('/categories',CategoryList)
-router.get('/category-edit/:id',CategoryEdit)
-router.post('/category-update/:id',CategoryValidator,CategoryUpdate)
+router.get('/category-create',CategoryController.CategoryCreate)
+router.post('/category-store',CategoryValidator,CategoryController.CategoryStore)
+router.get('/categories',CategoryController.CategoryList)
+router.get('/category-edit/:id',CategoryController.CategoryEdit)
+router.post('/category-update/:id',CategoryValidator,CategoryController.CategoryUpdate)
+router.delete('/category-delete/:id',CategoryValidator,CategoryController.CategoryDelete)
 
+router.get('/subcategories-create',CategoryController.SubCategoryCreate)
+router.post('/subcategories-store',SubCategoryValidator,CategoryController.SubCategoryStore)
 
 module.exports = router;

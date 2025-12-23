@@ -1,3 +1,32 @@
+ 
+ <script>
+     let id = ''
+     let deletedRow = ''
+        document.querySelectorAll('#deleteBtn').forEach((btn)=>{
+            btn.addEventListener('click',()=>{
+               id = btn.dataset.id
+               deletedRow = document.getElementById(`category${btn.dataset.id}`)
+            })
+            
+        })
+       
+       document.getElementById('deleteCategory').addEventListener('click',async()=>{
+           if(!id || id == '') return
+           try{
+              const category = await fetch(`/admin/category-delete/${id}`,{
+                method : 'DELETE'
+              })
+              if(category.ok){
+                 location.reload()
+              }else{
+                 alert('Category delete failed')
+              }
+           }catch(error){
+              console.log(error)
+           }
+       })
+ </script>
+
  <!-- Required Js -->
     <script src="/admin/js/vendor-all.min.js"></script>
     <script src="/admin/js/plugins/bootstrap.min.js"></script>
@@ -12,6 +41,8 @@
 
 <!-- custom-chart js -->
 <script src="/admin/js/pages/dashboard-main.js"></script>
+
+
 </body>
 
 </html>

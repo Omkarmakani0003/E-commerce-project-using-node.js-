@@ -7,12 +7,12 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Add new category</h5>
+                                <h5 class="m-b-10">Update category</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
+                                <li class="breadcrumb-item"><a href="dashboard"><i class="feather icon-home"></i></a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#!">Add category</a></li>
+                                <li class="breadcrumb-item"><a href="#!">Update category</a></li>
                             </ul>
                         </div>
                     </div>
@@ -28,11 +28,12 @@
                             <% } %> -->
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <h5>Add New category</h5>
+                        <h5>Update category</h5>
                         <a href="/admin/categories" class="btn btn-primary">Category list</a>
                     </div>
                     <div class="card-body">
-                        <form action="category-store" method="POST">
+                        <!-- <form action="/admin/category-update/<%= categories._id %>" method="POST"> -->
+                           <form action="/admin/category-update/<%= categories._id %>" method="POST">
                             <div class="row">
                                 <!-- Category Name -->
                                 <div class="col-sm-4">
@@ -47,8 +48,8 @@
                                             </p>
                                             <% } }) } %>
 
-                                                <input type="text" class="form-control" id="categoryname"
-                                                    name="category_name" placeholder="Enter category name" required>
+                                          <input type="text" class="form-control" id="categoryname"
+                                          name="category_name" placeholder="Enter category name" value="<%= categories.category_name %>" required>
                                     </div>
                                 </div>
 
@@ -65,9 +66,9 @@
                                             </p>
                                         <% } }) } %>
                                         <select class="form-control" id="status" name="status" required>
-                                            <option selected disabled>Select Status</option>
-                                            <option value="1">Active</option>
-                                            <option value="0">Deactive</option>
+                                            <option selected disabled>Select Category</option>
+                                            <option value="1" <%= categories.status == '1' ? 'selected="selected"' : '' %> >Active</option>
+                                            <option value="0" <%= categories.status == '0' ? 'selected="selected"' : '' %>>Deactive</option>
                                         </select>
                                     </div>
                                 </div>
@@ -75,7 +76,7 @@
                             <!-- Submit Button -->
                             <div class="row">
                                 <div class="col-sm-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Add Category</button>
+                                    <button type="submit" class="btn btn-primary">Update category</button>
                                 </div>
                             </div>
                         </form>

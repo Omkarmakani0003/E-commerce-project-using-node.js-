@@ -437,3 +437,5 @@ $(function() {
         function removeVariationField(id) {
             document.getElementById(`variationField_${id}`).remove();
         }
+ 
+       
