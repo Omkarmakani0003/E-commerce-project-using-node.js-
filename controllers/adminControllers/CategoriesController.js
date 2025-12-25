@@ -1,109 +1,185 @@
-const { category } = require('../../models/admin/category')
-const { subcategory } = require('../../models/admin/subcategory')
-const { validationResult } = require('express-validator')
+const { category } = require("../../models/admin/category");
+const { subcategory } = require("../../models/admin/subcategory");
+const { validationResult } = require("express-validator");
 
+// Main category
+exports.CategoryCreate = (req, res) => {
+  res.render("admin/categories/create", {
+    error: req.flash("errors"),
+    success: req.flash("success"),
+  });
+};
 
-// Main category 
-exports.CategoryCreate = (req,res) => {
-     res.render('admin/categories/create',{error : req.flash('errors'), success : req.flash('success')}); 
-}  
+exports.CategoryStore = async (req, res) => {
+  try {
+    const errors = validationResult(req);
 
-exports.CategoryStore = async(req,res) => {
- 
-     const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      errors.array().forEach((e) => {
+        req.flash("errors", e);
+      });
+      return res.redirect("/admin/category-create");
+    }
 
-     if(!errors.isEmpty()){
-       errors.array().forEach(e=>{
-          req.flash("errors", e)
-       })
-       return res.redirect('/admin/category-create')
-     } 
+    const { category_name, status } = req.body;
+    const categories = await category.create({
+      category_name: category_name,
+      status: status,
+    });
 
-     const {category_name, status} = req.body;
+    req.flash("success", "New category create");
+    return res.redirect("/admin/categories");
+  } catch (error) {
+    req.flash("errors", error);
+    return res.redirect("/admin/category-create");
+  }
+};
 
-     const categories = await category.create({
-          category_name : category_name,
-          status : status 
-     })
+exports.CategoryList = async (req, res) => {
+  const categories = await category.find();
+  return res.render("admin/categories/index", { error: req.flash("errors"),
+    success: req.flash("success"),categories });
+};
 
-     req.flash('success',"New category create")
-     return res.redirect('/admin/category-create')
-}  
+exports.CategoryEdit = async (req, res) => {
+  const categories = await category.findById(req.params.id);
+  return res.render("admin/categories/update", {
+    error: req.flash("errors"),
+    success: req.flash("success"),
+    categories,
+  });
+};
 
-exports.CategoryList = async(req,res) => {
-      const categories = await category.find()
-      return res.render('admin/categories/index',{categories})
-}
+exports.CategoryUpdate = async (req, res) => {
+  const errors = validationResult(req);
 
-exports.CategoryEdit = async(req,res) => {
-     const categories = await category.findById(req.params.id)
-     return res.render('admin/categories/update',{error : req.flash('errors'), success : req.flash('success'),categories})
-}
+  if (!errors.isEmpty()) {
+    errors.array().forEach((e) => {
+      req.flash("errors", e);
+    });
+    return res.redirect(`/admin/category-edit/${req.params.id}`);
+  }
 
-exports.CategoryUpdate = async(req,res) => {
+  const { category_name, status } = req.body;
 
-     const errors = validationResult(req)
-     
-     if(!errors.isEmpty()){
-       errors.array().forEach(e=>{
-          req.flash("errors", e)
-       })
-       return res.redirect(`/admin/category-edit/${req.params.id}`)
-     } 
+  await category.findByIdAndUpdate(
+    req.params.id,
+    {
+      category_name,
+      status,
+    },
+    { new: true }
+  );
 
-     const {category_name, status} = req.body;
+  req.flash("success", "Category update successfully");
+  return res.redirect(`/admin/categories`);
+};
 
-      await category.findByIdAndUpdate(
-        req.params.id,
-        {
-            category_name,
-            status
-        },
-        { new: true }
-    );
+exports.CategoryDelete = async (req, res) => {
+  if (!req.params.id) return;
+  try {
+    await category.findByIdAndDelete(req.params.id);
+    return res
+      .status(200)
+      .json({ success: true, message: "Category delete successfully" });
+  } catch (error) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Category delete faild" });
+  }
+};
 
-     req.flash('success',"Category update successfully")
-     return res.redirect(`/admin/categories`)
-}
+// Sub category
 
-exports.CategoryDelete = async(req,res) => {
-      if(!req.params.id) return
-      try{
-          await category.findByIdAndDelete(req.params.id)
-          return res.status(200).json({success:true,message:"Category delete successfully"})
-      }catch(error){
-          return res.status(401).json({success:false,message:'Category delete faild'})
-      }
-}
+exports.SubCategoryCreate = async (req, res) => {
+  const categories = await category.find();
+  res.render("admin/sub-categories/create", {
+    error: req.flash("errors"),
+    success: req.flash("success"),
+    categories,
+  });
+};
 
-// Sub category 
+exports.SubCategoryStore = async (req, res) => {
 
-exports.SubCategoryCreate = async(req,res) => {
-    const categories = await category.find()
-    res.render('admin/sub-categories/create',{error : req.flash('errors'), success : req.flash('success'),categories}); 
-}
+  const errors = validationResult(req);
+  
+  if (!errors.isEmpty()) {
+    errors.array().forEach((e) => {
+      req.flash("errors", e);
+    });
+    return res.redirect("/admin/subcategories-create");
+  }
 
-exports.SubCategoryStore = async(req,res) => {
- 
-     const errors = validationResult(req)
+  const { subcategory_name, categoryid, status } = req.body;
 
-     if(!errors.isEmpty()){
-       errors.array().forEach(e=>{
-          req.flash("errors", e)
-       })
-       return res.redirect('/admin/subcategories-create')
-     } 
+  const subcategories = await subcategory.create({
+    subcategory_name: subcategory_name,
+    categoryid: categoryid,
+    status: status,
+  });
 
-     const {subcategory_name,categoryId, status} = req.body;
+  req.flash("success", "New subcategory create");
+  return res.redirect("/admin/subcategories");
+};
 
-     const subcategories = await subcategory.create({
-          subcategory_name : subcategory_name,
-          categoryid : categoryId,
-          status : status 
-     })
+exports.SubCategoryList = async (req, res) => {
+  const subcategories = await subcategory
+    .find()
+    .populate("categoryid", "category_name");
+    return res.render("admin/sub-categories/index", { 
+    error: req.flash("errors"),
+    success: req.flash("success"),
+    subcategories });
+};
 
-     req.flash('success',"New subcategory create")
-     return res.redirect('/admin/subcategories-create')
-} 
+exports.SubCategoryEdit = async (req, res) => {
+  const subcategories = await subcategory.findById(req.params.id);
+  const categories = await category.find();
+  return res.render("admin/sub-categories/update", {
+    error: req.flash("errors"),
+    success: req.flash("success"),
+    subcategories,
+    categories,
+  });
+};
 
+exports.SubCategoryUpdate = async (req, res) => {
+  const errors = validationResult(req);
 
+  if (!errors.isEmpty()) {
+    errors.array().forEach((e) => {
+      req.flash("errors", e);
+    });
+    return res.redirect(`/admin/subcategories-edit/${req.params.id}`);
+  }
+
+  const { subcategory_name, categoryid, status } = req.body;
+
+  const subcategories = await subcategory.findByIdAndUpdate(
+    req.params.id,
+    {
+      subcategory_name: subcategory_name,
+      categoryid: categoryid,
+      status: status,
+    },
+    { new: true }
+  );
+
+  req.flash("success", "Subcategory update successfully");
+  return res.redirect(`/admin/subcategories`);
+};
+
+exports.SubCategoryDelete = async (req, res) => {
+  if (!req.params.id) return;
+  try {
+    await subcategory.findByIdAndDelete(req.params.id);
+    return res
+      .status(200)
+      .json({ success: true, message: "SubCategory delete successfully" });
+  } catch (error) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Category delete faild" });
+  }
+};

@@ -7,6 +7,6 @@ exports.CategoryValidator = [
 
 exports.SubCategoryValidator = [
     body('subcategory_name').notEmpty().trim().withMessage('SubCategory is required'),
-    body('categoryId').notEmpty().withMessage('Select category'),
+    body('categoryid').notEmpty().withMessage('Select category'),
     body('status').notEmpty().withMessage('Select status'),
 ]

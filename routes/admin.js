@@ -21,7 +21,7 @@ router.post('/login',Isloggein,login)
 
 // Dashboard routes
 router.use(CheckAuthentication)
-router.get('/dashboard',dashboard)
+router.get('/',dashboard)
 
 //Product routes
 router.get('/prouct-create',ProductCreate)
@@ -36,5 +36,9 @@ router.delete('/category-delete/:id',CategoryValidator,CategoryController.Catego
 
 router.get('/subcategories-create',CategoryController.SubCategoryCreate)
 router.post('/subcategories-store',SubCategoryValidator,CategoryController.SubCategoryStore)
+router.get('/subcategories',CategoryController.SubCategoryList)
+router.get('/subcategories-edit/:id',CategoryController.SubCategoryEdit)
+router.post('/subcategories-update/:id',SubCategoryValidator,CategoryController.SubCategoryUpdate)
+router.delete('/subcategories-delete/:id',CategoryController.SubCategoryDelete)
 
 module.exports = router;

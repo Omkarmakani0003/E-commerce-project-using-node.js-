@@ -7,6 +7,7 @@ const subcategory = new mongoose.Schema({
     },
     categoryid:{
         type : mongoose.Schema.Types.ObjectId,
+        ref: 'category',
         require : true
     },
     status:{

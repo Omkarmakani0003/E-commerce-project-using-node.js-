@@ -5,26 +5,11 @@
         document.querySelectorAll('#deleteBtn').forEach((btn)=>{
             btn.addEventListener('click',()=>{
                id = btn.dataset.id
-               deletedRow = document.getElementById(`category${btn.dataset.id}`)
+               deletedRow = document.getElementById(`${btn.dataset.id}`)
             })
             
         })
-       
-       document.getElementById('deleteCategory').addEventListener('click',async()=>{
-           if(!id || id == '') return
-           try{
-              const category = await fetch(`/admin/category-delete/${id}`,{
-                method : 'DELETE'
-              })
-              if(category.ok){
-                 location.reload()
-              }else{
-                 alert('Category delete failed')
-              }
-           }catch(error){
-              console.log(error)
-           }
-       })
+  
  </script>
 
  <!-- Required Js -->
@@ -37,7 +22,10 @@
 
 <!-- Apex Chart -->
 <script src="/admin/js/plugins/apexcharts.min.js"></script>
-
+<script src="https://cdn.datatables.net/v/bs5/dt-2.3.6/datatables.min.js" integrity="sha384-h8drA99ZjRhIv1cyWeNleFRr89bNrnvYdIG5Rc523s5jZLUmObH2k1ZxR8ldNEvJ" crossorigin="anonymous"></script>
+    <script>
+        new DataTable('#table');
+    </script>
 
 <!-- custom-chart js -->
 <script src="/admin/js/pages/dashboard-main.js"></script>

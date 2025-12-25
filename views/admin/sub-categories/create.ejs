@@ -22,7 +22,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <h5>Add New sub category</h5>
-                        <a href="/admin/categories" class="btn btn-primary">Sub category list</a>
+                        <a href="/admin/subcategories" class="btn btn-primary">Sub category list</a>
                     </div>
                     <div class="card-body">
                         <form action="subcategories-store" method="POST">
@@ -49,12 +49,12 @@
                                         <label for="categoryname">Select category</label>
                                         <% if (error && error.length> 0) {
                                             error.forEach(function(e) {
-                                            if(e.path == 'categoryId'){ %>
+                                            if(e.path == 'categoryid'){ %>
                                             <p class="text-danger m-1">
                                                 <%= e.msg %>
                                             </p>
                                             <% } }) } %>
-                                            <select class="form-control" name="categoryId">
+                                            <select class="form-control" name="categoryid">
                                                 <option selected disabled>Select Category</option>
                                                 <% if(categories && categories.length > 0) {
                                                  categories.forEach((category)=>{ %>
