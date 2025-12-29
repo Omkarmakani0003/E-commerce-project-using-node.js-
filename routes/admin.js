@@ -1,10 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var {loginform, login, dashboard} = require("../controllers/adminControllers/DashboardController")
-var { ProductCreate } = require("../controllers/adminControllers/ProductController")
+const express = require('express');
+const router = express.Router();
+const {loginform, login, dashboard} = require("../controllers/adminControllers/DashboardController")
+const  ProductController  = require("../controllers/adminControllers/ProductController")
+const upload = require("../middleware/ProductImagesUploader")
 
-var{ CategoryValidator, SubCategoryValidator } = require('../middleware/validators/categoryValidators')
-var CategoryController = require("../controllers/adminControllers/CategoriesController")
+const{ CategoryValidator, SubCategoryValidator } = require('../middleware/validators/categoryValidators')
+const{ ProductValidator } = require('../middleware/validators/ProductValidation')
+const CategoryController = require("../controllers/adminControllers/CategoriesController")
 const {CheckAuthentication} = require('../middleware/authentication')
 
 // check admin is already logged in or not
@@ -24,9 +26,11 @@ router.use(CheckAuthentication)
 router.get('/',dashboard)
 
 //Product routes
-router.get('/prouct-create',ProductCreate)
+router.get('/prouct-create',ProductController.ProductCreate)
+router.get('/displaysubcetegory/:id',ProductController.DisplaySubCategory)
+router.post('/prouct-store',upload.array('images[]',5),ProductValidator,ProductController.ProuctAdd)
 
-//categories routes
+//Categories routes
 router.get('/category-create',CategoryController.CategoryCreate)
 router.post('/category-store',CategoryValidator,CategoryController.CategoryStore)
 router.get('/categories',CategoryController.CategoryList)
@@ -34,6 +38,7 @@ router.get('/category-edit/:id',CategoryController.CategoryEdit)
 router.post('/category-update/:id',CategoryValidator,CategoryController.CategoryUpdate)
 router.delete('/category-delete/:id',CategoryValidator,CategoryController.CategoryDelete)
 
+//Subcategories routes
 router.get('/subcategories-create',CategoryController.SubCategoryCreate)
 router.post('/subcategories-store',SubCategoryValidator,CategoryController.SubCategoryStore)
 router.get('/subcategories',CategoryController.SubCategoryList)

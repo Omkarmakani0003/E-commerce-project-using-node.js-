@@ -10,7 +10,9 @@ const category = new mongoose.Schema({
         type : Boolean,
         require : true
     },
-    
-}) 
+
+},
+  {timestamps: true}
+) 
 module.exports.category = mongoose.model('category',category)
 

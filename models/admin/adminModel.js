@@ -13,6 +13,8 @@ const admin = new mongoose.Schema({
         type : String,
         require : true
     },
-}) 
+},
+  {timestamps: true}
+) 
 module.exports.admin = mongoose.model('admin',admin)
 

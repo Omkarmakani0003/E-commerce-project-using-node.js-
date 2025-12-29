@@ -38,7 +38,7 @@ exports.login = async(req,res) => {
            res.cookie('token',token,{ httpOnly: true })
            
            req.flash('success',"Admin login successfully")
-           return res.redirect('dashboard')
+           return res.redirect('/admin/')
 
      }catch (e){
           console.log(e)

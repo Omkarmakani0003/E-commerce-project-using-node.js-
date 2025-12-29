@@ -1,21 +1,21 @@
 const mongoose = require('mongoose')
 
-const subcategory = new mongoose.Schema({
-    subcategory_name:{
-        type : String,
+const VariationSchema = new mongoose.Schema({
+     variation:{
+        type : Array,
         require : true
     },
-    categoryid:{
+    product_id:{
         type : mongoose.Schema.Types.ObjectId,
-        ref: 'category',
+        ref: 'Product',
         require : true
     },
     status:{
         type : Boolean,
         require : true
     },
+    
 },
   {timestamps: true}
 ) 
-module.exports.subcategory = mongoose.model('subcategories',subcategory)
-
+module.exports.variation= mongoose.model('Variation',VariationSchema)

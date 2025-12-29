@@ -26,14 +26,14 @@
                         <h5>Add New Product</h5>
                     </div>
                     <div class="card-body">
-                        <form action="/add-product" method="post" enctype="multipart/form-data">
+                        <form action="/admin/prouct-store" method="POST" enctype="multipart/form-data">
                             <div class="row">
                                 <!-- Product Name -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="productName">Product Name</label>
-                                        <input type="text" class="form-control" id="productName" name="productName"
-                                            placeholder="Enter product name" required>
+                                        <input type="text" class="form-control" name="product_name"
+                                        value="<%= oldInput[0] ? oldInput[0].product_name : '' %>"   placeholder="Enter product name" >
                                     </div>
                                 </div>
 
@@ -41,12 +41,15 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="category">Category</label>
-                                        <select class="form-control" id="category" name="category" required>
-                                            <option value="">Select Category</option>
-                                            <option value="electronics">Electronics</option>
-                                            <option value="fashion">Fashion</option>
-                                            <option value="home">Home</option>
-                                            <option value="sports">Sports</option>
+                                        <select class="form-control" id="category" name="category_id" >
+                                            <option selected disabled>Select Category</option>
+                                            <% if(categories && categories.length> 0){
+                                                categories.forEach((category)=>{
+                                                %>
+                                                <option value="<%= category._id %>" <%= oldInput[0] ? oldInput[0].category_id == category._id ? 'selected' : '': ''%>>
+                                                    <%= category.category_name %>
+                                                </option>
+                                                <% } ) } %>
                                         </select>
                                     </div>
                                 </div>
@@ -55,91 +58,95 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="subCategory">Sub-category</label>
-                                        <select class="form-control" id="subCategory" name="subCategory" required>
-                                            <option value="">Select Sub-category</option>
+                                        <select class="form-control" id="subCategory" name="subcategory_id">
+                                            <option selected disabled>Select Sub-category</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <!-- Child Category -->
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="childCategory">Child Category</label>
-                                        <select class="form-control" id="childCategory" name="childCategory" required>
-                                            <option value="">Select Child Category</option>
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <!-- Price -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="price">Price ($)</label>
-                                        <input type="number" class="form-control" id="price" name="price"
-                                            placeholder="Enter price" required>
+                                        <input type="number" class="form-control" name="price"
+                                         value="<%= oldInput[0] ? oldInput[0].price : '' %>"   placeholder="Enter price" >
                                     </div>
                                 </div>
 
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="discountPrice">Discount Price ($)</label>
+                                        <input type="number" class="form-control"
+                                        value="<%= oldInput[0] ? oldInput[0].discount : '' %>"   name="discount" placeholder="Enter discount price">
+                                    </div>
+                                </div>
                                 <!-- Stock Quantity -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="stockQuantity">Stock Quantity</label>
-                                        <input type="number" class="form-control" id="stockQuantity"
-                                            name="stockQuantity" placeholder="Enter stock quantity" required>
+                                        <input type="number" class="form-control"
+                                        value="<%= oldInput[0] ? oldInput[0].stockQuantity : '' %>"   name="stock" placeholder="Enter stock quantity" >
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="discountPrice">Discount Price ($)</label>
-                                        <input type="number" class="form-control" id="discountPrice"
-                                            name="discountPrice" placeholder="Enter discount price">
-                                    </div>
-                                </div>
+
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="shippingFee">Shipping Fee ($)</label>
-                                        <input type="number" class="form-control" id="shippingFee" name="shippingFee"
-                                            placeholder="Enter shipping fee">
+                                        <input type="number" class="form-control" name="shipping_price"
+                                        value="<%= oldInput[0] ? oldInput[0].shippingFee : '' %>"    placeholder="Enter shipping fee">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="brandName">Brand Name</label>
-                                        <input type="text" class="form-control" id="brandName" name="brandName"
-                                            placeholder="Enter brand name" required>
+                                        <input type="text" class="form-control" name="brand_name"
+                                        value="<%= oldInput[0] ? oldInput[0].brand_name : '' %>"    placeholder="Enter brand name" >
                                     </div>
                                 </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="sku">SKU (Stock Keeping Unit)</label>
+                                        <input type="text" class="form-control" name="sku"
+                                        value="<%= oldInput[0] ? oldInput[0].sku : '' %>" placeholder="Enter SKU" >
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="productCondition">Condition</label>
-                                        <select class="form-control" id="productCondition" name="productCondition"
-                                            required>
-                                            <option value="new">New</option>
-                                            <option value="refurbished">Refurbished</option>
-                                            <option value="used">Used</option>
+                                        <select class="form-control" name="condition"
+                                            >
+                                            <option value="new" <%= oldInput[0] ? "new" == oldInput[0].productCondition ? 'selected' : '' : '' %>>New</option>
+                                            <option value="refurbished" <%= oldInput[0] ? "refurbished" == oldInput[0].productCondition ? 'selected' : '' : '' %>>Refurbished</option>
+                                            <option value="used" <%= oldInput[0] ? "used" == oldInput[0].productCondition ? 'selected' : '' : '' %>>Used</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label for="sku">SKU (Stock Keeping Unit)</label>
-                                        <input type="text" class="form-control" id="sku" name="sku"
-                                            placeholder="Enter SKU" required>
-                                    </div>
-                                </div>
+
                                 <!-- Product Tags -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="tags">Product Tags (optional)</label>
-                                        <input type="text" class="form-control" id="tags" name="tags"
-                                            placeholder="Enter tags (comma separated)">
+                                        <input type="text" class="form-control" name="tags"
+                                        value="<%= oldInput[0] ? oldInput[0].tags : '' %>"    placeholder="Enter tags (comma separated)">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <select class="form-control" name="status"
+                                            >
+                                            <option value="true" <%= oldInput[0] ? 'active' == oldInput[0].status ? 'selected' : '' : ''%>>Active</option>
+                                            <option value="false" <%= oldInput[0] ? 'deactive' == oldInput[0].status ? 'selected' : '' : '' %>>Deactive</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -153,6 +160,9 @@
                                             <!-- Dynamic variation fields will be added here -->
                                             <button type="button" class="btn btn-secondary"
                                                 onclick="addVariationField()">Add Variation</button>
+                                            <button type="button" class="btn btn-secondary" onclick="addColorVariation()">
+                                                Add Color Variation
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -168,7 +178,7 @@
                                                 onclick="document.getElementById('productImages').click()">
                                                 <p>Drag & Drop your images here or click to select files</p>
                                                 <input type="file" class="form-control-file" id="productImages"
-                                                    name="productImages[]" multiple accept="image/*"
+                                                    name="images[]" multiple accept="image/*"
                                                     style="display: none;">
                                             </div>
                                             <div id="imagePreview" class="image-preview-container">
@@ -185,8 +195,8 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="productDescription">Product Description</label>
-                                        <textarea class="form-control" id="productDescription" name="productDescription"
-                                            rows="5" placeholder="Enter product description" required></textarea>
+                                        <textarea class="form-control" name="description"
+                                            rows="5" placeholder="Enter product description" ></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -205,4 +215,30 @@
         </div>
     </div>
 
+
+    <script>
+        document.getElementById('category').addEventListener('change', async () => {
+            const id = document.getElementById('category').value
+            if (!id) {
+                return false;
+            }
+            await fetch(`/admin/displaysubcetegory/${id}`)
+                .then(response => response.json())
+                .then((data) => {
+                    const select = document.getElementById('subCategory')
+                    if (data.data.length > 0) {
+                        select.innerHTML = ''
+                        data.data.forEach(element => {
+                            select.innerHTML += `<option value="${element._id}">${element.subcategory_name}</option>`
+                        });
+                    } else {
+                        select.innerHTML = '<option disabled>Data not found</option>'
+                    }
+                })
+                .catch((err) => { console.error(err) })
+
+
+
+        })
+    </script>
     <%- include('../layouts/footer')%>
