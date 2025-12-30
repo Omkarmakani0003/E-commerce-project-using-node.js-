@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 
 const VariationSchema = new mongoose.Schema({
      variation:{
-        type : Array,
-        require : true
+        type: Map,
+        of: [String] 
     },
     product_id:{
         type : mongoose.Schema.Types.ObjectId,

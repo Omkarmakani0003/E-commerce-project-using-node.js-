@@ -12,9 +12,7 @@ exports.ProductCreate = async(req,res) => {
         res.render('admin/product/create',{categories, error: req.flash("errors"), oldInput: req.flash("oldInput")}); 
      }catch(error){
          console.error(error)
-     }
-
-     
+     }  
 }
 
 exports.DisplaySubCategory = async(req,res) => {
@@ -51,8 +49,10 @@ exports.ProuctAdd = async(req,res) => {
            trim: true,
            strict : true
         })
+
         const url = req.files.map((e)=>{ return e.path })
         const public_id = req.files.map((e)=>{ return e.filename })
+
         const products = await product.create({
             product_name: req.body.product_name,
             slug: slug,
@@ -72,22 +72,45 @@ exports.ProuctAdd = async(req,res) => {
         })
  
         if(req.body.variation_type && req.body.variations){
+
+         const result = req.body.variation_type.reduce((obj, key, index) => {
+            obj[key] = [req.body.variations[index]];
+            return obj;
+         }, {});
+
            await variation.create({
-               variation: {
-                   [req.body.variation_type] :req.body.variations,
-               },
+               variation: result,
                product_id : products._id,
                status:req.body.status
            })
         }
 
-        console.log(products)
-
+        res.redirect('/admin/products')
+      
      }catch(error){
         console.log(error)
      }
-     
-   
 }
+
+exports.ProductList = async(req,res) => {
+      const products = await product.find();
+      const categories = await category.find();
+      res.render('admin/product/index',{products,categories, error: req.flash("errors"), success: req.flash("success")})
+}
+
+exports.ProductView = async(req,res) => {
+      const slug = req.params.slug;
+      const products = await product.findOne({slug});
+      let subcategories = '';
+      const categories = await category.findById(products.category_id);
+      if(products.subcategory_id){
+         subcategories = await subcategory.findById(products.subcategory_id);
+      }
+      const variations = await variation.findOne({product_id :products._id})
+      const variation_data = variations.variation
+      res.render('admin/product/view',{products, categories, subcategories,variation_data, error: req.flash("errors"), success: req.flash("success")})
+}
+
+
 
 

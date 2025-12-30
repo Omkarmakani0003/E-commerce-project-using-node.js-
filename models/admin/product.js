@@ -28,7 +28,6 @@ const productSchema = new mongoose.Schema(
     subcategory_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "subcategories",
-      required: true,
     },
 
     discount: {
@@ -64,7 +63,6 @@ const productSchema = new mongoose.Schema(
     },
     tags: {
       type: String,
-      required: true,
     },
     images: [
       {

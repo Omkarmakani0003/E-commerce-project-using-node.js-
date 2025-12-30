@@ -414,13 +414,13 @@ $(function() {
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="variationType_${variationCount}">Variation Type</label>
-                        <input type="text" class="form-control" id="variationType_${variationCount}" name="variation_type[]" placeholder="e.g.  Size, Material" required>
+                        <input type="text" class="form-control" id="variationType_${variationCount}" name="variation_type[${variationCount}]" placeholder="e.g.  Size, Material" required>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="variationOptions_${variationCount}">Options (comma separated)</label>
-                        <input type="text" class="form-control" id="variationOptions_${variationCount}" name="variations[]" placeholder="e.g. " required>
+                        <input type="text" class="form-control" id="variationOptions_${variationCount}" name="variations[${variationCount}]" placeholder="e.g. " required>
                     </div>
                 </div>
                 <div class="col-sm-4 mt-4">

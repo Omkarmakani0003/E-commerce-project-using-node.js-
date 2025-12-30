@@ -29,6 +29,8 @@ router.get('/',dashboard)
 router.get('/prouct-create',ProductController.ProductCreate)
 router.get('/displaysubcetegory/:id',ProductController.DisplaySubCategory)
 router.post('/prouct-store',upload.array('images[]',5),ProductValidator,ProductController.ProuctAdd)
+router.get('/products',ProductController.ProductList)
+router.get('/product-detail/:slug',ProductController.ProductView)
 
 //Categories routes
 router.get('/category-create',CategoryController.CategoryCreate)
