@@ -26,11 +26,15 @@ router.use(CheckAuthentication)
 router.get('/',dashboard)
 
 //Product routes
-router.get('/prouct-create',ProductController.ProductCreate)
+router.get('/product-create',ProductController.ProductCreate)
 router.get('/displaysubcetegory/:id',ProductController.DisplaySubCategory)
 router.post('/prouct-store',upload.array('images[]',5),ProductValidator,ProductController.ProuctAdd)
 router.get('/products',ProductController.ProductList)
 router.get('/product-detail/:slug',ProductController.ProductView)
+router.delete('/product-delete/:id',ProductController.DeleteProduct)
+router.get('/product-edit/:slug',ProductController.EditProduct)
+router.delete('/productimage-delete/:public_id/:id',ProductController.DeleteImage)
+router.post('/prouct-update/:slug',upload.array('images[]',5),ProductValidator,ProductController.ProuctUpdate)
 
 //Categories routes
 router.get('/category-create',CategoryController.CategoryCreate)

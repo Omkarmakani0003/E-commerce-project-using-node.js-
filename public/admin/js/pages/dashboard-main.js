@@ -439,15 +439,13 @@ $(function() {
             document.getElementById(`variationField_${id}`).remove();
         }
 
-        let colorCount = 0;
-
         function addColorVariation() {
-          colorCount++;
+          variationCount++;
 
           const colorDiv = document.createElement('div');
           colorDiv.classList.add('variation-field');
           colorDiv.classList.add('mt-3');
-          colorDiv.id = `colorVariation_${colorCount}`;
+          colorDiv.id = `colorVariation_${variationCount}`;
 
           colorDiv.innerHTML = `
         <div class="row">
@@ -456,7 +454,7 @@ $(function() {
                     <label>Variation Type</label>
                     <input type="text"
                         class="form-control"
-                        name="variation_type"
+                        name="variation_type[${variationCount}]"
                         value="Color"
                         readonly>
                 </div>
@@ -467,7 +465,7 @@ $(function() {
                     <label>Select Color</label>
                     <input type="color"
                         class="form-control"
-                        name="variations[]"
+                        name="variations[${variationCount}]"
                         value="#000000">
                 </div>
             </div>
@@ -475,7 +473,7 @@ $(function() {
             <div class="col-sm-4 mt-4">
                 <button type="button"
                         class="btn btn-danger"
-                        onclick="removeColorVariation(${colorCount})">
+                        onclick="removeColorVariation(${variationCount})">
                     Remove Color
                 </button>
             </div>
@@ -486,6 +484,7 @@ $(function() {
 }
 
 function removeColorVariation(id) {
+    
     document.getElementById(`colorVariation_${id}`).remove();
 }
  

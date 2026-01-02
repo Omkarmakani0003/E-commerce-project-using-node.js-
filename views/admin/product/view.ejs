@@ -7,12 +7,12 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Add new product</h5>
+                                <h5 class="m-b-10">product detail</h5>
                             </div>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#!">Add product</a></li>
+                                <li class="breadcrumb-item"><a href="#!">product detail</a></li>
                             </ul>
                         </div>
                     </div>
@@ -23,7 +23,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Add New Product</h5>
+                        <h5>product detail</h5>
                     </div>
                     <div class="card-body">
                             <div class="row">
@@ -140,28 +140,29 @@
 
                             <div class="row">
                                 <!-- Variations Section -->
-                                <div class="col-sm-12">
+                            <% if(variations) {%>
+                                <div class="col-sm-8">
                                     <div class="form-group">
-                                        <label for="productVariations">Product Variations</label>
-                                        
-                                        
-                                            
+                                      <label for="productVariations">Product Variations</label>     
                                         <table class="table table-striped">
-                                            
-                                                <% variation_data.forEach((key,value)=>{ %>
-                                                    <tr>
-                                                        <th><%= value %></th>
-                                                        <td><%= key %></td>
-                                                    </tr>
-                                                    
-                                                <% }) %>
-                                                
-  
-                                                <tr></tr>
+                                             <% for(let key in variations.variation[0]){ %>
+                                                <tr>                                        
+                                                  <th><%= key %>  :</th>
+                                                 <% if(key != 'Color') { %>
+                                                  <td><%= variations.variation[0][key] %></td>
+                                                 <% }else{ %>
+                                                    <td class="d-flex">
+                                                       <% variations.variation[0]['Color'] .forEach((color)=>{ %> 
+                                                         <div class="mr-3" style="width:30px; height:30px; border:1px solid; border-radius: 50%; background-color: <%= color %> ;"></div>
+                                                       <% } ) %>
+                                                    </td> 
+                                                 <% }%>  
+                                                </tr>
+                                             <% } %>
                                         </table>
-                                        
-                                    </div>
-                                </div>
+                                    </div> 
+                                  </div>
+                                <% } %> 
                             </div>
 
                             <div class="row">
@@ -170,18 +171,14 @@
                                     <div class="form-group">
                                         <label for="productImages">Product Images</label>
                                         <div id="imageUploader" class="image-uploader">
-                                            <div id="imageDropArea" class="image-drop-area"
-                                                onclick="document.getElementById('productImages').click()">
-                                                <p>Drag & Drop your images here or click to select files</p>
-                                                <input type="file" class="form-control-file" id="productImages"
-                                                    name="images[]" multiple accept="image/*"
-                                                    style="display: none;">
-                                            </div>
-                                            <div id="imagePreview" class="image-preview-container">
-                                                <!-- Image previews will appear here -->
-                                            </div>
+                                            <% if(products.images[0].url.length > 0){ 
+                                                products.images[0].url.forEach((image) => {
+                                            %>
+                                            <img class="img-thumbnail mr-3" src="<%= image %>" width="200px">
+                                            <% } ) }else{ %>
+                                                <p class="m-0 text-danger">Image not found</p> 
+                                            <% } %>    
                                         </div>
-                                        <small class="form-text text-muted">You can upload multiple images.</small>
                                     </div>
                                 </div>
                             </div>
@@ -192,7 +189,7 @@
                                     <div class="form-group">
                                         <label for="productDescription">Product Description</label>
                                         <textarea class="form-control" name="description"
-                                            rows="5" placeholder="Enter product description" ></textarea>
+                                            rows="5" placeholder="Enter product description" ><%= products.description %></textarea>
                                     </div>
                                 </div>
                             </div>

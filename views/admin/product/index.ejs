@@ -68,7 +68,7 @@
                      class="btn btn-icon btn-outline-info mr-2"
                      ><i class="feather icon-eye"></i></a>
 
-                    <a href="category-edit/<%= e._id %>"
+                    <a href="/admin/product-edit/<%= e.slug %>"
                       class="btn btn-icon btn-outline-primary mr-2"
                       ><i class="feather icon-edit"></i></a>
                       <button
@@ -123,7 +123,7 @@
               >
                 Close
               </button>
-              <button type="button" class="btn btn-danger" id="deleteCategory">
+              <button type="button" class="btn btn-danger" id="deleteProduct">
                 Delete
               </button>
             </div>
@@ -133,21 +133,21 @@
     </div>
   </div>
 </div>
-<!-- <script>
-     document.getElementById('deleteCategory').addEventListener('click',async()=>{
+<script>
+     document.getElementById('deleteProduct').addEventListener('click',async()=>{
            if(!id || id == '') return
            try{
-              const category = await fetch(`/admin/category-delete/${id}`,{
+              const product = await fetch(`/admin/product-delete/${id}`,{
                 method : 'DELETE'
               })
-              if(category.ok){
+              if(product.ok){
                  location.reload()
               }else{
-                 alert('Category delete failed')
+                 alert('product delete failed')
               }
            }catch(error){
               console.log(error)
            }
        })
-</script> -->
+</script>
 <%- include('../layouts/footer')%>

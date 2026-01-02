@@ -31,7 +31,14 @@
                                 <!-- Product Name -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="productName">Product Name</label>
+                                        <label for="productName">Product Name *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'product_name'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
                                         <input type="text" class="form-control" name="product_name"
                                         value="<%= oldInput[0] ? oldInput[0].product_name : '' %>"   placeholder="Enter product name" >
                                     </div>
@@ -40,7 +47,14 @@
                                 <!-- Category -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="category">Category</label>
+                                        <label for="category">Category *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'category_id'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
                                         <select class="form-control" id="category" name="category_id" >
                                             <option selected disabled>Select Category</option>
                                             <% if(categories && categories.length> 0){
@@ -69,7 +83,14 @@
                                 <!-- Price -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="price">Price ($)</label>
+                                        <label for="price">Price *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'price'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
                                         <input type="number" class="form-control" name="price"
                                          value="<%= oldInput[0] ? oldInput[0].price : '' %>"   placeholder="Enter price" >
                                     </div>
@@ -77,7 +98,14 @@
 
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="discountPrice">Discount Price ($)</label>
+                                        <label for="discountPrice">Discount Price *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'discount'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
                                         <input type="number" class="form-control"
                                         value="<%= oldInput[0] ? oldInput[0].discount : '' %>"   name="discount" placeholder="Enter discount price">
                                     </div>
@@ -85,7 +113,14 @@
                                 <!-- Stock Quantity -->
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="stockQuantity">Stock Quantity</label>
+                                        <label for="stockQuantity">Stock Quantity *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'stock'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
                                         <input type="number" class="form-control"
                                         value="<%= oldInput[0] ? oldInput[0].stockQuantity : '' %>"   name="stock" placeholder="Enter stock quantity" >
                                     </div>
@@ -96,14 +131,28 @@
 
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="shippingFee">Shipping Fee ($)</label>
+                                        <label for="shippingFee">Shipping Fee *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'shipping_price'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
                                         <input type="number" class="form-control" name="shipping_price"
                                         value="<%= oldInput[0] ? oldInput[0].shippingFee : '' %>"    placeholder="Enter shipping fee">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="brandName">Brand Name</label>
+                                        <label for="brandName">Brand Name *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'brand_name'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
                                         <input type="text" class="form-control" name="brand_name"
                                         value="<%= oldInput[0] ? oldInput[0].brand_name : '' %>"    placeholder="Enter brand name" >
                                     </div>
@@ -111,7 +160,14 @@
 
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="sku">SKU (Stock Keeping Unit)</label>
+                                        <label for="sku">SKU (Stock Keeping Unit) *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'sku'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
                                         <input type="text" class="form-control" name="sku"
                                         value="<%= oldInput[0] ? oldInput[0].sku : '' %>" placeholder="Enter SKU" >
                                     </div>
@@ -121,9 +177,8 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="form-group">
-                                        <label for="productCondition">Condition</label>
-                                        <select class="form-control" name="condition"
-                                            >
+                                        <label for="productCondition">Condition *</label>
+                                        <select class="form-control" name="condition">
                                             <option value="new" <%= oldInput[0] ? "new" == oldInput[0].productCondition ? 'selected' : '' : '' %>>New</option>
                                             <option value="refurbished" <%= oldInput[0] ? "refurbished" == oldInput[0].productCondition ? 'selected' : '' : '' %>>Refurbished</option>
                                             <option value="used" <%= oldInput[0] ? "used" == oldInput[0].productCondition ? 'selected' : '' : '' %>>Used</option>
@@ -142,8 +197,14 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="status">Status</label>
-                                        <select class="form-control" name="status"
-                                            >
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'status'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+                                        <select class="form-control" name="status">
                                             <option value="true" <%= oldInput[0] ? 'active' == oldInput[0].status ? 'selected' : '' : ''%>>Active</option>
                                             <option value="false" <%= oldInput[0] ? 'deactive' == oldInput[0].status ? 'selected' : '' : '' %>>Deactive</option>
                                         </select>
@@ -173,6 +234,13 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="productImages">Product Images</label>
+                                        <!-- <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'images'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %> -->
                                         <div id="imageUploader" class="image-uploader">
                                             <div id="imageDropArea" class="image-drop-area"
                                                 onclick="document.getElementById('productImages').click()">
@@ -194,7 +262,14 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label for="productDescription">Product Description</label>
+                                        <label for="productDescription">Product Description *</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'description'){ %>
+                                            <p class="text-danger m-0">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
                                         <textarea class="form-control" name="description"
                                             rows="5" placeholder="Enter product description" ></textarea>
                                     </div>
