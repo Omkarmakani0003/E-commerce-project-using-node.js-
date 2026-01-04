@@ -1,0 +1,130 @@
+<%- include('layouts/header') %>
+
+    <style>
+        /* html, body {
+            height: 100%;
+           
+        } */
+
+        .auth-wrapper {
+            min-height: calc(100vh - 200px); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-btn {
+            width: 100%;
+            text-align: left;
+        }
+
+        .social-btn i {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER / NAVBAR ================= -->
+<!-- USE SAME NAVBAR FROM index.html -->
+<!-- ================= END NAVBAR ================= -->
+
+
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-0">
+                <a class="breadcrumb-item text-dark" href="index.html">Home</a>
+                <span class="breadcrumb-item active">Register</span>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+
+<!-- Register Start -->
+<div class="container-fluid auth-wrapper">
+    <div class="row px-xl-5 justify-content-center w-100">
+        <div class="col-lg-6 col-md-8">
+            <div class="bg-light p-30">
+                <h3 class="mb-4 text-center">Create Your Account</h3>
+
+                <form>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-control" placeholder="John Doe">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" placeholder="example@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" placeholder="********">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control" placeholder="********">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="terms">
+                            <label class="custom-control-label" for="terms">
+                                I agree to the <a href="#">Terms & Conditions</a>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-block py-2 mb-3">
+                        Create Account
+                    </button>
+
+                    <!-- Divider -->
+                    <div class="text-center text-muted mb-3">
+                        <small>Or sign up with</small>
+                    </div>
+
+                    <!-- Social Login -->
+                    <button type="button" class="btn btn-outline-dark social-btn mb-2">
+                        <i class="fab fa-google text-danger"></i>
+                        Continue with Google
+                    </button>
+
+                    <button type="button" class="btn btn-outline-dark social-btn">
+                        <i class="fab fa-facebook-f text-primary"></i>
+                        Continue with Facebook
+                    </button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <small>
+                        Already have an account?
+                        <a href="login.html">Login here</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Register End -->
+
+
+<!-- ================= FOOTER ================= -->
+<!-- USE SAME FOOTER FROM index.html -->
+<!-- ================= END FOOTER ================= -->
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top">
+    <i class="fa fa-angle-double-up"></i>
+</a>
+
+<%- include('layouts/footer') %>
