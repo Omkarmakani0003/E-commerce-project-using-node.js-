@@ -1,7 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var { home } = require("../controllers/homeController")
+const express = require('express');
+const router = express.Router();
+const homeController  = require("../controllers/homeController")
+const ProductController = require("../controllers/ProductController")
 
-router.get('/',home)
+router.get('/',homeController.HomePage)
+router.get('/product-detail/:slug',ProductController.ProductDetail)
 
 module.exports = router;

@@ -843,6 +843,13 @@ pre code {
     margin-right: auto;
     margin-left: auto;
 }
+.colorVariation {
+    width: 30px;
+    height: 30px;
+    border: 1px solid;
+    border-radius: 50%;
+    margin-right: 8px
+}
 
 @media (min-width: 576px) {
     .container {

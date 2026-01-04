@@ -225,28 +225,73 @@
                                         <div id="variationsContainer">
                                             <!-- Dynamic variation fields will be added here -->
                                             <button type="button" class="btn btn-secondary"
-                                                onclick="addVariationField()">Add Variation</button>
-                                            <button type="button" class="btn btn-secondary" onclick="addColorVariation()">
+                                                onclick="addVariationField('<%= variations.variation.length + variations.variation.find(item => item.type === 'Color').values.length - 1 %>')">Add Variation</button>
+                                            <button type="button" class="btn btn-secondary" onclick="addColorVariation('<%= variations.variation.length + variations.variation.find(item => item.type === 'Color').values.length - 1 %>')">
                                                 Add Color Variation
                                             </button>
                                         </div>
+                                        <% 
+                                           let i = 0
+                                           variations.variation.forEach((variation,vindex)=>{
+                                           if(variation.type != 'Color') { 
+                                         %> 
+                                        <div class="variation-field mt-3" id="variationField_<%= vindex + i + 1 %>">
+                                             <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="variationType_">Variation Type</label>
+                                                            <input type="text" class="form-control" id="variationType_<%= vindex + i + 1 %>" name="variation_type[<%= vindex + i + 1 %>]" value="<%= variation.type %>" placeholder="e.g.  Size, Material" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="variationOptions_">Options (comma separated)</label>
+                                                            <input type="text" class="form-control" id="variationOptions_<%= vindex + i + 1 %>" name="variations[<%= vindex + i + 1 %>]" value="<%= variation.values %>" placeholder="e.g. " required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 mt-4">
+                                                        <div class="form-group">
+                                                            <button type="button" class="btn btn-danger" onclick="removeVariationField('<%= vindex + i + 1 %>')">Remove Variation</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                         
+                                <% }else{ variation.values.forEach((color,index)=>{  i = index %>   
+                                     <div class="variation-field mt-3" id="colorVariation_<%= vindex + index + 1 %>">
+                                         <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Variation Type</label>
+                                                    <input type="text"
+                                                        class="form-control"
+                                                        name="variation_type[<%= vindex + index + 1 %>]"
+                                                        value="Color"
+                                                        readonly>
+                                                </div>
+                                            </div>
 
-                                         <!-- <table class="table table-striped">
-                                             <% for(let key in variations.variation[0]){ %>
-                                                <tr>                                        
-                                                  <th><%= key %>  :</th>
-                                                 <% if(key != 'Color') { %>
-                                                  <td><%= variations.variation[0][key] %></td>
-                                                 <% }else{ %>
-                                                    <td class="d-flex">
-                                                       <% variations.variation[0]['Color'] .forEach((color)=>{ %> 
-                                                         <div class="mr-3" style="width:30px; height:30px; border:1px solid; border-radius: 50%; background-color: <%= color %> ;"></div>
-                                                       <% } ) %>
-                                                    </td> 
-                                                 <% }%>  
-                                                </tr>
-                                             <% } %>
-                                        </table> -->
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Select Color</label>
+                                                    <input type="color"
+                                                        class="form-control"
+                                                        name="variations[<%= vindex + index + 1 %>]"
+                                                        value="<%= color %>">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4 mt-4">
+                                                <button type="button"
+                                                        class="btn btn-danger"
+                                                        onclick="removeColorVariation('<%= vindex + 1 %>')">
+                                                    Remove Color
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% }) } }) %>     
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -307,7 +352,7 @@
                             <!-- Submit Button -->
                             <div class="row">
                                 <div class="col-sm-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Add Product</button>
+                                    <button type="submit" class="btn btn-primary">Update Product</button>
                                 </div>
                             </div>
                         </form>

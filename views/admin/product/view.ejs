@@ -145,20 +145,22 @@
                                     <div class="form-group">
                                       <label for="productVariations">Product Variations</label>     
                                         <table class="table table-striped">
-                                             <% for(let key in variations.variation[0]){ %>
-                                                <tr>                                        
-                                                  <th><%= key %>  :</th>
-                                                 <% if(key != 'Color') { %>
-                                                  <td><%= variations.variation[0][key] %></td>
-                                                 <% }else{ %>
-                                                    <td class="d-flex">
-                                                       <% variations.variation[0]['Color'] .forEach((color)=>{ %> 
-                                                         <div class="mr-3" style="width:30px; height:30px; border:1px solid; border-radius: 50%; background-color: <%= color %> ;"></div>
-                                                       <% } ) %>
-                                                    </td> 
-                                                 <% }%>  
-                                                </tr>
-                                             <% } %>
+                                             <% variations.variation.forEach(function(variation){ %>
+                                                  <tr>
+                                                     <td><%= variation.type %></td>
+                                                     <% if(variation.type != 'Color'){ %>
+                                                       <th><%= variation.values %></th>
+                                                    
+                                                        <% }else{   %>
+                                                          <th class="d-flex">
+                                                            <% variation.values.forEach((color)=>{ %>
+                                                             <div class="colorVariation" style="background-color: <%= color %>;"></div>
+                                                            <% }) %>
+                                                         </th> 
+                                                        <% } %> 
+                                                     
+                                                  </tr>
+                                             <% }) %>
                                         </table>
                                     </div> 
                                   </div>

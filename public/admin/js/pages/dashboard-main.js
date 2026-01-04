@@ -399,10 +399,19 @@ $(function() {
             button.parentElement.remove();
         }
 
-        // Add Variation Field (Color, Size, etc.)
+        // Add Variation Field
         let variationCount = 0;
-        function addVariationField() {
-            variationCount++;
+        
+        function addVariationField(count = 0) {
+            
+            if(variationCount >= count){
+                variationCount++
+            }else{
+               variationCount = parseInt(count) || 0
+               variationCount++
+            }
+
+            console.log('addVariationField',variationCount)
 
             const variationDiv = document.createElement('div');
             variationDiv.classList.add('variation-field');
@@ -439,8 +448,16 @@ $(function() {
             document.getElementById(`variationField_${id}`).remove();
         }
 
-        function addColorVariation() {
-          variationCount++;
+        function addColorVariation(count = 0) {
+        
+            if(variationCount >= count){
+                variationCount++
+            }else{
+               variationCount = parseInt(count) || 0
+               variationCount++
+            }
+
+            console.log('addColorVariation',variationCount)
 
           const colorDiv = document.createElement('div');
           colorDiv.classList.add('variation-field');

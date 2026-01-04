@@ -79,19 +79,38 @@ exports.ProuctAdd = async(req,res) => {
 
 
         if(req.body.variation_type && req.body.variations){
-          const result = req.body.variation_type.reduce((obj, key, index) => {
 
-            if(!obj[key]){
-               obj[key] = []
+         const variationsMap = req.body.variation_type.reduce((obj, type, index) => {
 
+            if (!obj[type]) {
+                  obj[type] = [];
             }
-            obj[key].push(req.body.variations[index]);
+
+            if (typeof req.body.variations[index] === 'string' &&
+                  req.body.variations[index].includes(',')) {
+
+                  obj[type].push(
+                     ...req.body.variations[index]
+                        .split(',')
+                        .map(v => v.trim())
+                  );
+
+            } else {
+                  obj[type].push(req.body.variations[index]);
+            }
 
             return obj;
          }, {});
 
+         const variations = Object.entries(variationsMap).map(
+            ([type, values]) => ({
+                  type,
+                  values
+            })
+         );
+
             await variation.create({
-               variation: result,
+               variation: variations,
                product_id : products._id,
                status:req.body.status
            })
@@ -234,27 +253,45 @@ exports.ProuctUpdate = async(req,res)=>{
            await products.save()
 
 
-      //   if(req.body.variation_type && req.body.variations){
-      //     const result = req.body.variation_type.reduce((obj, key, index) => {
+        if(req.body.variation_type && req.body.variations){
 
-      //       if(!obj[key]){
-      //          obj[key] = []
+          const variationsMap = req.body.variation_type.reduce((obj, type, index) => {
 
-      //       }
-      //       obj[key].push(req.body.variations[index]);
+            if (!obj[type]) {
+                  obj[type] = [];
+            }
 
-      //       return obj;
-      //    }, {});
+            if (typeof req.body.variations[index] === 'string' &&
+                  req.body.variations[index].includes(',')) {
 
-      //       await variation.create({
-      //          variation: result,
-      //          product_id : products._id,
-      //          status:req.body.status
-      //      })
-      //    }
+                  obj[type].push(
+                     ...req.body.variations[index]
+                        .split(',')
+                        .map(v => v.trim())
+                  );
+
+            } else {
+                  obj[type].push(req.body.variations[index]);
+            }
+
+            return obj;
+         }, {});
+
+         const variations = Object.entries(variationsMap).map(
+            ([type, values]) => ({
+                  type,
+                  values
+            })
+         );
+
+         const Variation =  await variation.findOne({product_id: products._id})
+            Variation.variation = variations,
+            Variation.status = req.body.status
+            Variation.save()
+         }
         
-      //  req.flash("success", "New product added successfully"); 
-      res.redirect('/admin/products')
+     req.flash("success", "Product updated successfully"); 
+     res.redirect('/admin/products')
       
      }catch(error){
         console.log(error)

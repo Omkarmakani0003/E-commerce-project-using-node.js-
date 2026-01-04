@@ -1,4 +1,4 @@
-<%- include('Layouts/header') %>
+<%- include('layouts/header') %>
 <!-- Breadcrumb Start -->
 <div class="container-fluid">
     <div class="row px-xl-5">
@@ -22,15 +22,11 @@
         <div class="col-lg-5 mb-30">
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner bg-light">
-                    <div class="carousel-item active">
-                        <img class="w-100 h-100" src="img/product-1.jpg" alt="Product Image">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="img/product-2.jpg" alt="Product Image">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100 h-100" src="img/product-3.jpg" alt="Product Image">
-                    </div>
+                    <% if(products.images[0].url.length > 0) { products.images[0].url.forEach((img)=>{ %>
+                        <div class="carousel-item <%= products.images[0].url[0] == img ?  'active' : '' %>">
+                           <img class="" src="<%= img %>" alt="Product Image" width="100%" >
+                        </div>
+                    <% }) } %>
                 </div>
                 <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                     <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -44,7 +40,7 @@
         <!-- Product Info -->
         <div class="col-lg-7 h-auto mb-30">
             <div class="h-100 bg-light p-30">
-                <h3>Men's Stylish Jacket</h3>
+                <h3><%= products.product_name %></h3>
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
                         <small class="fas fa-star"></small>
@@ -56,55 +52,53 @@
                     <small class="pt-1">(99 Reviews)</small>
                 </div>
 
-                <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
+                <h3 class="font-weight-semi-bold mb-4">Rs. <%= products.price - products.discount %></h3>
 
                 <p class="mb-4">
-                    Premium quality men’s jacket made from durable fabric.
-                    Perfect for winter wear with a modern stylish design.
+                    <%= products.description %>
                 </p>
 
                 <!-- Sizes -->
-                <div class="d-flex mb-3">
-                    <strong class="text-dark mr-3">Sizes:</strong>
-                    <form>
+                <% if(variations) { %>
+                  <% variations.variation.forEach(function(variation){ %>
+                    <% if(variation.type != 'Color'){  %>
+                      <div class="d-flex mb-3">
+                    
+                      <strong class="text-dark mr-3"><%= variation.type %> :</strong>
+                      <form>
+                        <%
+                          variation.values.forEach((value,index)=>{   
+                        %>
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="size-1" name="size">
-                            <label class="custom-control-label" for="size-1">XS</label>
+                            <input type="radio" class="custom-control-input" id="<%= variation.type %>-<%= index %>" name="<%= variation.type %>">
+                            <label class="custom-control-label" for="<%= variation.type %>-<%= index %>"><%= value %></label>
                         </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="size-2" name="size">
-                            <label class="custom-control-label" for="size-2">S</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="size-3" name="size" checked>
-                            <label class="custom-control-label" for="size-3">M</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="size-4" name="size">
-                            <label class="custom-control-label" for="size-4">L</label>
-                        </div>
-                    </form>
-                </div>
-
+                        <%  }) %>
+                      </form>
+                    </div>
+                  <% } %>
+                <% }) %>
+              <% } %>
                 <!-- Colors -->
-                <div class="d-flex mb-4">
-                    <strong class="text-dark mr-3">Colors:</strong>
-                    <form>
+                <% if(variations) { %>
+                  <% variations.variation.forEach(function(variation){ %>
+                    <% if(variation.type == 'Color'){  %>
+                      <div class="d-flex mb-4">
+                        <strong class="text-dark mr-3"><%= variation.type %> :</strong>
+                        <form>
+                          <%
+                            variation.values.forEach((value,index)=>{   
+                          %>
                         <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="color-1" name="color" checked>
-                            <label class="custom-control-label" for="color-1">Black</label>
+                            <input type="radio" class="custom-control-input" id="<%= variation.type %>-<%= index %>" name="<%= variation.type %>">
+                            <label class="custom-control-label" for="<%= variation.type %>-<%= index %>" style="background-color: <%= value %>;width: 24px;border:1px solid;border-radius:50%;"></label>
                         </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="color-2" name="color">
-                            <label class="custom-control-label" for="color-2">Blue</label>
-                        </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio" class="custom-control-input" id="color-3" name="color">
-                            <label class="custom-control-label" for="color-3">Gray</label>
-                        </div>
-                    </form>
-                </div>
-
+                        <%  }) %>
+                       </form>
+                   </div>
+                <% } %>
+              <% }) %>
+            <% } %>
                 <!-- Quantity + Buttons -->
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
@@ -153,8 +147,7 @@
                     <div class="tab-pane fade show active" id="tab-pane-1">
                         <h4 class="mb-3">Product Description</h4>
                         <p>
-                            This jacket is crafted with premium materials, offering durability,
-                            warmth, and modern style. Suitable for casual and semi-formal wear.
+                            <%= products.description %>
                         </p>
                     </div>
 
@@ -171,7 +164,7 @@
                     <div class="tab-pane fade" id="tab-pane-3">
                         <h4 class="mb-4">Customer Reviews</h4>
                         <div class="media mb-4">
-                            <img src="img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+                            <img src="/img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
                             <div class="media-body">
                                 <h6>John Doe<small> - <i>01 Jan 2025</i></small></h6>
                                 <div class="text-primary mb-2">
@@ -202,32 +195,47 @@
 
             <div class="row mb-3">
                 <div class="col-6 text-muted">SKU</div>
-                <div class="col-6 font-weight-bold">MS-JKT-001</div>
+                <div class="col-6 font-weight-bold"><%= products.sku %></div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-6 text-muted">Brand</div>
-                <div class="col-6 font-weight-bold">MultiShop</div>
+                <div class="col-6 font-weight-bold"><%= products.brand_name %></div>
             </div>
 
             <div class="row mb-3">
                 <div class="col-6 text-muted">Category</div>
-                <div class="col-6 font-weight-bold">Men’s Fashion</div>
+                <% categories.forEach((category)=>{ %>
+
+                
+                <div class="col-6 font-weight-bold"><%= String(products.category_id) == String(category._id) ? category.category_name : '' %></div>
+               <% }) %>
             </div>
 
             <div class="row mb-3">
                 <div class="col-6 text-muted">Availability</div>
                 <div class="col-6">
-                    <span class="badge badge-success px-3 py-1">In Stock</span>
+                    <% if(products.stock > 0) { %>
+                       <span class="badge badge-success px-3 py-1">In Stock</span>
+                    <% }else{ %>
+                        <span class="badge badge-danger px-3 py-1">Out of Stock</span>
+                    <% } %>    
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-6 text-muted">Tags</div>
                 <div class="col-6">
-                    <span class="badge badge-secondary mr-1">Jacket</span>
-                    <span class="badge badge-secondary mr-1">Winter</span>
-                    <span class="badge badge-secondary">Men</span>
+                    <% const tag = products.tags.split(',') 
+                        tag.forEach((tags)=>{
+
+                        
+                    %>
+                    
+                    <span class="badge badge-secondary mr-1"><%= tags %></span>
+                    <% }) %>
+                    <!-- <span class="badge badge-secondary mr-1">Winter</span>
+                    <span class="badge badge-secondary">Men</span> -->
                 </div>
             </div>
         </div>
@@ -289,7 +297,7 @@
                 <!-- Product Item -->
                 <div class="product-item bg-light">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
+                        <img class="img-fluid w-100" src="/img/product-2.jpg" alt="">
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="#"><i class="far fa-heart"></i></a>
@@ -331,7 +339,7 @@
 
                 <div class="product-item bg-light">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="img/product-6.jpg" alt="">
+                        <img class="img-fluid w-100" src="/img/product-6.jpg" alt="">
                         <div class="product-action">
                             <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href="#"><i class="far fa-heart"></i></a>
@@ -374,4 +382,4 @@
     <i class="fa fa-angle-double-up"></i>
 </a>
 
-<%- include('Layouts/footer') %>
+<%- include('layouts/footer') %>
