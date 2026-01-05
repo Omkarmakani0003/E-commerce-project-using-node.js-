@@ -1,11 +1,6 @@
 <%- include('layouts/header') %>
 
     <style>
-        /* html, body {
-            height: 100%;
-           
-        } */
-
         .auth-wrapper {
             min-height: calc(100vh - 200px); 
             display: flex;
@@ -53,37 +48,72 @@
             <div class="bg-light p-30">
                 <h3 class="mb-4 text-center">Create Your Account</h3>
 
-                <form>
+                <form action="/register" method="POST">
                     <div class="form-group">
                         <label>Full Name</label>
-                        <input type="text" class="form-control" placeholder="John Doe">
+                        <% if (error && error.length> 0) {
+                            error.forEach(function(e) {
+                            if(e.path == 'fullName'){ %>
+                                <p class="text-danger">
+                                    <%= e.msg %>
+                                </p>
+                        <% } }) } %>
+                        <input type="text" class="form-control" name="fullName" value="<%= oldInput[0] ? oldInput[0].fullName : '' %>" placeholder="John Doe">
                     </div>
 
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="email" class="form-control" placeholder="example@email.com">
+                        <% if (error && error.length> 0) {
+                            error.forEach(function(e) {
+                            if(e.path == 'email'){ %>
+                                <p class="text-danger">
+                                    <%= e.msg %>
+                                </p>
+                        <% } }) } %>
+                        <input type="email" class="form-control" name="email" value="<%= oldInput[0] ? oldInput[0].email : '' %>" placeholder="example@email.com">
                     </div>
 
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" placeholder="********">
+                        <% if (error && error.length> 0) {
+                            error.forEach(function(e) {
+                            if(e.path == 'password'){ %>
+                                <p class="text-danger">
+                                    <%= e.msg %>
+                                </p>
+                        <% } }) } %>
+                        <input type="password" class="form-control" name="password" placeholder="********">
                     </div>
 
                     <div class="form-group">
                         <label>Confirm Password</label>
-                        <input type="password" class="form-control" placeholder="********">
+                        <% if (error && error.length> 0) {
+                            error.forEach(function(e) {
+                            if(e.path == 'confirm_password'){ %>
+                                <p class="text-danger">
+                                    <%= e.msg %>
+                                </p>
+                        <% } }) } %>
+                        <input type="password" class="form-control" name="confirm_password" placeholder="********">
                     </div>
 
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="terms">
+                            <input type="checkbox" class="custom-control-input" name="agreement" id="terms">
                             <label class="custom-control-label" for="terms">
                                 I agree to the <a href="#">Terms & Conditions</a>
                             </label>
+                            <% if (error && error.length> 0) {
+                            error.forEach(function(e) {
+                            if(e.path == 'agreement'){ %>
+                                <p class="text-danger">
+                                    <%= e.msg %>
+                                </p>
+                            <% } }) } %>    
                         </div>
                     </div>
 
-                    <button class="btn btn-primary btn-block py-2 mb-3">
+                    <button class="btn btn-primary btn-block py-2 mb-3" type="submit">
                         Create Account
                     </button>
 
@@ -107,7 +137,7 @@
                 <div class="text-center mt-4">
                     <small>
                         Already have an account?
-                        <a href="login.html">Login here</a>
+                        <a href="/login">Login here</a>
                     </small>
                 </div>
             </div>

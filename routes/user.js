@@ -4,8 +4,11 @@ const homeController  = require("../controllers/homeController")
 const ProductController = require("../controllers/ProductController")
 const RegisterController = require("../controllers/RegisterController")
 const LoginController = require("../controllers/LoginController")
+const {UserValidation} = require("../middleware/validators/UserValidation")
 
-router.get('/register',RegisterController.RegisterForm)
+router.get('/user-register',RegisterController.RegisterForm)
+router.post('/register',UserValidation,RegisterController.Register)
+router.get('/otp',RegisterController.OtpVarify)
 
 router.get('/login',LoginController.LoginForm)
 
