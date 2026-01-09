@@ -1,19 +1,21 @@
 const {category} = require('../models/admin/category')
 const { user } = require('../models/users')
+const { otp } = require('../models/otp')
+const {SendOtp} = require('../utils/sendOtp')
 const { validationResult } = require("express-validator");
 const bcrypt = require('bcrypt')
 const { mailSender } = require('../utils/mailSender') 
 
 exports.RegisterForm = async(req,res) => {
    const categories = await category.find();
-   res.render('register',{categories, error: req.flash("errors"), oldInput: req.flash("oldInput")})
+   res.render('register',{user:req.user,categories, error: req.flash("errors"), oldInput: req.flash("oldInput")})
 }
 
 exports.Register = async(req,res) => {
    
    try{
-      
-      const errors = await validationResult(req);
+      const errors = validationResult(req);
+
       if (!errors.isEmpty()) {
          req.flash("oldInput", req.body);
          errors.array().forEach((e) => {
@@ -22,7 +24,7 @@ exports.Register = async(req,res) => {
          return res.redirect("/user-register");
       }
  
-      const User = await user.find({ email : req.body.email });
+      const User = await user.findOne({ email : req.body.email });
 
       if(User && User.length > 0){
          req.flash("oldInput", req.body);
@@ -30,6 +32,7 @@ exports.Register = async(req,res) => {
          return res.redirect("/user-register");
       }
       const HashPassword = await bcrypt.hash(req.body.password,10)
+
       const register = await user.create({
          name : req.body.fullName,
          email : req.body.email,
@@ -37,34 +40,104 @@ exports.Register = async(req,res) => {
          is_varify : false,
       })
 
-      if(register){
-         const otp = Math.floor(Math.random() * 1999)
-         const data = {
-            'email' : register.email ,
-            'subject' : 'OTP for user varification',
-            'otp' : otp
-         }
-         const send = await mailSender(data)
+      const send = await SendOtp(register.email)
 
-         if(send){
-            req.flash("success", {message:"Otp sent successfully"})
-         }
-
-         return res.redirect("/otp");
+      if(!send){
+         req.flash("errors", {message:`Failed to send otp`})
+         return res.redirect("/user-register");
       }
+
+      req.flash("success", {message:`Otp sent On  ${ register.email }`})
+      req.session.email = register.email
+      return res.redirect("/otp"); 
 
    }catch(error){
       console.error(error.message)
-   }
-   
+   } 
 }
 
 exports.OtpVarify = async(req,res) => {
     const categories = await category.find();
-    res.render('otpverify',{categories, error: req.flash("errors"), success: req.flash("success")})
+
+    if(req.session.email != undefined || req.session.email != null){
+         res.render('otpverify',{user:req.user, categories, error: req.flash("errors"), success: req.flash("success"), email: req.session.email})
+    }
+
+    if(req.user != undefined || req.user != null){
+        if(req.user.is_varify == false){
+           res.render('otpverify',{user:req.user, categories, error: req.flash("errors"), success: req.flash("success"), email: req.session.email})
+        }
+    }
+   
+    res.redirect('back')
+}
+
+exports.resendOtp = async(req,res)=>{
+
+   const send = await SendOtp(req.params.email)
+   if(!send){
+      req.flash("errors", {message:`Failed to send otp`})
+      return res.redirect("/otp");
+   }
+   req.flash("success", {message:`Otp resent On  ${ req.params.email }`})
+   req.session.email = req.params.email
+   return res.redirect("/otp"); 
+
 }
 
 exports.Varify = async(req,res) => {
-    const categories = await category.find();
-    res.render('otpverify',{categories, error: req.flash("errors"), success: req.flash("success")})
+
+   const email = req.params.email
+   const userOtp = req.body.otp.join('')
+
+   const Otp = await otp.findOne({ email });
+
+   if(userOtp == '' || userOtp == null || userOtp == undefined){
+      req.flash("errors",{message:'Enter your otp'})
+      return res.redirect("/otp");
+   }
+
+   if(!Otp){
+      req.flash("errors", {message:'User not found'})
+      return res.redirect("/otp");
+   }
+
+   if(userOtp != Otp.otp){
+      req.flash("errors", {message:'Enter valid otp'})
+      return res.redirect("/otp");
+   }
+
+   if(Otp.expiryAt < new Date()){
+      req.flash("errors", {message:'Otp Expired'})
+      return res.redirect("/otp");
+   }
+
+   const User = await user.findOneAndUpdate(
+
+      { email: email },   
+      { $set: {is_varify : true} },        
+      {
+         new: true,                 
+         upsert: true,              
+          runValidators: true
+      }
+   );
+
+   if(User){
+      await otp.findOneAndUpdate(
+        { email },
+        { $set: {otp : ''}},        
+        {
+           new: true,                 
+           upsert: true,              
+           runValidators: true
+        }
+      )
+
+      
+
+      req.flash("success", {message:'Email varify successfully'})
+      return res.redirect("/login");
+   }
+
 }

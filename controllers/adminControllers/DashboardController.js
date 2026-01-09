@@ -14,28 +14,29 @@ exports.login = async(req,res) => {
     
           if(!email || !password){
              req.flash('errors',"Email and password are required")
-             return res.redirect('login')
+             return res.redirect('/admin/login')
           }
           const isExist = await admin.findOne({email})
           
           if(!isExist){
              req.flash('errors',"Email or password incorrect")
-             return res.redirect('login')
+             return res.redirect('/admin/login')
           }
 
            const password_verify = await bcrypt.compare(password,isExist.password)
            
            if(!password_verify){
              req.flash('errors',"Email or password incorrect")
-             return res.redirect('login')
+             return res.redirect('/admin/login')
            }
            const playload = {
                id: isExist._id,
                name : isExist.name,
                email : isExist.email
            }
+
            const token = jwt.sign(playload,process.env.JWTSECRET,{expiresIn:'1d'})
-           res.cookie('token',token,{ httpOnly: true })
+           res.cookie('admin_token',token,{ httpOnly: true })
            
            req.flash('success',"Admin login successfully")
            return res.redirect('/admin/')

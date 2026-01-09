@@ -7,12 +7,12 @@ const upload = require("../middleware/ProductImagesUploader")
 const{ CategoryValidator, SubCategoryValidator } = require('../middleware/validators/categoryValidators')
 const{ ProductValidator } = require('../middleware/validators/ProductValidation')
 const CategoryController = require("../controllers/adminControllers/CategoriesController")
-const {CheckAuthentication} = require('../middleware/authentication')
+const {CheckAdminAuth} = require('../middleware/authentication')
 
 // check admin is already logged in or not
 const Isloggein = (req,res,next) =>{
-    if(req.cookies.token){
-        return res.redirect('dashboard')
+    if(req.cookies.admin_token){
+        return res.redirect('/admin/')
     }
     next()
 }
@@ -22,7 +22,7 @@ router.post('/login',Isloggein,login)
 
 
 // Dashboard routes
-router.use(CheckAuthentication)
+router.use(CheckAdminAuth)
 router.get('/',dashboard)
 
 //Product routes
