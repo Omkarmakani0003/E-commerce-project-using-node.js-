@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {loginform, login, dashboard} = require("../controllers/adminControllers/DashboardController")
 const  ProductController  = require("../controllers/adminControllers/ProductController")
-const upload = require("../middleware/ProductImagesUploader")
+const upload = require("../middleware/FileUploader")
 
 const{ CategoryValidator, SubCategoryValidator } = require('../middleware/validators/categoryValidators')
 const{ ProductValidator } = require('../middleware/validators/ProductValidation')
@@ -38,10 +38,10 @@ router.post('/prouct-update/:slug',upload.array('images[]',5),ProductValidator,P
 
 //Categories routes
 router.get('/category-create',CategoryController.CategoryCreate)
-router.post('/category-store',CategoryValidator,CategoryController.CategoryStore)
+router.post('/category-store',upload.single('image'),CategoryValidator,CategoryController.CategoryStore)
 router.get('/categories',CategoryController.CategoryList)
 router.get('/category-edit/:id',CategoryController.CategoryEdit)
-router.post('/category-update/:id',CategoryValidator,CategoryController.CategoryUpdate)
+router.post('/category-update/:id',upload.single('image'),CategoryValidator,CategoryController.CategoryUpdate)
 router.delete('/category-delete/:id',CategoryValidator,CategoryController.CategoryDelete)
 
 //Subcategories routes

@@ -12,7 +12,7 @@ exports.HomePage = async(req,res) => {
             })
          )
          const products = await product.find()
-         res.render('index',{user: req.user,categories,productCount,products,success:req.flash('success'),search:''}); 
+         res.render('index',{user: req.user,categories,productCount,products,success:req.flash('success'),search:'',route: req.path || ''}); 
      }catch(error){
           console.log(error.message)
      }

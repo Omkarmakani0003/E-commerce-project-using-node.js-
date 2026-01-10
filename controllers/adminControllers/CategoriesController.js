@@ -1,6 +1,7 @@
 const { category } = require("../../models/admin/category");
 const { subcategory } = require("../../models/admin/subcategory");
 const { validationResult } = require("express-validator");
+const cloudinary = require('cloudinary').v2
 
 // Main category
 exports.CategoryCreate = (req, res) => {
@@ -21,15 +22,19 @@ exports.CategoryStore = async (req, res) => {
       return res.redirect("/admin/category-create");
     }
 
+   console.log(req.file.filename)
+   console.log(req.file.path)
     const { category_name, status } = req.body;
     const categories = await category.create({
       category_name: category_name,
+      image: {'public_id' : String(req.file.filename), 'url' : String(req.file.path)},
       status: status,
     });
 
     req.flash("success", "New category create");
     return res.redirect("/admin/categories");
   } catch (error) {
+    console.log(error.message)
     req.flash("errors", error);
     return res.redirect("/admin/category-create");
   }
@@ -61,12 +66,25 @@ exports.CategoryUpdate = async (req, res) => {
   }
 
   const { category_name, status } = req.body;
+  const Category = await category.findById(req.params.id)
+  let image = '';
+  if(Category.image.length > 0){
+      image = {'public_id' : String(Category.image[0].public_id), 'url' : String(Category.image[0].url)}
+  }
+
+  if(req.file != undefined){
+    if(Category.image.length > 0){
+     await cloudinary.uploader.destroy(Category.image[0].public_id)
+    }
+     image = {'public_id' : String(req.file.filename), 'url' : String(req.file.path)}
+  }
 
   await category.findByIdAndUpdate(
     req.params.id,
     {
       category_name,
       status,
+      image
     },
     { new: true }
   );
@@ -78,7 +96,13 @@ exports.CategoryUpdate = async (req, res) => {
 exports.CategoryDelete = async (req, res) => {
   if (!req.params.id) return;
   try {
-    await category.findByIdAndDelete(req.params.id);
+
+    const Category = await category.findByIdAndDelete(req.params.id);
+    
+    if(Category.image && Category.image.length > 0){
+      await cloudinary.uploader.destroy(Category.image[0].public_id)
+    }
+    
     return res
       .status(200)
       .json({ success: true, message: "Category delete successfully" });

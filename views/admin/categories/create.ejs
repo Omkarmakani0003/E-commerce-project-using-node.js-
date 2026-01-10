@@ -32,7 +32,7 @@
                         <a href="/admin/categories" class="btn btn-primary">Category list</a>
                     </div>
                     <div class="card-body">
-                        <form action="category-store" method="POST">
+                        <form action="category-store" method="POST" enctype="multipart/form-data">
                             <div class="row">
                                 <!-- Category Name -->
                                 <div class="col-sm-4">
@@ -48,7 +48,24 @@
                                         <% } }) } %>
 
                                                 <input type="text" class="form-control" id="categoryname"
-                                                    name="category_name" placeholder="Enter category name" required>
+                                                name="category_name" placeholder="Enter category name" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="image">Image</label>
+                                        <% if (error && error.length> 0) {
+                                            error.forEach(function(e) {
+                                            if(e.path == 'image'){ %>
+
+                                            <p class="text-danger m-1">
+                                                <%= e.msg %>
+                                            </p>
+                                        <% } }) } %>
+
+                                                <input type="file" class="form-control" id="image"
+                                                name="image" placeholder="Upload image" required>
                                     </div>
                                 </div>
 

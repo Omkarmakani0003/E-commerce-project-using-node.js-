@@ -8,7 +8,7 @@ exports.ProductDetail = async(req,res)=>{
         const categories = await category.find();
         const products = await product.findOne({slug})
         const variations = await variation.findOne({ product_id : products._id})
-        res.render('productDetail',{user:req.user,categories,products,variations})
+        res.render('productDetail',{user:req.user,categories,products,variations,route: req.path || ''})
     }catch(error){
         console.log(error.message)
     }

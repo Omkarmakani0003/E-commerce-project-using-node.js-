@@ -6,6 +6,18 @@ const category = new mongoose.Schema({
         require : true,
         unique: true
     },
+    image: [
+       {
+        public_id: {
+          type: String,
+          required: true,
+        },
+        url: {
+          type: String,
+          required: true,
+        },
+      }
+    ],
     status:{
         type : Boolean,
         require : true

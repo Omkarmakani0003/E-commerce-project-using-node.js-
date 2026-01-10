@@ -11,7 +11,9 @@
                         if(String(category._id) == String(currentCategoryId)){
                      %>
                         <a href="/category/<%= category._id %>" class="breadcrumb-item text-dark"><%= category.category_name %></a>
-                    <% }} )}  %>
+                    <% }} )}else{  %>
+                        <a href="/category" class="breadcrumb-item text-dark">Category</a>
+                    <% } %>    
                 </nav>
             </div>
         </div>
@@ -25,44 +27,55 @@
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-4">
                 <!-- Price Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Categories</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form action="/search">
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" checked id="price-all">
-                            <label class="custom-control-label" for="price-all">All Price</label>
+                         <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                            <input type="radio" class="custom-control-input" checked id="category-all" name="category" value="all">
+                            <label class="custom-control-label" for="category-all">All category</label>
                             <span class="badge border font-weight-normal"><%= products.length %></span>
                         </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-1" name="priceRange">
-                            <label class="custom-control-label" for="price-1">0 - 100</label>
+                        <% if(categories) { 
+                            categories.forEach((category)=>{ 
+                         %>
+                        <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                            <input type="radio" class="custom-control-input" id="category-<%= category._id %>" name="category" value="<%= category._id %>">
+                            <label class="custom-control-label" for="category-<%= category._id %>"><%= category.category_name %></label>
                             
-                            <span class="badge border font-weight-normal"></span>
-
                         </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-2" name="priceRange">
-                            <label class="custom-control-label" for="price-2">100 - 200</label>
-                            <span class="badge border font-weight-normal">295</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-3" name="priceRange">
-                            <label class="custom-control-label" for="price-3">200 - 300</label>
-                            <span class="badge border font-weight-normal">246</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-4">
-                            <label class="custom-control-label" for="price-4">300 - 400</label>
-                            <span class="badge border font-weight-normal">145</span>
-                        </div>
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                            <input type="checkbox" class="custom-control-input" id="price-5">
-                            <label class="custom-control-label" for="price-5">400 - 500</label>
-                            <span class="badge border font-weight-normal">168</span>
-                        </div>
+                        <% })} %>
                     </form>
                 </div>
                 <!-- Price End -->
+                  <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <form action="/search">
+                        <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                            <input type="radio" class="custom-control-input" checked id="price-all" name="priceRange" value="all">
+                            <label class="custom-control-label" for="price-all">All Price</label>
+                            <span class="badge border font-weight-normal"><%= products.length %></span>
+                        </div>
+
+                        <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                            <input type="radio" class="custom-control-input" id="price-1" name="priceRange" value="0-1000">
+                            <label class="custom-control-label" for="price-1">0 - 1,000</label>
+                        </div>
+
+                        <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                            <input type="radio" class="custom-control-input" id="price-2" name="priceRange" value="1000-50000">
+                            <label class="custom-control-label" for="price-2">1,000 - 50,000</label>
+                        </div>
+
+                        <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                            <input type="radio" class="custom-control-input" id="price-3" name="priceRange" value="50000-100000">
+                            <label class="custom-control-label" for="price-3">50,000 - 1,00,000</label>
+                        </div>
+                        <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
+                            <input type="radio" class="custom-control-input" id="price-4" name="priceRange" value="50000-100000">
+                            <label class="custom-control-label" for="price-4">Greater then 1,00,000</label>
+                        </div>
+                    </form>
+                </div>
             </div>
             <!-- Shop Sidebar End -->
 
@@ -102,11 +115,15 @@
                     <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
-                                <img class="" src="<%= product.images[0].url[0] %>" width="100%!important" height="300px!important" alt="">
+                                <% if(product.images[0].url[0]) { %>
+                                   <img class="" src="<%= product.images[0].url[0] %>" width="100%!important" height="300px!important" alt="">
+                                <% }else{ %>
+                                    <img class="" src="img/no-image-available-icon-vector.jpg" width="100%!important" height="300px!important" alt="">
+                                <% } %>    
                                 <div class="product-action">
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                    
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
@@ -143,5 +160,9 @@
             <!-- Shop Product End -->
         </div>
     </div>
-
+<script>
+     function updatePrice(value) {
+        document.getElementById("priceValue").innerText = value;
+    }
+</script>
 <%- include('layouts/footer') %>
