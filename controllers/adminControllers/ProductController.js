@@ -4,6 +4,7 @@ const multer = require('multer');
 const slugify = require('slugify')
 const { validationResult } = require("express-validator");
 const {product} = require('../../models/admin/product')
+const {variation} = require('../../models/admin/variation')
          
 const cloudinary = require('cloudinary').v2
 const { CloudinaryStorage } = require('multer-storage-cloudinary')
@@ -11,9 +12,7 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary')
 exports.ProductCreate = async(req,res) => {
      try{
         const categories = await category.find()
-      //   req.flash("errors").forEach((e)=>{
-      //    console.log(e.msg)
-      //   })
+         
         res.render('admin/product/create',{categories, error: req.flash("errors"), oldInput: req.flash("oldInput")}); 
      }catch(error){
          console.error(error)

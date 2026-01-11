@@ -5,10 +5,12 @@ const {SendOtp} = require('../utils/sendOtp')
 const { validationResult } = require("express-validator");
 const bcrypt = require('bcrypt')
 const { mailSender } = require('../utils/mailSender') 
+const {cart} = require('../models/cart') 
 
 exports.RegisterForm = async(req,res) => {
    const categories = await category.find();
-   res.render('register',{user:req.user,categories, error: req.flash("errors"), oldInput: req.flash("oldInput")})
+   const cartCout = await cart.countDocuments()
+   res.render('register',{user:req.user,categories, error: req.flash("errors"), oldInput: req.flash("oldInput"),cartcount : cartCout})
 }
 
 exports.Register = async(req,res) => {
@@ -60,12 +62,12 @@ exports.OtpVarify = async(req,res) => {
     const categories = await category.find();
 
     if(req.session.email != undefined || req.session.email != null){
-         res.render('otpverify',{user:req.user, categories, error: req.flash("errors"), success: req.flash("success"), email: req.session.email})
+         res.render('otpverify',{user:req.user, categories, error: req.flash("errors"), success: req.flash("success"), email: req.session.email,cartcount : cartCout})
     }
 
     if(req.user != undefined || req.user != null){
         if(req.user.is_varify == false){
-           res.render('otpverify',{user:req.user, categories, error: req.flash("errors"), success: req.flash("success"), email: req.session.email})
+           res.render('otpverify',{user:req.user, categories, error: req.flash("errors"), success: req.flash("success"), email: req.session.email,cartcount : cartCout})
         }
     }
    

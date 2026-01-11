@@ -1,5 +1,9 @@
 <%- include('layouts/header') %>
-
+  <style>
+    .active{
+        color: #ffd333!important
+    }
+  </style>
     <div class="container-fluid">
         <div class="row px-xl-5">
             <div class="col-12">
@@ -30,20 +34,31 @@
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Categories</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form action="/search">
-                         <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
-                            <input type="radio" class="custom-control-input" checked id="category-all" name="category" value="all">
-                            <label class="custom-control-label" for="category-all">All category</label>
-                            <span class="badge border font-weight-normal"><%= products.length %></span>
+                         <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input" id="category-all" name="category[]" value="all" checked>
+                            <label class="custom-control-label" for="category-all">All Categories</label>
+                            <!-- <span class="badge border font-weight-normal">150</span> -->
                         </div>
-                        <% if(categories) { 
+                        <% if(Subcategory) {
+                            Subcategory.forEach((subcategory)=>{ 
+
+                        %>
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                              <input type="checkbox" class="custom-control-input categories" data-id="<%= subcategory._id %>" id="subcategory-<%= subcategory._id %>" name="subcategory[]" value="<%= subcategory._id %>">
+                              <label class="custom-control-label" for="subcategory-<%= subcategory._id %>"><%= subcategory.subcategory_name %></label>
+                               <!-- <span class="badge border font-weight-normal">150</span> -->
+                           </div>
+                        <% }) }else 
+                         if(categories) { 
                             categories.forEach((category)=>{ 
                          %>
-                        <div class="custom-control custom-radio d-flex align-items-center justify-content-between mb-3">
-                            <input type="radio" class="custom-control-input" id="category-<%= category._id %>" name="category" value="<%= category._id %>">
+                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                            <input type="checkbox" class="custom-control-input categories" data-id="<%= category._id %>" id="category-<%= category._id %>" name="category[]" value="<%= category._id %>">
                             <label class="custom-control-label" for="category-<%= category._id %>"><%= category.category_name %></label>
-                            
+                            <!-- <span class="badge border font-weight-normal">150</span> -->
                         </div>
                         <% })} %>
+                        
                     </form>
                 </div>
                 <!-- Price End -->
@@ -109,6 +124,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row pb-3 col-12" id="products">
                     <% if(products.length > 0){ 
                         products.forEach((product)=>{
                     %>
@@ -120,12 +136,7 @@
                                 <% }else{ %>
                                     <img class="" src="img/no-image-available-icon-vector.jpg" width="100%!important" height="300px!important" alt="">
                                 <% } %>    
-                                <div class="product-action">
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                    
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                                </div>
+                                
                             </div>
                             <div class="text-center py-4">
                                 <a href="/product-detail/<%= product.slug %>" class="h6 text-decoration-none text-truncate"><%= product.product_name %></a>
@@ -144,6 +155,7 @@
                         </div>
                     </div>
                    <% })} %>
+                    </div>
                     <div class="col-12">
                         <nav>
                           <ul class="pagination justify-content-center">
@@ -164,5 +176,75 @@
      function updatePrice(value) {
         document.getElementById("priceValue").innerText = value;
     }
-</script>
+
+    const categoryAll = document.getElementById('category-all');
+    const categoryItems = document.querySelectorAll('.categories');
+    let checkedIds = []
+    
+    function getProduct(ids = [],c_id){
+            
+            fetch(`/get-category-wise-products/?category=${encodeURIComponent(ids)}&id=${c_id}`)
+            .then(res => res.json())
+            .then(data => {
+
+            const productsContainer = document.getElementById('products');
+            if (data.products.length > 0) {
+                
+                productsContainer.innerHTML = '';
+
+                data.products.forEach(product => {
+                    const imgSrc = product.images && product.images[0]?.url[0] ? product.images[0].url[0] : 'img/no-image-available-icon-vector.jpg';
+                            productsContainer.innerHTML += `
+                                <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                                    <div class="product-item bg-light mb-4">
+                                        <div class="product-img position-relative overflow-hidden">
+                                            <img src="${imgSrc}" style="width:100%!important; height:300px!important;" alt="">
+                                        </div>
+                                        <div class="text-center py-4">
+                                            <a href="/product-detail/${product.slug}" class="h6 text-decoration-none text-truncate">${product.product_name}</a>
+                                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                                <h5>Rs.${product.price - product.discount}</h5>
+                                                <h6 class="text-muted ml-2"><del>${product.price}</del></h6>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small class="fa fa-star text-primary mr-1"></small>
+                                                <small>(99)</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }else{
+                        productsContainer.innerHTML = ''
+                    }
+                } 
+            );
+    }
+
+    const currentCategoryId = '<%= currentCategoryId %>'
+    categoryAll.addEventListener('change', () => {
+        if (categoryAll.checked) {
+            categoryItems.forEach(item => item.checked = false);
+            checkedIds = []
+            getProduct([],currentCategoryId)
+        }
+    });
+
+    categoryItems.forEach(item => {
+        item.addEventListener('change', () => {
+            if (item.checked) {
+                categoryAll.checked = false;
+            } 
+            //convert nodelist to array and get all checked ids
+            checkedIds = Array.from(categoryItems).filter(inputBox => inputBox.checked).map(inputBox => inputBox.dataset.id);
+            getProduct(checkedIds,currentCategoryId)
+        });
+    });
+
+</script> 
 <%- include('layouts/footer') %>

@@ -107,10 +107,10 @@
             if(categories) { 
             categories.forEach((category,index)=>{ 
             count++
-            if(count < 10){
+            if(count < 9){
             %> 
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <a class="text-decoration-none" href="">
+                <a class="text-decoration-none" href="/category/<%= category._id %>">
                     <div class="cat-item d-flex align-items-center mb-4">
                         <div class="overflow-hidden" style="width: 100px; height: 100px;">
                             
@@ -144,12 +144,6 @@
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
                         <img class="" src="<%= product.images[0].url[0] ? product.images[0].url[0] :'/img/no-image-available-icon-vector.jpg'%>" width="100%!important" height="300px!important" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
                     </div>
                     <div class="text-center py-4">
                         <a class="h6 text-decoration-none text-truncate" href="product-detail/<%= product.slug %>"><%= product.product_name %></a>

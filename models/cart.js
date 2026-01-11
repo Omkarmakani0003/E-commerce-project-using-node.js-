@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { variation } = require("./admin/variation");
 
 const cart = new mongoose.Schema(
   {
@@ -7,9 +8,12 @@ const cart = new mongoose.Schema(
       ref: "user",
       required: true,
     },
-    items:{
-        type: Array,
-    },
+    items: [
+      {
+        product_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+        variation: { type: Array }
+      }
+    ],
     quantity :{
       type: Number,
       required: true,

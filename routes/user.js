@@ -22,12 +22,13 @@ router.get('/resendotp/:email',RegisterController.resendOtp)
 router.post('/verify/:email',RegisterController.Varify)
 router.get('/category/:id',CategoryController.Category)
 router.get('/category',CategoryController.AllCategory)
+router.get('/get-category-wise-products',CategoryController.GetCategoryWiseProducts)
 router.get('/search',ProductController.Search)
 router.get('/',homeController.HomePage)
 router.get('/product-detail/:slug',ProductController.ProductDetail)
 
 router.post('/add-to-cart',CartController.AddToCart)
-
+router.get('/cart',CartController.DisplayCart)
 router.use(CheckUserAuth)
 router.get('/logout',LoginController.logout)
 

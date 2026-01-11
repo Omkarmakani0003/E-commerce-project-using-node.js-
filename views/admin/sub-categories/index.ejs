@@ -61,7 +61,7 @@
                                                         <%= e.categoryid.category_name %>
                                                     </td>
                                                     <td>
-                                                        <%= e.status==1 ? 'Active' : 'Deactive' %>
+                                                        <%= e.status == true ? 'Active' : 'Deactive' %>
                                                     </td>
                                                     <td><a href="subcategories-edit/<%= e._id %>"
                                                             class="btn btn-icon btn-outline-primary mr-2"><i

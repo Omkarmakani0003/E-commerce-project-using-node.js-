@@ -2,6 +2,7 @@ var express = require('express');
 const {category} = require('../models/admin/category')
 const {subcategory} = require('../models/admin/subcategory')
 const {product} = require('../models/admin/product')
+const {cart} = require('../models/cart') 
 
 exports.HomePage = async(req,res) => {
      try{
@@ -12,7 +13,8 @@ exports.HomePage = async(req,res) => {
             })
          )
          const products = await product.find()
-         res.render('index',{user: req.user,categories,productCount,products,success:req.flash('success'),search:'',route: req.path || ''}); 
+         const cartCout = await cart.countDocuments() 
+         res.render('index',{user: req.user,categories,productCount,products,success:req.flash('success'),search:'',route: req.path || '', cartcount : cartCout}); 
      }catch(error){
           console.log(error.message)
      }

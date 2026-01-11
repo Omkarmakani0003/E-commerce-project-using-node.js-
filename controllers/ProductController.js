@@ -1,6 +1,7 @@
 const {product} = require('../models/admin/product')
 const {variation} = require('../models/admin/variation')
 const {category} = require('../models/admin/category')
+const {cart} = require('../models/cart') 
 
 exports.ProductDetail = async(req,res)=>{
     try{
@@ -8,7 +9,8 @@ exports.ProductDetail = async(req,res)=>{
         const categories = await category.find();
         const products = await product.findOne({slug})
         const variations = await variation.findOne({ product_id : products._id})
-        res.render('productDetail',{user:req.user,categories,products,variations,route: req.path || ''})
+        const cartCout = await cart.countDocuments() 
+        res.render('productDetail',{user:req.user,categories,products,variations,route: req.path || '',cartcount : cartCout})
     }catch(error){
         console.log(error.message)
     }
@@ -35,8 +37,9 @@ exports.Search = async(req,res)=>{
 
         const variations = await variation.findOne({ product_id : products._id})
         const categories = await category.find() 
-
-        res.render('category',{user:req.user, categories, products, variations, currentCategoryId : '',search : search})
+        const cartCout = await cart.countDocuments() 
+        const Subcategory = ''
+        res.render('category',{user:req.user, categories,Subcategory, products, variations, currentCategoryId : '',search : search, route: req.path || '', cartcount : cartCout})
     }catch(error){
         console.log(error.message)
     }

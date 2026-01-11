@@ -2,10 +2,12 @@ const {category} = require('../models/admin/category')
 const { user } = require('../models/users')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const {cart} = require('../models/cart') 
 
 exports.LoginForm = async(req,res) => {
    const categories = await category.find();
-   res.render('login',{user:req.user,categories, error: req.flash('errors')})
+   const cartCout = await cart.countDocuments() 
+   res.render('login',{user:req.user,categories, error: req.flash('errors'),route: req.path || '',cartcount : cartCout})
 }
 
 exports.login = async(req,res) => {
