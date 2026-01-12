@@ -6,7 +6,14 @@ const {cart} = require('../models/cart')
 
 exports.LoginForm = async(req,res) => {
    const categories = await category.find();
-   const cartCout = await cart.countDocuments() 
+   
+   let cartCout = 0
+   if(req.user == undefined){
+       cartCout = 0
+   }else{
+       cartCout = await cart.countDocuments({user_id:req.user._id})
+   }
+     
    res.render('login',{user:req.user,categories, error: req.flash('errors'),route: req.path || '',cartcount : cartCout})
 }
 

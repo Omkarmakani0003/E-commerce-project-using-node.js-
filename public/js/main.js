@@ -114,19 +114,68 @@
     $('.quantity button').on('click', function () {
         var button = $(this);
         var oldValue = button.parent().parent().find('input').val();
+
         if (button.hasClass('btn-plus')) {
             var newVal = parseFloat(oldValue) + 1;
         } else {
-            if (oldValue > 0) {
+            if (oldValue > 2) {
                 var newVal = parseFloat(oldValue) - 1;
             } else {
-                newVal = 0;
+                newVal = 1;
             }
         }
         button.parent().parent().find('input').val(newVal);
+        quantity(button.data('id'),newVal)
     });
     
 })(jQuery);
+
+function quantity(id,value){
+
+    fetch('/cart-quantity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({id:id,quantity:value})
+    }).then(res => res.json())
+      .then(data => {
+        if(data.success){
+             document.getElementById(`total_${id}`).innerText = `Rs.${data.Quantity.quantity * data.Quantity.total}`
+             const amount = document.querySelectorAll('.amount')
+             let totalAmount = 0
+             Array.from(amount).forEach((item)=>{
+                 totalAmount += parseInt(item.innerText.split('.')[1])
+             })
+             document.getElementById('subTotal').innerText = `Rs. ${totalAmount}`
+             const shippingCharge = parseInt(document.getElementById('shipping').innerText.split('.')[1])
+             document.getElementById('Total').innerText = `Rs. ${totalAmount + shippingCharge}`
+          }
+        } 
+      );
+}
+
+function cartRemove(id){
+    fetch(`/cart-remove/${id}`, {
+        method: 'DELETE',
+    }).then(res => res.json())
+      .then(data => {
+        if(data.success){
+             document.getElementById(`cart_${data.RemoveCart._id}`).remove()
+             const amount = document.querySelectorAll('.amount')
+             let totalAmount = 0
+             Array.from(amount).forEach((item)=>{
+                 totalAmount += parseInt(item.innerText.split('.')[1])
+             })
+             document.getElementById('subTotal').innerText = `Rs. ${totalAmount}`
+             const shippingCharge = parseInt(document.getElementById('shipping').innerText.split('.')[1])
+             const totalShipping = shippingCharge - data.Shipping
+             document.getElementById('shipping').innerText = `Rs. ${totalShipping}`
+             document.getElementById('Total').innerText = `Rs. ${totalAmount + totalShipping}`
+             const rowCount = document.getElementById('rowCount')
+             document.getElementById('cartCount').innerText = rowCount.rows.length
+          }
+        } 
+      );
+}
 
 // Related products carousel
 $(".related-carousel").owlCarousel({

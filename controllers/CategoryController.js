@@ -9,7 +9,7 @@ exports.AllCategory = async(req,res)=>{
         const categories = await category.find() 
         const products = await product.find()
         const variations = await variation.findOne({ product_id : products._id})
-        const cartCout = await cart.countDocuments()
+        const cartCout = await cart.countDocuments({user_id:req.user._id}) 
         const Subcategory = ''
         res.render('category',{user:req.user, categories,Subcategory, products, variations, currentCategoryId : '',route: req.path || '',cartcount : cartCout})
     }catch(error){
@@ -24,7 +24,7 @@ exports.Category = async(req,res)=>{
         const Subcategory = await subcategory.find({categoryid:id})
         const products = await product.find({category_id:id})
         const variations = await variation.findOne({ product_id : products._id})
-        const cartCout = await cart.countDocuments()
+        const cartCout = await cart.countDocuments({user_id:req.user._id}) 
         res.render('category',{user:req.user, categories, Subcategory, products, variations, currentCategoryId : id, route: req.path || '',cartcount : cartCout})
     }catch(error){
         console.log(error.message)

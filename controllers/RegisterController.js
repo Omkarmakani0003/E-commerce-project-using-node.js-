@@ -9,8 +9,8 @@ const {cart} = require('../models/cart')
 
 exports.RegisterForm = async(req,res) => {
    const categories = await category.find();
-   const cartCout = await cart.countDocuments()
-   res.render('register',{user:req.user,categories, error: req.flash("errors"), oldInput: req.flash("oldInput"),cartcount : cartCout})
+   const cartCout = await cart.countDocuments({user_id:req.user._id}) 
+   res.render('register',{user:req.user,categories, error: req.flash("errors"), oldInput: req.flash("oldInput"),cartcount : cartCout,route: req.path || ''})
 }
 
 exports.Register = async(req,res) => {
@@ -60,7 +60,7 @@ exports.Register = async(req,res) => {
 
 exports.OtpVarify = async(req,res) => {
     const categories = await category.find();
-
+    const cartCout = await cart.countDocuments({user_id:req.user._id}) 
     if(req.session.email != undefined || req.session.email != null){
          res.render('otpverify',{user:req.user, categories, error: req.flash("errors"), success: req.flash("success"), email: req.session.email,cartcount : cartCout})
     }

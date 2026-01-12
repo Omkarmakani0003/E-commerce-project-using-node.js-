@@ -1,12 +1,6 @@
 
-    const user = '<%- JSON.stringify(user) %>';
-
     function addtocart() {
 
-    if(!user){
-        window.location = '/login'
-        return false;
-    }
     const qty = document.getElementById('qty').value;
     const productId = document.getElementById('productId').value;
     const price = document.getElementById('price').value
@@ -42,6 +36,8 @@
       .then(data => {
         if(data.success){
             document.getElementById('cartCount').innerText = data.cartCout
+          }else{
+             window.location = '/login'
           }
         } 
       );

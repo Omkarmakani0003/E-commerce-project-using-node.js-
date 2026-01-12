@@ -29,6 +29,9 @@ router.get('/product-detail/:slug',ProductController.ProductDetail)
 
 router.post('/add-to-cart',CartController.AddToCart)
 router.get('/cart',CartController.DisplayCart)
+router.post('/cart-quantity',CartController.CartUpdate)
+router.delete('/cart-remove/:id',CartController.CartRemove)
+
 router.use(CheckUserAuth)
 router.get('/logout',LoginController.logout)
 
