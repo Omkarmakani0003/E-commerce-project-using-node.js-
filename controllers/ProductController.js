@@ -9,9 +9,9 @@ exports.ProductDetail = async(req,res)=>{
         const categories = await category.find();
         const products = await product.findOne({slug})
         const variations = await variation.findOne({ product_id : products._id})
-        
         const cartCout = await cart.countDocuments({user_id:req.user._id})  
-        res.render('productDetail',{user:req.user,categories,products,variations,route: req.path || '',cartcount : cartCout})
+        const relatedProducts = await product.find({subcategory_id : products.subcategory_id}) 
+        res.render('productDetail',{user:req.user,categories,products,variations,route: req.path || '',cartcount : cartCout,relatedProducts})
     }catch(error){
         console.log(error.message)
     }

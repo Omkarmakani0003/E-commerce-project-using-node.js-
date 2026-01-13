@@ -4,9 +4,8 @@
     <div class="row px-xl-5">
         <div class="col-12">
             <nav class="breadcrumb bg-light mb-30">
-                <a class="breadcrumb-item text-dark" href="index.html">Home</a>
-                <a class="breadcrumb-item text-dark" href="shop.html">Shop</a>
-                <span class="breadcrumb-item active">Product Detail</span>
+                <a class="breadcrumb-item text-dark" href="/">Home</a>
+                <span class="breadcrumb-item active"><%= products.product_name %></span>
             </nav>
         </div>
     </div>
@@ -99,6 +98,14 @@
                 <% } %>
               <% }) %>
             <% } %>
+                <div class="d-flex">
+                    <strong class="text-dark mr-3">Stock :</strong>
+                    <% if(products.stock > 0){ %>
+                       <p class="text-dark"><%= products.stock %></p>
+                    <% }else { %>
+                        <p class="text-danger">Out of stock</p>
+                    <% } %>
+                </div>
                 <!-- Quantity + Buttons -->
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
@@ -123,7 +130,7 @@
                     <input type="hidden" value="<%= products._id %>" id="productId">
                 </div>
 
-                <div class="d-flex pt-2">
+                <!-- <div class="d-flex pt-2">
                     <strong class="text-dark mr-2">Share:</strong>
                     <div class="d-inline-flex">
                         <a class="text-dark px-2" href=""><i class="fab fa-facebook-f"></i></a>
@@ -131,7 +138,7 @@
                         <a class="text-dark px-2" href=""><i class="fab fa-linkedin-in"></i></a>
                         <a class="text-dark px-2" href=""><i class="fab fa-pinterest"></i></a>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>
@@ -209,11 +216,11 @@
 
             <div class="row mb-3">
                 <div class="col-6 text-muted">Category</div>
-                <% categories.forEach((category)=>{ %>
-
-                
-                <div class="col-6 font-weight-bold"><%= String(products.category_id) == String(category._id) ? category.category_name : '' %></div>
-               <% }) %>
+                <% categories.forEach((category)=>{ 
+                    if(String(products.category_id) == String(category._id)){
+                %>
+                  <div class="col-6 font-weight-bold"><%= category.category_name %></div>
+                <% }}) %>
             </div>
 
             <div class="row mb-3">
@@ -277,9 +284,9 @@
                 <span class="badge badge-light border mr-2 px-3 py-2">
                     <i class="fa fa-check text-success mr-1"></i>Quality Checked
                 </span>
-                <span class="badge badge-light border px-3 py-2">
+                <!-- <span class="badge badge-light border px-3 py-2">
                     <i class="fa fa-shield-alt text-success mr-1"></i>Buyer Protection
-                </span>
+                </span> -->
             </div>
         </div>
     </div>
@@ -297,21 +304,18 @@
     <div class="row px-xl-5">
         <div class="col">
             <div class="owl-carousel related-carousel">
-
-                <!-- Product Item -->
+              <% if(relatedProducts){
+                 relatedProducts.forEach((relatedProduct)=>{ 
+                 if(String(relatedProduct._id) != String(products._id)){
+              %>
                 <div class="product-item bg-light">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="/img/product-2.jpg" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href="#"><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href="#"><i class="fa fa-search"></i></a>
-                        </div>
+                        <img class="img-fluid w-100" src="<%= relatedProduct.images[0].url[0] %>" alt="">
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="#">Winter Hoodie</a>
+                        <a class="h6 text-decoration-none text-truncate" href="#"><%= relatedProduct.product_name %></a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$120.00</h5>
+                            <h5>Rs. <%= relatedProduct.price %></h5>
                         </div>
                         <div class="d-flex align-items-center justify-content-center">
                             <small class="fa fa-star text-primary mr-1"></small>
@@ -322,7 +326,7 @@
                         </div>
                     </div>
                 </div>
-
+             <% } })} %>
                 <!-- Duplicate for more products -->
                 <!-- product-3, product-4, product-5 etc -->
 
