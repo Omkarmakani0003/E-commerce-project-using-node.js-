@@ -13,7 +13,7 @@ const {UserAttech} = require('../middleware/UserAttech')
 
 
 router.get('/login',LoginController.LoginForm)
-router.post('/login',LoginController.login)
+router.post('/user-login',LoginController.login)
 
 router.use(UserAttech)
 router.get('/user-register',RegisterController.RegisterForm)
@@ -27,13 +27,11 @@ router.get('/get-category-wise-products',CategoryController.GetCategoryWiseProdu
 router.get('/search',ProductController.Search)
 router.get('/',homeController.HomePage)
 router.get('/product-detail/:slug',ProductController.ProductDetail)
-
+router.post('/add-to-cart',CartController.AddToCart)
 
 
 router.use(CheckUserAuth)
 router.get('/logout',LoginController.logout)
-
-router.post('/add-to-cart',CartController.AddToCart)
 router.get('/cart',CartController.DisplayCart)
 router.post('/cart-quantity',CartController.CartUpdate)
 router.delete('/cart-remove/:id',CartController.CartRemove)

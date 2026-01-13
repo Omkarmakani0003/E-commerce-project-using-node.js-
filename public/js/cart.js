@@ -1,6 +1,5 @@
 
     function addtocart() {
-
     const qty = document.getElementById('qty').value;
     const productId = document.getElementById('productId').value;
     const price = document.getElementById('price').value

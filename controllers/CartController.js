@@ -2,7 +2,7 @@ const {cart} =require('../models/cart')
 const {category} = require('../models/admin/category')
 
 exports.AddToCart = async(req,res) => {
-
+  
     if(!req.user){
         return res.status(400).json({success:false})
     }
@@ -31,6 +31,7 @@ exports.DisplayCart = async(req,res) => {
 }
 
 exports.CartUpdate = async(req,res) => {
+     
      try{
           const {id,quantity} = req.body
 
