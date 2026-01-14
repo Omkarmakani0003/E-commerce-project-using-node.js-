@@ -19,6 +19,7 @@ exports.ProductDetail = async(req,res)=>{
 
 exports.Search = async(req,res)=>{
     try{
+        const { page = 1, limit = 10 } = req.query
         const search = req.query.search
         const Category =  await category.findOne({category_name : { $regex: search, $options: 'i'}})
 
@@ -34,9 +35,12 @@ exports.Search = async(req,res)=>{
           query.$or.push({category_id : Category._id})
         }
  
-        const products = await product.find(query)
+        const products = await product.paginate(query,{page : parseInt(page), limit : parseInt(limit)})
+        let variations = []
+        for (let i = 0; i < products.docs.length; i++){
+            variations.push(await variation.findOne({ product_id : products.docs[i]._id}))
+        } 
 
-        const variations = await variation.findOne({ product_id : products._id})
         const categories = await category.find() 
         const cartCout = await cart.countDocuments({user_id:req.user._id})  
         const Subcategory = ''

@@ -30,7 +30,7 @@
     <!-- Topbar Start -->
     <div class="container-fluid">
         <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
-            <div class="col-lg-4">
+            <div class="col-lg-4 logo">
                 <a href="/" class="text-decoration-none">
                     <span class="h1 text-uppercase text-primary bg-dark px-2">Multi</span>
                     <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
@@ -51,6 +51,10 @@
             <% if(user) { %>
                 <div class="col-lg-4 col-6 text-right">
                   <div class="btn-group">
+                    <a href="/cart" class="btn px-0  mobile-cart">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span class="badge text-secondary border border-secondary rounded-circle" id="cartCount" style="padding-bottom: 2px;">0</span>
+                    </a>
                     <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a href="#" class="dropdown-item">Profile</a>
@@ -59,11 +63,17 @@
                  </div>
                </div> 
            <% }else{ %>
-                <div class="col-lg-4 col-6 text-right">
-                  <div class="btn-group">
+                <div class="col-lg-4 col-6 text-right ">
+                  <div class="btn-group signin">
                     <a href="/login" class="dropdown-item">Sign in</a>
                     <a href="/user-register" class="dropdown-item">Sign up</a>
                   </div>
+                  <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
+                        <a href="/cart" class="btn px-0  mobile-cart">
+                            <i class="fas fa-shopping-cart text-primary"></i>
+                            <span class="badge text-secondary border border-secondary rounded-circle" id="cartCount" style="padding-bottom: 2px;">0</span>
+                        </a>
+                   </div>
                </div>
            <% } %>
             
@@ -76,7 +86,7 @@
     <div class="container-fluid bg-dark mb-30">
         <div class="row px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
-                <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
+                <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" id="category-dropdown" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
                     <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
@@ -101,7 +111,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav mr-auto py-0">
+                        <div class="navbar-nav mr-auto py-0 ">
                             
                             <a href="/" class="nav-item nav-link <%= route == '/'? 'active':''%>">Home</a>
                             <a href="/category" class="nav-item nav-link <%= route == '/category'? 'active':''%>">Category</a>
@@ -109,10 +119,14 @@
                               <a href="#!" class="nav-item nav-link <%= route == '/orders'? 'active':''%>">Orders</a>
                             <% } %>
                         </div>
+                        <div class="btn-group mobile-signin">
+                         <a href="/login" class="nav-item nav-link text-white">Sign in</a>
+                         <a href="/user-register" class="nav-item nav-link text-white">Sign up</a>
+                        </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                            <a href="/cart" class="btn px-0 ml-3">
+                            <a href="/cart" class="btn px-0  cart">
                                 <i class="fas fa-shopping-cart text-primary"></i>
-                                <span class="badge text-secondary border border-secondary rounded-circle" id="cartCount" style="padding-bottom: 2px;">0</span>
+                                <span class="badge text-secondary border border-secondary rounded-circle" id="cartCount" style="padding-bottom: 2px;"><%= cartcount %></span>
                             </a>
                         </div>
                     </div>
