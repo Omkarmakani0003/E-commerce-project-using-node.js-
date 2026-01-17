@@ -17,9 +17,9 @@ exports.AddToCart = async(req,res) => {
          total :  price
     })
 
-   const cartCout = await cart.countDocuments() 
+   const cartCount = await cart.countDocuments({user_id:req.user._id}) 
    
-   return res.status(200).json({success:true,Cart,cartCout})
+   return res.status(200).json({success:true,Cart,cartCount})
 }
 
 exports.DisplayCart = async(req,res) => {

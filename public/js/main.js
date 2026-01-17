@@ -203,7 +203,7 @@ $(".featured-carousel").owlCarousel({
     smartSpeed: 1200,
     margin: 30,
     dots: false,
-    loop: true,
+    loop: false,
     nav : true,
     navText : [
         '<i class="fa fa-angle-left"></i>',
@@ -217,4 +217,6 @@ $(".featured-carousel").owlCarousel({
     }
 });
 
-
+document.querySelectorAll('.toast').forEach(toastEl => {
+    new bootstrap.Toast(toastEl, { delay: 2500 }).show();
+});

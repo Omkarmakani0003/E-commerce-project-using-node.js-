@@ -39,7 +39,9 @@
         <!-- Product Info -->
         <div class="col-lg-7 h-auto mb-30">
             <div class="h-100 bg-light p-30">
+                
                 <h3><%= products.product_name %></h3>
+                <input type="hidden" name="product-id" value="<%= products._id %>">
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
                         <small class="fas fa-star"></small>
@@ -52,7 +54,7 @@
                 </div>
 
                 <h3 class="font-weight-semi-bold mb-4">Rs. <%= products.price - products.discount %></h3>
-                  <input type="hidden" id="price" value="<%= products.price - products.discount %>">
+                  <input type="hidden" id="price" name ="price" value="<%= products.price - products.discount %>">
                 <p class="mb-4">
                     <%= products.description %>
                 </p>
@@ -64,7 +66,8 @@
                       <div class="d-flex mb-3">
                     
                       <strong class="text-dark mr-3" id="variation_type"><%= variation.type %> :</strong>
-                      <form>
+                      <input type="hidden" name="variation_type[]" value="<%= variation.type %>">
+                      
                         <%
                           variation.values.forEach((value,index)=>{   
                         %>
@@ -73,7 +76,7 @@
                             <label class="custom-control-label" for="<%= variation.type %>-<%= index %>"><%= value %></label>
                         </div>
                         <%  }) %>
-                      </form>
+                      
                     </div>
                   <% } %>
                 <% }) %>
@@ -84,7 +87,7 @@
                     <% if(variation.type == 'Color'){  %>
                       <div class="d-flex mb-4">
                         <strong class="text-dark mr-3"><%= variation.type %> :</strong>
-                        <form>
+                        
                           <%
                             variation.values.forEach((value,index)=>{   
                           %>
@@ -93,7 +96,7 @@
                             <label class="custom-control-label" for="<%= variation.type %>-<%= index %>" style="background-color: <%= value %>;width: 24px;border:1px solid;border-radius:50%;"></label>
                         </div>
                         <%  }) %>
-                       </form>
+                       
                    </div>
                 <% } %>
               <% }) %>
@@ -121,9 +124,10 @@
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3 mr-1">
+                    <button class="btn btn-primary px-3 mr-1" onclick="buynow()">
                         <i class="fa fa-shopping-bag mr-1"></i> Buy Now
                     </button>
+                    
                     <button class="btn btn-primary px-3 mr-1" onclick='addtocart()'>
                         <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
                     </button>
@@ -344,27 +348,29 @@
     <div class="row px-xl-5">
         <div class="col">
             <div class="owl-carousel featured-carousel">
-
+                <% if(featuredProducts){
+                  featuredProducts.forEach((relatedProduct)=>{ 
+                   if(String(relatedProduct._id) != String(products._id)){
+                %>
                 <div class="product-item bg-light">
                     <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" src="/img/product-6.jpg" alt="">
-                        
+                        <img class="img-fluid w-100" src="<%= relatedProduct.images[0].url[0] %>" alt="">
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="#">Premium Coat</a>
+                        <a class="h6 text-decoration-none text-truncate" href="#"><%= relatedProduct.product_name %></a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>$180.00</h5>
+                            <h5>Rs. <%= relatedProduct.price %></h5>
                         </div>
                         <div class="d-flex align-items-center justify-content-center">
                             <small class="fa fa-star text-primary mr-1"></small>
                             <small class="fa fa-star text-primary mr-1"></small>
                             <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(88)</small>
+                            <small class="fa fa-star-half-alt text-primary mr-1"></small>
+                            <small>(45)</small>
                         </div>
                     </div>
                 </div>
-
+             <% } })} %>
                 <!-- Add more items -->
             </div>
         </div>

@@ -44,7 +44,7 @@
 
                         %>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                              <input type="checkbox" class="custom-control-input categories" data-id="<%= subcategory._id %>" id="subcategory-<%= subcategory._id %>" name="subcategory[]" value="<%= subcategory._id %>">
+                              <input type="checkbox" class="custom-control-input categories" data-id="<%= subcategory._id %>" id="subcategory-<%= subcategory._id %>" name="subcategory[]" value="<%= subcategory._id %>" <%= String(subcategoryid) == String(subcategory._id)? 'checked' : '' %> >
                               <label class="custom-control-label" for="subcategory-<%= subcategory._id %>"><%= subcategory.subcategory_name %></label>
                                <!-- <span class="badge border font-weight-normal">150</span> -->
                            </div>
@@ -137,6 +137,9 @@
         </div>
     </div>
 <script>
+
+    
+
      function updatePrice(value) {
         document.getElementById("priceValue").innerText = value;
      }
@@ -144,9 +147,14 @@
     const categoryAll = document.getElementById('category-all');
     const categoryItems = document.querySelectorAll('.categories');
     let checkedIds = []
-    
+
+    document.addEventListener("DOMContentLoaded", function() {
+       if('<%= subcategoryid %>'){
+         getProduct('<%= subcategoryid %>')
+       }
+    });
+
     function getProduct(ids = [],c_id,page=1,limit=10){
-            
             fetch(`/get-category-wise-products/?category=${encodeURIComponent(ids)}&id=${c_id}&page=${page}&limit=${limit}`)
             .then(res => res.json())
             .then(data => {
@@ -185,7 +193,6 @@
                                 </div>
                             `;  
                         });
-                        console.log(data)
                         pagination.innerHTML = ''
                             pagination.innerHTML += `
                               <li class="page-item  ${ data.products.hasPrevPage == false ? 'disabled' : '' }"><a class="page-link" onclick="(getProduct('${ids}','${currentCategoryId}',${data.products.prevPage}))">Previous</span></a></li>`
@@ -220,6 +227,8 @@
             getProduct(checkedIds,currentCategoryId)
         });
     });
+
+    
 
 </script> 
 <%- include('layouts/footer') %>

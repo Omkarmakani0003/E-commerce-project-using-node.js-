@@ -72,7 +72,22 @@
                         <% } }) } %>
                         <input type="email" class="form-control" name="email" value="<%= oldInput[0] ? oldInput[0].email : '' %>" placeholder="example@email.com">
                     </div>
-
+                    <div class="form-group">
+                        <label>contact</label>
+                        <input type="number" class="form-control" name="contact" value="<%= oldInput[0] ? oldInput[0].contact : '' %>" placeholder="example@email.com">
+                    </div>  
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="number" class="form-control" name="address" value="<%= oldInput[0] ? oldInput[0].address : '' %>" placeholder="example@email.com">
+                    </div>  
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="number" class="form-control" name="city" value="<%= oldInput[0] ? oldInput[0].city : '' %>" placeholder="example@email.com">
+                    </div> 
+                    <div class="form-group">
+                        <label>State</label>
+                        <input type="number" class="form-control" name="state" value="<%= oldInput[0] ? oldInput[0].state : '' %>" placeholder="example@email.com">
+                    </div>  
                     <div class="form-group">
                         <label>Password</label>
                         <% if (error && error.length> 0) {
@@ -116,22 +131,6 @@
                     <button class="btn btn-primary btn-block py-2 mb-3" type="submit">
                         Create Account
                     </button>
-
-                    
-                    <!-- <div class="text-center text-muted mb-3">
-                        <small>Or sign up with</small>
-                    </div>
-
-                    
-                    <button type="button" class="btn btn-outline-dark social-btn mb-2">
-                        <i class="fab fa-google text-danger"></i>
-                        Continue with Google
-                    </button>
-
-                    <button type="button" class="btn btn-outline-dark social-btn">
-                        <i class="fab fa-facebook-f text-primary"></i>
-                        Continue with Facebook
-                    </button> -->
                 </form>
 
                 <div class="text-center mt-4">

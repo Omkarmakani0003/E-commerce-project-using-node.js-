@@ -9,8 +9,21 @@ const user = new mongoose.Schema({
         type : String,
         require : true,
     },
+    contact:{
+        type : Number,
+        require : true
+    },
     address:{
         type : String,
+        require : true
+    },
+    city:{
+        type : String,
+        require : true
+    },
+    state:{
+        type : String,
+        require : true
     },
     is_varify:{
         type : Boolean,

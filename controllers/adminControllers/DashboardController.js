@@ -49,3 +49,9 @@ exports.login = async(req,res) => {
 exports.dashboard = (req,res) => {
      res.render('admin/dashboard',{success : req.flash('success'),error : req.flash('errors')}); 
 }  
+
+exports.logout = (req,res) => {
+    res.clearCookie('admin_token')
+    req.admin = ''
+    return res.redirect('/admin/login') 
+}

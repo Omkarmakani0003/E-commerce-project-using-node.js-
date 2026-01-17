@@ -14,7 +14,7 @@ exports.LoginForm = async(req,res) => {
        cartCout = await cart.countDocuments({user_id:req.user._id})
    }
      
-   res.render('login',{user:req.user,categories, error: req.flash('errors'),route: req.path || '',cartcount : cartCout})
+   res.render('login',{user:req.user,categories, error: req.flash('errors'),success: req.flash('success'),route: req.path || '',cartcount : cartCout})
 }
 
 exports.login = async(req,res) => {

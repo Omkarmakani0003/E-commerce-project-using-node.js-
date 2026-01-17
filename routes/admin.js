@@ -1,13 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const {loginform, login, dashboard} = require("../controllers/adminControllers/DashboardController")
+const {loginform, login, dashboard,logout} = require("../controllers/adminControllers/DashboardController")
 const  ProductController  = require("../controllers/adminControllers/ProductController")
+const UserController = require("../controllers/adminControllers/UserController")
 const upload = require("../middleware/FileUploader")
 
 const{ CategoryValidator, SubCategoryValidator } = require('../middleware/validators/categoryValidators')
 const{ ProductValidator } = require('../middleware/validators/ProductValidation')
+const { SliderValidation } = require('../middleware/validators/SliderValidation')
+
 const CategoryController = require("../controllers/adminControllers/CategoriesController")
+const SliderController = require('../controllers/adminControllers/SettingsController')
 const {CheckAdminAuth} = require('../middleware/authentication')
+
 
 // check admin is already logged in or not
 const Isloggein = (req,res,next) =>{
@@ -51,5 +56,13 @@ router.get('/subcategories',CategoryController.SubCategoryList)
 router.get('/subcategories-edit/:id',CategoryController.SubCategoryEdit)
 router.post('/subcategories-update/:id',SubCategoryValidator,CategoryController.SubCategoryUpdate)
 router.delete('/subcategories-delete/:id',CategoryController.SubCategoryDelete)
+
+router.get('/slider-list',SliderController.sliders)
+router.get('/slider-create',SliderController.create)
+router.post('/slider-store',upload.single('image'),SliderValidation,SliderController.store)
+
+router.get('/users',UserController.users)
+
+router.get('/logout',logout)
 
 module.exports = router;

@@ -24,6 +24,7 @@ exports.AllCategory = async(req,res)=>{
 exports.Category = async(req,res)=>{
     try{
         const { page = 1, limit = 10 } = req.query
+        const subcategoryid = req.query.s || ''
         const id = req.params.id
         const categories = await category.find() 
         const Subcategory = await subcategory.find({categoryid:id})
@@ -33,7 +34,7 @@ exports.Category = async(req,res)=>{
             variations.push(await variation.findOne({ product_id : products.docs[i]._id}))
         }
         const cartCout = await cart.countDocuments({user_id:req.user._id}) 
-        res.render('category',{user:req.user, categories, Subcategory, products, variations, currentCategoryId : id, route: req.path || '',cartcount : cartCout})
+        res.render('category',{user:req.user, categories, Subcategory, products, variations, currentCategoryId : id, route: req.path || '',cartcount : cartCout,subcategoryid})
     }catch(error){
         console.log(error.message)
     }

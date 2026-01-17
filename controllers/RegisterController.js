@@ -38,6 +38,10 @@ exports.Register = async(req,res) => {
       const register = await user.create({
          name : req.body.fullName,
          email : req.body.email,
+         contact : req.body.contact,
+         city : req.body.city,
+         state : req.body.state,
+         address :req.body.address,
          password : HashPassword,
          is_varify : false,
       })

@@ -10,8 +10,18 @@ exports.ProductDetail = async(req,res)=>{
         const products = await product.findOne({slug})
         const variations = await variation.findOne({ product_id : products._id})
         const cartCout = await cart.countDocuments({user_id:req.user._id})  
-        const relatedProducts = await product.find({subcategory_id : products.subcategory_id}) 
-        res.render('productDetail',{user:req.user,categories,products,variations,route: req.path || '',cartcount : cartCout,relatedProducts})
+        const relatedProducts = await product.find({
+            $or:[
+                {subcategory_id : products.subcategory_id},
+                {category_id : products.category_id}
+            ] 
+        })
+        const featuredProducts = await product.find({
+            $or:[
+                {category_id : products.category_id}
+            ] 
+        })
+        res.render('productDetail',{user:req.user,categories,products,variations,route: req.path || '',cartcount : cartCout,relatedProducts,featuredProducts})
     }catch(error){
         console.log(error.message)
     }
@@ -48,4 +58,27 @@ exports.Search = async(req,res)=>{
     }catch(error){
         console.log(error.message)
     }
+}
+
+exports.Buynow = async(req,res) => {
+
+   if(!req.user){
+     return res.json({success:false})
+   } 
+
+   const {product_id,quantity,price} = req.body
+   const item = [{product_id : await product.findOne(product_id)}]
+   const products = [
+     {  
+        user_id : req.user._id,
+        items : item,
+        quantity : quantity,
+        total : price,
+
+     }
+   ]
+
+   req.session.buynow = products
+
+   return res.json({success:true})
 }
