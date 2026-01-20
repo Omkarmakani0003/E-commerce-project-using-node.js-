@@ -21,6 +21,7 @@ exports.ProductDetail = async(req,res)=>{
                 {category_id : products.category_id}
             ] 
         })
+        delete req.session.cart
         res.render('productDetail',{user:req.user,categories,products,variations,route: req.path || '',cartcount : cartCout,relatedProducts,featuredProducts})
     }catch(error){
         console.log(error.message)
@@ -62,12 +63,15 @@ exports.Search = async(req,res)=>{
 
 exports.Buynow = async(req,res) => {
 
+
    if(!req.user){
      return res.json({success:false})
    } 
 
-   const {product_id,quantity,price} = req.body
-   const item = [{product_id : await product.findOne(product_id)}]
+   const {productId,quantity,price,variations} = req.body
+
+   const item = [{product_id : await product.findById(productId), variation : variations}]
+
    const products = [
      {  
         user_id : req.user._id,

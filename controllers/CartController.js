@@ -26,7 +26,8 @@ exports.DisplayCart = async(req,res) => {
      const categories = await category.find();
      const cartCout = await cart.countDocuments({user_id:req.user._id})  
      const cartItems = await cart.find({ user_id : req.user._id }).populate('items.product_id')
-     req.session.checkout = cartItems
+     delete req.session.buynow
+     req.session.cart = cartItems
      res.render('cart',{user:req.user,categories, error: req.flash('errors'),route: req.path || '',cartcount : cartCout,cartItems})
 }
 

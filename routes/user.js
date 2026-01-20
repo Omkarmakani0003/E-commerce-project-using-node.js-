@@ -6,7 +6,7 @@ const CategoryController = require("../controllers/CategoryController")
 const RegisterController = require("../controllers/RegisterController")
 const LoginController = require("../controllers/LoginController")
 const CartController = require('../controllers/CartController')
-const CheckOut = require('../controllers/CheckOutController')
+const CheckOutController = require('../controllers/CheckOutController')
 const UserController = require('../controllers/UserController')
 const {UserValidation,UserUpdateValidation} = require("../middleware/validators/UserValidation")
 const {CheckUserAuth} = require('../middleware/authentication')
@@ -38,9 +38,12 @@ router.get('/logout',LoginController.logout)
 router.get('/cart',CartController.DisplayCart)
 router.post('/cart-quantity',CartController.CartUpdate)
 router.delete('/cart-remove/:id',CartController.CartRemove)
-router.get('/checkout',CheckOut.CheckOut)
+router.get('/checkout',CheckOutController.CheckOut)
 router.get('/profile',UserController.profile)
 router.post('/update-profile',UserUpdateValidation,UserController.UserUpdate)
+router.post('/place-order',CheckOutController.placeOrder)
+router.post('/verify-payment',CheckOutController.PaymentVarify)
+
 
 
 
