@@ -12,12 +12,12 @@ const order = new mongoose.Schema(
       {
         product_id: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "product",
+          ref: "Product",
           required: true,
         },
 
         variation: {
-          type: Object, // e.g. { size: "M", color: "Red" }
+          type: Object,
           default: {},
         },
 
@@ -51,9 +51,17 @@ const order = new mongoose.Schema(
       default: "pending",
     },
 
+    razorpay_order_id: {
+      type: String,
+    },
+
+    razorpay_payment_id: {
+      type: String,
+    },
     payment_method: {
       type: String,
       enum: ["cod", "card", "upi", "paypal"],
+      default : "card"
     },
 
     payment_status: {
@@ -64,7 +72,5 @@ const order = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-
 
 module.exports.orders = mongoose.model("order", order);

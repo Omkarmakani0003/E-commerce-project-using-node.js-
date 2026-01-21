@@ -111,12 +111,11 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav mr-auto py-0 ">
-                            
+                        <div class="navbar-nav mr-auto py-0 ">  
                             <a href="/" class="nav-item nav-link <%= route == '/'? 'active':''%>">Home</a>
                             <a href="/category" class="nav-item nav-link <%= route == '/category'? 'active':''%>">Category</a>
                             <% if(user) { %>
-                              <a href="#!" class="nav-item nav-link <%= route == '/orders'? 'active':''%>">Orders</a>
+                              <a href="/orders" class="nav-item nav-link <%= route == '/orders'? 'active':''%>">Orders</a>
                             <% } %>
                         </div>
                         <div class="btn-group mobile-signin">

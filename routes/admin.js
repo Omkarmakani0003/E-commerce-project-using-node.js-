@@ -11,6 +11,7 @@ const { SliderValidation } = require('../middleware/validators/SliderValidation'
 
 const CategoryController = require("../controllers/adminControllers/CategoriesController")
 const SliderController = require('../controllers/adminControllers/SettingsController')
+const OrderController = require('../controllers/adminControllers/OrderController')
 const {CheckAdminAuth} = require('../middleware/authentication')
 
 
@@ -60,6 +61,9 @@ router.delete('/subcategories-delete/:id',CategoryController.SubCategoryDelete)
 router.get('/slider-list',SliderController.sliders)
 router.get('/slider-create',SliderController.create)
 router.post('/slider-store',upload.single('image'),SliderValidation,SliderController.store)
+router.delete('/slider-delete/:id',SliderController.delete)
+
+router.get('/orders',OrderController.orders)
 
 router.get('/users',UserController.users)
 

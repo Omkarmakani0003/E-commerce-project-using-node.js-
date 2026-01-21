@@ -7,6 +7,10 @@ const {slider} = require('../models/slider')
 
 exports.HomePage = async(req,res) => {
      try{
+          if(req.session.order){
+             delete req.session.order
+          }
+           
          const categories = await category.find(); 
          const productCount = await Promise.all(
             categories.map(async(category)=>{

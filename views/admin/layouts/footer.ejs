@@ -4,8 +4,8 @@
      let deletedRow = ''
         document.querySelectorAll('#deleteBtn').forEach((btn)=>{
             btn.addEventListener('click',()=>{
-               id = btn.dataset.id
                deletedRow = document.getElementById(`${btn.dataset.id}`)
+               id = btn.dataset.id
             })
             
         })

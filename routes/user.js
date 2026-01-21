@@ -8,6 +8,7 @@ const LoginController = require("../controllers/LoginController")
 const CartController = require('../controllers/CartController')
 const CheckOutController = require('../controllers/CheckOutController')
 const UserController = require('../controllers/UserController')
+const OrderController = require('../controllers/OrderController')
 const {UserValidation,UserUpdateValidation} = require("../middleware/validators/UserValidation")
 const {CheckUserAuth} = require('../middleware/authentication')
 const {UserAttech} = require('../middleware/UserAttech') 
@@ -43,6 +44,9 @@ router.get('/profile',UserController.profile)
 router.post('/update-profile',UserUpdateValidation,UserController.UserUpdate)
 router.post('/place-order',CheckOutController.placeOrder)
 router.post('/verify-payment',CheckOutController.PaymentVarify)
+router.get('/orders',OrderController.Orders)
+router.get('/success',OrderController.OrderSuccess)
+router.get('/view_order/:id',OrderController.ViewOrders)
 
 
 

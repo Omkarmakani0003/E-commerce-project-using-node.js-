@@ -30,7 +30,7 @@ exports.SendOtp = async(email)=>{
             const data = {
                'email' : email,
                'subject' : 'OTP for user varification',
-               'otp' : generate_otp
+               'text' : `Your otp is : ${generate_otp}`
             }
             const send = await mailSender(data)
 

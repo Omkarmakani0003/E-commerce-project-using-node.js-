@@ -44,3 +44,19 @@ exports.store = async(req,res) => {
 
 }
 
+exports.delete = async(req,res) => {
+  if (!req.params.id) return;
+    try {
+  
+      const Slider = await slider.findByIdAndDelete(req.params.id);
+      
+    //   if(Slider.image && Slider.image.length > 0){
+    //     await cloudinary.uploader.destroy(Category.image[0].public_id)
+    //   }
+      
+      return res.status(200).json({ success: true, message: "Slider delete successfully" });
+    } catch (error) {
+      return res.status(401).json({ success: false, message: "Slider delete failed" });
+    } 
+}
+

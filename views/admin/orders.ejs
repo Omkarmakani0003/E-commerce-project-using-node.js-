@@ -1,5 +1,4 @@
-<%- include('../layouts/header')%>
-
+<%- include('layouts/header')%>
 <div class="pcoded-main-container">
   <div class="pcoded-content">
     <!-- [ breadcrumb ] start -->
@@ -8,14 +7,14 @@
         <div class="row align-items-center">
           <div class="col-md-12">
             <div class="page-header-title">
-              <h5 class="m-b-10">Slider List</h5>
+              <h5 class="m-b-10">Order List</h5>
             </div>
             <ul class="breadcrumb">
               <li class="breadcrumb-item">
                 <a href="index.html"><i class="feather icon-home"></i></a>
               </li>
-              <li class="breadcrumb-item"><a href="#!">Sliders</a></li>
-              <li class="breadcrumb-item"><a href="#!">Sliders List</a></li>
+              <li class="breadcrumb-item"><a href="#!">Order</a></li>
+              <li class="breadcrumb-item"><a href="#!">Order List</a></li>
             </ul>
           </div>
         </div>
@@ -24,47 +23,33 @@
     <div class="col-xl-12">
       <div class="card">
         <div class="card-header d-flex justify-content-between">
-          <h5>Sliders List</h5>
-          <a href="/admin/slider-create" class="btn btn-primary"
-            >Add sliders</a
-          >
+          <h5>Order List</h5>
+          
         </div>
         <div class="card-body table-border-style">
-        <% if (success && success.length > 0) { success.forEach(function(e) { %>
-           <div class="alert alert-success"><%= e %></div>
-        <% } ) }  %>
           <div class="table-responsive">
             <table class="table table-striped" id="table">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Image</th>
-                  <th>Title</th>
-                  <th>Action</th>
+                  <th>order id</th>
+                  <th>date</th>
+                  <th>payment status</th>
+                  <th>action</th>
                 </tr>
               </thead>
               <tbody>
-                <% if(Slider){
-                   Slider.forEach((sliders,index)=>{
+                <% if(order){
+                   order.forEach((Order,index)=>{
                 %>
                 <tr>
                    <td><%= index + 1 %></td>
-                   <td><img src="<%= sliders.image %>" alt="" width="100px" height="100px"></td>
-                   <td><%= sliders.title %></td>
-                   <td><a href="/admin/slider-edit/<%= sliders.id %>"
-                      class="btn btn-icon btn-outline-primary mr-2"
-                      ><i class="feather icon-edit"></i></a>
-                       <button
-                      type="button"
-                      class="btn btn-icon btn-outline-danger mr-2"
-                      id="deleteBtn"
-                      data-id="<%= sliders._id %>"
-                      data-toggle="modal"
-                      data-target="#exampleModalLive"
-                    >
-                      <i class="feather icon-trash"></i>
-                    </button>
-                   </td>
+                   <td><%= Order.razorpay_order_id %></td>
+                   <td><%= new Date(Order.updatedAt).toLocaleDateString() %></td>
+                   <td><%= Order.payment_status %></td>
+                   <td><a href="#!"
+                     class="btn btn-icon btn-outline-info mr-2"
+                     ><i class="feather icon-eye"></i></a></td>
                 </tr>
                 <% }) } %>
               </tbody>
@@ -116,23 +101,5 @@
     </div>
   </div>
 </div>
-<script>
-     document.getElementById('deleteSlider').addEventListener('click',async()=>{
-         console.log('okok')
-           if(!id || id == '') return
-           try{
-              const slider = await fetch(`/admin/slider-delete/${id}`,{
-                method : 'DELETE'
-              })
-              if(slider.ok){
-                 location.reload()
-              }else{
-                 alert('Slider delete failed')
-              }
-           }catch(error){
-              console.log(error)
-           }
-       })
-</script>
+<%- include('layouts/footer')%>
 
-<%- include('../layouts/footer')%>

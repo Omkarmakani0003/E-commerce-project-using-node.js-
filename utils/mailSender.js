@@ -16,7 +16,7 @@ exports.mailSender = async(Data) => {
         from : process.env.EMAIL,
         to : Data.email,
         subject : Data.subject,
-        text : `Your varification opt is : ${Data.otp}`
+        text : Data.text
     }  
 
     const sent = await transporter.sendMail(send)

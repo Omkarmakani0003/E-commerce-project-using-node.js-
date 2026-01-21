@@ -18,7 +18,7 @@
                             cartItems.forEach((cart) => {
                         %>
                         <tr id="cart_<%= cart._id %>">
-                            <td class="align-middle"><img src="<%= cart.items[0].product_id.images[0].url[0] %>" alt="" style="width: 50px;"><%= cart.items[0].product_id.product_name %></td>
+                            <td class="align-middle"><a href="/product-detail/<%= cart.items[0].product_id.slug %>" class="text-dark"><img src="<%= cart.items[0].product_id.images[0].url[0] %>" class="mr-3" alt="" style="width: 50px;"><%= cart.items[0].product_id.product_name %></a></td>
                             <td class="align-middle">Rs.<%= cart.items[0].product_id.price - cart.items[0].product_id.discount %></td>
                             <td class="align-middle">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
