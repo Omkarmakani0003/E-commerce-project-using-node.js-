@@ -74,7 +74,7 @@ exports.placeOrder = async(req,res)=>{
                 'text' : `Your order placed successfully,
                           order_id is ${order.id}`
                 }
-    await mailSender(data)
+    // await mailSender(data)
 
     delete req.session.checkout
     delete req.session.buynow
@@ -94,8 +94,17 @@ exports.PaymentVarify = async(req, res) => {
   const {
     razorpay_order_id,
     razorpay_payment_id,
-    razorpay_signature
+    razorpay_signature,
+    payment_status
   } = req.body;
+
+  if (payment_status === 'Failed') {
+      await orders.findOneAndUpdate(
+        { razorpay_order_id },
+        { payment_status: 'failed'}
+      );
+    return res.status(400).json({ status: 'failed', message: 'Payment failed' });
+  }
 
   const sign = razorpay_order_id + "|" + razorpay_payment_id;
   const validate = validateWebhookSignature(sign, razorpay_signature, process.env.RAZORPAY_KEY_SECRET)
@@ -116,7 +125,7 @@ exports.PaymentVarify = async(req, res) => {
                           payment_id is ${razorpay_payment_id},`
                 }
 
-        await mailSender(data)
+        // await mailSender(data)
         res.status(200).json({status : 'ok'})
       }else{
        const order = await orders.findOneAndUpdate({razorpay_order_id:razorpay_order_id},{

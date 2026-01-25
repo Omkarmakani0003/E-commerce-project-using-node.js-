@@ -13,8 +13,8 @@
           </div>
        <% } ) }  %>
     </div>
-        <div class="row px-xl-5">
-            <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12 p-0">
                 <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
                     <% if(sliders && sliders.length > 0){ %>
                     <ol class="carousel-indicators">
@@ -28,11 +28,12 @@
                             sliders.forEach((slider,index)=>{
                         %>
                           
-                        <div class="carousel-item position-relative <%= index === 0 ? 'active' : '' %>" style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="<%= slider.image %>" style="object-fit: cover;">
+                        <div class="carousel-item position-relative <%= index === 0 ? 'active' : '' %>" style="height: 500px;">
+                            <img class="position-absolute w-100 h-100" src="<%= slider.image[0].url %>" style="object-fit: cover;">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><%= slider.title %></h1>
+                                    <p class="text-white mb-3 animate__animated animate__fadeInDown"><%= slider.description %></p>
                                     <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="/category/<%= slider.category_id %>?s=<%= slider.subcategory_id %>">Shop Now</a>
                                 </div>
                             </div>
@@ -115,15 +116,21 @@
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
         <div class="row px-xl-5">
             <% if( products && products.length > 0 ) {
-                products.forEach((product)=>{
-            %>        
+                function shortTital(title){
+                    const Title =  title.split(' ')
+                    return `${Title[0]+' '+Title[1]}...`
+                }
+                products.forEach((product,index)=>{
+                if(index < 8){
+            %>      
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+               <a href="product-detail/<%= product.slug %>">  
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
                         <img class="" src="<%= product.images[0].url[0] ? product.images[0].url[0] :'/img/no-image-available-icon-vector.jpg'%>" width="100%!important" height="300px!important" alt="">
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="product-detail/<%= product.slug %>"><%= product.product_name %></a>
+                        <a class="h6 text-decoration-none text-truncate" href="product-detail/<%= product.slug %>"><%= shortTital(product.product_name) %></a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5><%= product.price - product.discount %></h5><h6 class="text-muted ml-2"><del><%= product.price %></del></h6>
                         </div>
@@ -137,8 +144,9 @@
                         </div>
                     </div>
                 </div>
+                </a>
             </div>
-           <% }) } %>
+           <% }}) } %>
         </div>
     </div>
     <!-- Products End -->
@@ -176,22 +184,22 @@
     <div class="container-fluid pt-5 pb-3">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Recent Products</span></h2>
         <div class="row px-xl-5">
-           <% if( products && products.length > 0 ) {
-                products.forEach((product)=>{
+           <% if( recentProducts && recentProducts.length > 0 ) {
+                 function shortTital(title){
+                    const Title =  title.split(' ')
+                    return `${Title[0]+' '+Title[1]}...`
+                 }
+                recentProducts.forEach((product,index)=>{
+                if(index < 8){
             %>        
             <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+               <a href="product-detail/<%= product.slug %>">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
                         <img class="" src="<%= product.images[0].url[0] ? product.images[0].url[0] :'/img/no-image-available-icon-vector.jpg'%>" width="100%!important" height="300px!important" alt="">
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="/product-detail/<%= product.slug %>"><%= product.product_name %></a>
+                        <a class="h6 text-decoration-none text-truncate" href="/product-detail/<%= product.slug %>"><%= shortTital(product.product_name) %></a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5><%= product.price - product.discount %></h5><h6 class="text-muted ml-2"><del><%= product.price %></del></h6>
                         </div>
@@ -205,11 +213,10 @@
                         </div>
                     </div>
                 </div>
+              </a>
             </div>
-           <% }) } %>
+           <% }}) } %>
         </div>
     </div>
     <!-- Products End -->
 <%- include('layouts/footer') %>
-
-   

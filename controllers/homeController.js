@@ -17,10 +17,11 @@ exports.HomePage = async(req,res) => {
              return await product.countDocuments({category_id:category._id})
             })
          )
-         const products = await product.find()
+         const products = await product.aggregate([ { $sample: { size: 8 } } ])
+         const recentProducts = await product.aggregate([ { $sample: { size: 8 } } ])
          const cartCout = await cart.countDocuments({user_id:req.user._id}) 
          const sliders = await slider.find()
-         res.render('index',{user: req.user,categories,productCount,products,sliders,success:req.flash('success'),search:'',route: req.path || '', cartcount : cartCout}); 
+         res.render('index',{user: req.user,categories,productCount,products,recentProducts,sliders,success:req.flash('success'),search:'',route: req.path || '', cartcount : cartCout}); 
      }catch(error){
           console.log(error.message)
      }

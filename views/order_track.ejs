@@ -1,0 +1,90 @@
+<%- include('layouts/header') %>
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2 class="font-weight-bold">Order Tracking</h2>
+        <p class="text-muted">Payment & delivery progress</p>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <!-- Order Summary -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <strong>Order ID</strong>
+                    <p class="text-muted mb-0"><%= order.razorpay_order_id %></p>
+                </div>
+                <div class="col-md-3">
+                    <strong>Order Date</strong>
+                    <p class="text-muted mb-0"><%= new Date(order.createdAt).toLocaleDateString() %></p>
+                </div>
+                <div class="col-md-3">
+                    <strong>Payment Method</strong>
+                    <p class="text-muted mb-0"><%= order.payment_method %></p>
+                </div>
+                <div class="col-md-3">
+                    <strong>Total Amount</strong>
+                    <p class="text-success font-weight-bold mb-0">Rs : <%= order.total %></p>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- Tracking Progress -->
+            <div class="tracking-steps">
+
+                
+                    
+                    <!-- Order Placed -->
+                    <div class="tracking-step <%= order.steps.includes('confirmed') ? 'completed' : '' %> ">
+                        <div class="icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h6>Order Placed</h6>
+                        <small class="text-muted"><%= new Date(order.updatedAt).toLocaleDateString() %></small>
+                    </div>
+                
+                <!-- Payment -->
+                <div class="tracking-step <%= order.payment_status == 'paid' ? 'completed' : '' %> <%= order.payment_status == 'failed' ? 'failed' : '' %>" >
+                    <div class="icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h6>Payment Paid</h6>
+                    <small class="text-muted"><%= new Date(order.updatedAt).toLocaleDateString() %></small>
+                </div>
+
+                <!-- Processing -->
+                <div class="tracking-step <%= order.steps.includes('processing') ? 'completed' : '' %>">
+                    <div class="icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h6>Processing</h6>
+                    <small class="text-muted"><%= new Date(order.updatedAt).toLocaleDateString() %></small>
+                </div>
+
+                <!-- Shipped -->
+                <div class="tracking-step <%= order.steps.includes('shipped') ? 'completed' : '' %>">
+                    <div class="icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h6>Shipped</h6>
+                    <small class="text-muted"><%= new Date(order.updatedAt).toLocaleDateString() %></small>
+                </div>
+
+                <!-- Delivered -->
+                <div class="tracking-step <%= order.steps.includes('delivered') ? 'completed' : '' %>">
+                    <div class="icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h6>Delivered</h6>
+                    <small class="text-muted">Expected <%= order.steps.includes('delivered') ? new Date(order.updatedAt).toLocaleDateString() : '' %></small>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<%- include('layouts/footer') %>

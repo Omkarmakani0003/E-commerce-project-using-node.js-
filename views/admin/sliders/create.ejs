@@ -10,7 +10,7 @@
                                 <h5 class="m-b-10">Add new slider</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html"><i class="feather icon-home"></i></a>
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a>
                                 </li>
                                 <li class="breadcrumb-item"><a href="#!">Add slider</a></li>
                             </ul>
@@ -29,7 +29,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <h5>Add New slider</h5>
-                        <a href="/admin/categories" class="btn btn-primary">Slider list</a>
+                        <a href="/admin/slider-list" class="btn btn-primary">Slider list</a>
                     </div>
                     <div class="card-body">
                         <form action="/admin/slider-store" method="POST" enctype="multipart/form-data">
@@ -37,7 +37,7 @@
                                 <!-- Category Name -->
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
-                                        <label for="categoryname">Title</label>
+                                        <label for="title">Title</label>
                                         <% if (error && error.length> 0) {
                                             error.forEach(function(e) {
                                             if(e.path == 'title'){ %>
@@ -91,6 +91,10 @@
 
                                          <input type="file" class="form-control" id="image"
                                          name="image" placeholder="Upload image" required>
+                                    </div>
+                                     <div class="col-sm-12 form-group">
+                                        <label for="description">Description</label>
+                                        <textarea class="form-control" name="description" id="" placeholder="Enter description"></textarea>
                                     </div>
                                     </div>
                                    

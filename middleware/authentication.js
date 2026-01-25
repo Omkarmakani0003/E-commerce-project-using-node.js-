@@ -31,7 +31,6 @@ exports.CheckAdminAuth = async(req,res,next) =>{
 }
 
 exports.CheckUserAuth = async(req,res,next) =>{
-
     const token = req.cookies.user_token
     if(!token){
         return res.redirect('/login')

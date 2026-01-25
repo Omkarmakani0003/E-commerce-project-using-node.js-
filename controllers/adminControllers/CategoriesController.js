@@ -22,8 +22,6 @@ exports.CategoryStore = async (req, res) => {
       return res.redirect("/admin/category-create");
     }
 
-   console.log(req.file.filename)
-   console.log(req.file.path)
     const { category_name, status } = req.body;
     const categories = await category.create({
       category_name: category_name,
@@ -148,9 +146,7 @@ exports.SubCategoryStore = async (req, res) => {
 };
 
 exports.SubCategoryList = async (req, res) => {
-  const subcategories = await subcategory
-    .find()
-    .populate("categoryid", "category_name");
+  const subcategories = await subcategory.find().populate("categoryid", "category_name");
     return res.render("admin/sub-categories/index", { 
     error: req.flash("errors"),
     success: req.flash("success"),

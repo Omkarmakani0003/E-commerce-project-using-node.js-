@@ -30,59 +30,116 @@
     </div>
     <!-- [ breadcrumb ] end -->
     <!-- [ Main Content ] start -->
-
-    <!-- [ Main Content ] end -->
+     <div class="row">
+           <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <% let sales = 0
+                                   if(TotalSales){
+                                     TotalSales.forEach((sale)=>{
+                                        sales += sale.totalAmount
+                                     })
+                                   }
+                                %>
+                                <h3>Rs. <%= sales %></h3>
+                                <h6 class="text-muted m-b-0">Total Sales<i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h3><%= totalVerifiedUsers %></h3>
+                                <h6 class="text-muted m-b-0">Total varified users</a><i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h3><%= totalUnVerifiedUsers %></h3>
+                                <h6 class="text-muted m-b-0">Total un-varified users<i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h3><%= Totalproduct %></h3>
+                                <h6 class="text-muted m-b-0">Total Products<i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h3><%= TotalOrders %></h3>
+                                <h6 class="text-muted m-b-0">Total Complated Orders<i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <h3><%= TotalCancelledOrders %></h3>
+                                <h6 class="text-muted m-b-0">Total Cancelled Orders<i class="fa fa-caret-down text-c-red m-l-10"></i></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div> 
+       <div class="row">
+           <div class="col-md-6 p-1">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Basic line chart</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="line-chart-1"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 p-1">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Pie Charts</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="pie-chart-1" style="width:100%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>   
   </div>
 </div>
-<!-- [ Main Content ] end -->
-<!-- Warning Section start -->
-<!-- Older IE warning message -->
-<!--[if lt IE 11]>
-  <div class="ie-warning">
-    <h1>Warning!!</h1>
-    <p>
-      You are using an outdated version of Internet Explorer, please upgrade
-      <br />to any of the following web browsers to access this website.
-    </p>
-    <div class="iew-container">
-      <ul class="iew-download">
-        <li>
-          <a href="http://www.google.com/chrome/">
-            <img src="assets/images/browser/chrome.png" alt="Chrome" />
-            <div>Chrome</div>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.mozilla.org/en-US/firefox/new/">
-            <img src="assets/images/browser/firefox.png" alt="Firefox" />
-            <div>Firefox</div>
-          </a>
-        </li>
-        <li>
-          <a href="http://www.opera.com">
-            <img src="assets/images/browser/opera.png" alt="Opera" />
-            <div>Opera</div>
-          </a>
-        </li>
-        <li>
-          <a href="https://www.apple.com/safari/">
-            <img src="assets/images/browser/safari.png" alt="Safari" />
-            <div>Safari</div>
-          </a>
-        </li>
-        <li>
-          <a
-            href="http://windows.microsoft.com/en-us/internet-explorer/download-ie"
-          >
-            <img src="assets/images/browser/ie.png" alt="" />
-            <div>IE (11 & above)</div>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <p>Sorry for the inconvenience!</p>
-  </div>
-<![endif]-->
-<!-- Warning Section Ends -->
-
+<script>
+    const revenueData = <%- JSON.stringify(TotalSales || []) %>;
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const labels = revenueData.map(item => months[item._id - 1]);
+    const seriesData = revenueData.map(item => item.totalAmount);
+</script>
 <%- include('layouts/footer')%>
+ 

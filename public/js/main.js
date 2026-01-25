@@ -184,7 +184,7 @@ $(".related-carousel").owlCarousel({
     margin: 30,
     dots: false,
     loop: true,
-    nav : true,
+    nav : false,
     navText : [
         '<i class="fa fa-angle-left"></i>',
         '<i class="fa fa-angle-right"></i>'
@@ -204,7 +204,7 @@ $(".featured-carousel").owlCarousel({
     margin: 30,
     dots: false,
     loop: false,
-    nav : true,
+    nav : false,
     navText : [
         '<i class="fa fa-angle-left"></i>',
         '<i class="fa fa-angle-right"></i>'

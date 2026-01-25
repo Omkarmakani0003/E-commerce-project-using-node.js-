@@ -39,8 +39,12 @@
                                 <td><%= Order.razorpay_order_id %></td>
                                 <td><%= new Date(Order.updatedAt).toLocaleDateString() %></td>
                                 <td>Rs.<%= Order.total %></td>
-                                <td><span class="badge <%= Order.payment_status == 'paid'? 'badge-success' : 'badge-danger' %>"><%= Order.payment_status %></span></td>
-                                <td><%= Order.status %></td>
+                                <td><span class="p-2 badge <%= 
+                                                        (Order.payment_status == 'paid' || Order.payment_status == 'delivered') ? 'badge-success' : 
+                                                        (Order.payment_status == 'cancelled' || Order.payment_status == 'failed') ? 'badge-danger' : 'badge-info' %>"><%= Order.payment_status %></span></td>
+                                <td><span class="p-2 badge <%= 
+                                                        (Order.status == 'paid' || Order.status == 'delivered') ? 'badge-success' : 
+                                                        (Order.status == 'cancelled') ? 'badge-danger' : 'badge-info' %>"><%= Order.status %></span></td>
                                 <td>
                                     <a href="/view_order/<%= Order._id %>" class="btn btn-sm btn-primary">
                                         View

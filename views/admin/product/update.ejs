@@ -217,6 +217,8 @@
                                 </div>
                             </div>
 
+                            
+
                             <div class="row">
                                 <!-- Variations Section -->
                                 <div class="col-sm-12">
@@ -225,12 +227,13 @@
                                         <div id="variationsContainer">
                                             <!-- Dynamic variation fields will be added here -->
                                             <button type="button" class="btn btn-secondary"
-                                                onclick="addVariationField('<%= variations.variation.length + variations.variation.find(item => item.type === 'Color').values.length - 1 %>')">Add Variation</button>
-                                            <button type="button" class="btn btn-secondary" onclick="addColorVariation('<%= variations.variation.length + variations.variation.find(item => item.type === 'Color').values.length - 1 %>')">
+                                                onclick="addVariationField('<%= ((variations?.variation?.length) || 1) + ((variations?.variation?.find(item => item.type === 'Color')?.values.length) || 0) - 1 %>')">Add Variation</button>
+                                            <button type="button" class="btn btn-secondary" onclick="addColorVariation('<%= ((variations?.variation?.length) || 1) + ((variations?.variation?.find(item => item.type === 'Color')?.values.length) || 0) - 1 %>')">
                                                 Add Color Variation
                                             </button>
                                         </div>
                                         <% 
+                                           if(variations != null){
                                            let i = 0
                                            variations.variation.forEach((variation,vindex)=>{
                                            if(variation.type != 'Color') { 
@@ -290,7 +293,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                <% }) } }) %>     
+                                <% }) } })} %>     
                                         
                                     </div>
                                 </div>

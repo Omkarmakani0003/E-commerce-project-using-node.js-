@@ -7,7 +7,7 @@ const {cart} = require('../models/cart')
 exports.AllCategory = async(req,res)=>{
     try{
         const categories = await category.find() 
-        const { page = 1, limit = 10 } = req.query
+        const { page = 1, limit = 9 } = req.query
         const products = await product.paginate({},{page : parseInt(page), limit : parseInt(limit)})
         let variations = []
         for (let i = 0; i < products.docs.length; i++){
@@ -15,7 +15,8 @@ exports.AllCategory = async(req,res)=>{
         }
         const cartCout = await cart.countDocuments({user_id:req.user._id}) 
         const Subcategory = ''
-        res.render('category',{user:req.user, categories,Subcategory, products, variations, currentCategoryId : '',route: req.path || '',cartcount : cartCout})
+        const subcategoryid = req.query.s || ''
+        res.render('category',{user:req.user, categories,Subcategory, products, variations, currentCategoryId : '',route: req.path || '',cartcount : cartCout,subcategoryid})
     }catch(error){
         console.log(error.message)
     }
@@ -23,7 +24,7 @@ exports.AllCategory = async(req,res)=>{
 
 exports.Category = async(req,res)=>{
     try{
-        const { page = 1, limit = 10 } = req.query
+        const { page = 1, limit = 9 } = req.query
         const subcategoryid = req.query.s || ''
         const id = req.params.id
         const categories = await category.find() 
@@ -42,7 +43,7 @@ exports.Category = async(req,res)=>{
 
 exports.GetCategoryWiseProducts= async(req,res) =>{
       const id = req.query.category.split(',')
-      const { page = 1, limit = 10 } = req.query
+      const { page = 1, limit = 9 } = req.query
       if(id.length > 0 && id[0] != ''){
 
         const products = await product.paginate({

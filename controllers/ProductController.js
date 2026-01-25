@@ -10,17 +10,27 @@ exports.ProductDetail = async(req,res)=>{
         const products = await product.findOne({slug})
         const variations = await variation.findOne({ product_id : products._id})
         const cartCout = await cart.countDocuments({user_id:req.user._id})  
-        const relatedProducts = await product.find({
-            $or:[
-                {subcategory_id : products.subcategory_id},
-                {category_id : products.category_id}
-            ] 
-        })
-        const featuredProducts = await product.find({
-            $or:[
-                {category_id : products.category_id}
-            ] 
-        })
+        const relatedProducts = await product.aggregate([
+            {
+            $match: {
+            $or: [
+                    { subcategory_id: products.subcategory_id },
+                    { category_id: products.category_id }
+                 ]
+                }
+            },
+            { $sample: { size: 8 } } 
+        ])
+        const featuredProducts = await product.aggregate([
+            {
+            $match: {
+            $or: [
+                    { category_id: products.category_id }
+                 ]
+                }
+            },
+            { $sample: { size: 8 } } 
+        ])
         delete req.session.cart
         res.render('productDetail',{user:req.user,categories,products,variations,route: req.path || '',cartcount : cartCout,relatedProducts,featuredProducts})
     }catch(error){
@@ -30,7 +40,7 @@ exports.ProductDetail = async(req,res)=>{
 
 exports.Search = async(req,res)=>{
     try{
-        const { page = 1, limit = 10 } = req.query
+        const { page = 1, limit = 9 } = req.query
         const search = req.query.search
         const Category =  await category.findOne({category_name : { $regex: search, $options: 'i'}})
 
@@ -55,7 +65,8 @@ exports.Search = async(req,res)=>{
         const categories = await category.find() 
         const cartCout = await cart.countDocuments({user_id:req.user._id})  
         const Subcategory = ''
-        res.render('category',{user:req.user, categories,Subcategory, products, variations, currentCategoryId : '',search : search, route: req.path || '', cartcount : cartCout})
+        const subcategoryid = req.query.s || ''
+        res.render('category',{user:req.user, categories,Subcategory, products, variations, currentCategoryId : '',search : search, route: req.path || '', cartcount : cartCout,subcategoryid})
     }catch(error){
         console.log(error.message)
     }

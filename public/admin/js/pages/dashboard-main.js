@@ -403,15 +403,13 @@ $(function() {
         let variationCount = 0;
         
         function addVariationField(count = 0) {
-            
+
             if(variationCount >= count){
                 variationCount++
             }else{
                variationCount = parseInt(count) || 0
                variationCount++
             }
-
-            console.log('addVariationField',variationCount)
 
             const variationDiv = document.createElement('div');
             variationDiv.classList.add('variation-field');
@@ -456,8 +454,6 @@ $(function() {
                variationCount = parseInt(count) || 0
                variationCount++
             }
-
-            console.log('addColorVariation',variationCount)
 
           const colorDiv = document.createElement('div');
           colorDiv.classList.add('variation-field');

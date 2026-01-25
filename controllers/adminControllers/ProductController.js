@@ -119,7 +119,7 @@ exports.ProuctAdd = async(req,res) => {
         res.redirect('/admin/products')
       
      }catch(error){
-        console.log(error)
+        console.log(error.message)
      }
 }
 
@@ -129,7 +129,7 @@ exports.ProductList = async(req,res) => {
       const categories = await category.find();
       res.render('admin/product/index',{products,categories, error: req.flash("errors"), success: req.flash("success")})
    }catch(error){
-       console.log(error)
+       console.log(error.message)
    }  
 }
 
@@ -146,7 +146,7 @@ exports.ProductView = async(req,res) => {
       const variations = await variation.findOne({product_id :products._id})
       res.render('admin/product/view',{products, categories, subcategories,variations, error: req.flash("errors"), success: req.flash("success")})
    }catch(error){
-      console.log(error)
+      console.log(error.message)
    }
       
 }
@@ -163,7 +163,7 @@ exports.DeleteProduct = async(req,res) => {
       }
       return res.status(200).json({success:true})
    }catch(error){
-      console.log(error)
+      console.log(error.message)
    }
 }
 
@@ -179,7 +179,7 @@ exports.EditProduct = async(req,res)=>{
       const variations = await variation.findOne({product_id :products._id})
       res.render('admin/product/update',{products, categories, subcategories,variations, error: req.flash("errors"), success: req.flash("success"),oldInput: req.flash("oldInput")})
    }catch(error){
-      console.log(error)
+      console.log(error.message)
    }
 } 
 
@@ -283,17 +283,30 @@ exports.ProuctUpdate = async(req,res)=>{
             })
          );
 
-         const Variation =  await variation.findOne({product_id: products._id})
-            Variation.variation = variations,
-            Variation.status = req.body.status
-            Variation.save()
-         }
+      let variationDoc = await variation.findOne({ product_id: products._id });
+
+      if (variationDoc) {
+      
+      variationDoc.variation = variations;
+      variationDoc.status = req.body.status;
+      await variationDoc.save();
+
+      }else{
+      
+      variationDoc = new variation({
+         product_id: products._id,
+         variation: variations,
+         status: req.body.status
+      });
+      await variationDoc.save();
+      }
+   }
         
      req.flash("success", "Product updated successfully"); 
      res.redirect('/admin/products')
       
      }catch(error){
-        console.log(error)
+        console.log(error.message)
      }
 
 }

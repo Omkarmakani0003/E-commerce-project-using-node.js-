@@ -47,6 +47,7 @@ router.post('/verify-payment',CheckOutController.PaymentVarify)
 router.get('/orders',OrderController.Orders)
 router.get('/success',OrderController.OrderSuccess)
 router.get('/view_order/:id',OrderController.ViewOrders)
+router.get('/order-track/:id',OrderController.track)
 
 
 

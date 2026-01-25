@@ -90,9 +90,14 @@
                     <div class="row pb-3 col-12" id="products">
                         
                     <% if(products.docs.length > 0){ 
+                        function shortTital(title){
+                            const Title =  title.split(' ')
+                            return `${Title[0]+' '+Title[1]}...`
+                        }
                         products.docs.forEach((product)=>{
                     %>
                     <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                        <a href="product-detail/<%= product.slug %>">
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
                                 <% if(product.images[0].url[0]) { %>
@@ -103,7 +108,7 @@
                                 
                             </div>
                             <div class="text-center py-4">
-                                <a href="/product-detail/<%= product.slug %>" class="h6 text-decoration-none text-truncate"><%= product.product_name %></a>
+                                <a href="/product-detail/<%= product.slug %>" class="h6 text-decoration-none text-truncate"><%= shortTital(product.product_name) %></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
                                     <h5>Rs.<%= product.price - product.discount %></h5><h6 class="text-muted ml-2"><del><%= product.price %></del></h6>
                                 </div>
@@ -117,6 +122,7 @@
                                 </div>
                             </div>
                         </div>
+                       </a>
                     </div>
                    <% })} %>
                     </div>
@@ -138,11 +144,11 @@
     </div>
 <script>
 
-    
 
-     function updatePrice(value) {
-        document.getElementById("priceValue").innerText = value;
-     }
+    //  function updatePrice(value) {
+    //     document.getElementById("priceValue").innerText = value;
+    //  }
+
     const currentCategoryId = '<%= currentCategoryId %>'
     const categoryAll = document.getElementById('category-all');
     const categoryItems = document.querySelectorAll('.categories');
@@ -154,7 +160,12 @@
        }
     });
 
-    function getProduct(ids = [],c_id,page=1,limit=10){
+    function shortTital(title){
+       const Title =  title.split(' ')
+       return `${Title[0]+' '+ Title[1]}...`
+    }
+
+    function getProduct(ids = [],c_id,page=1,limit=9){
             fetch(`/get-category-wise-products/?category=${encodeURIComponent(ids)}&id=${c_id}&page=${page}&limit=${limit}`)
             .then(res => res.json())
             .then(data => {
@@ -170,12 +181,13 @@
                     const imgSrc = product.images && product.images[0]?.url[0] ? product.images[0].url[0] : 'img/no-image-available-icon-vector.jpg';
                             productsContainer.innerHTML += `
                                 <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                                  <a href="/product-detail/${product.slug} %>">
                                     <div class="product-item bg-light mb-4">
                                         <div class="product-img position-relative overflow-hidden">
                                             <img src="${imgSrc}" style="width:100%!important; height:300px!important;" alt="">
                                         </div>
                                         <div class="text-center py-4">
-                                            <a href="/product-detail/${product.slug}" class="h6 text-decoration-none text-truncate">${product.product_name}</a>
+                                            <a href="/product-detail/${product.slug}" class="h6 text-decoration-none text-truncate">${shortTital(product.product_name)}</a>
                                             <div class="d-flex align-items-center justify-content-center mt-2">
                                                 <h5>Rs.${product.price - product.discount}</h5>
                                                 <h6 class="text-muted ml-2"><del>${product.price}</del></h6>
@@ -190,6 +202,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </a>
                                 </div>
                             `;  
                         });

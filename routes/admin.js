@@ -61,9 +61,13 @@ router.delete('/subcategories-delete/:id',CategoryController.SubCategoryDelete)
 router.get('/slider-list',SliderController.sliders)
 router.get('/slider-create',SliderController.create)
 router.post('/slider-store',upload.single('image'),SliderValidation,SliderController.store)
+router.get('/slider-edit/:id',SliderController.Edit)
+router.post('/slider-update/:id',upload.single('image'),SliderController.Update)
 router.delete('/slider-delete/:id',SliderController.delete)
 
 router.get('/orders',OrderController.orders)
+router.get('/view-order/:id',OrderController.vieworder)
+router.post('/update-status',OrderController.updateStatus)
 
 router.get('/users',UserController.users)
 

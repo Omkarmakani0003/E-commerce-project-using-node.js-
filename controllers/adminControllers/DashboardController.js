@@ -2,6 +2,9 @@ const bcrypt = require('bcrypt')
 const {admin} = require('../../models/admin/adminModel')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv');
+const {user} = require('../../models/users')
+const {product} = require('../../models/admin/product')
+const {orders} = require('../../models/order')
 dotenv.config()
 
 exports.loginform = (req,res) => {
@@ -42,12 +45,26 @@ exports.login = async(req,res) => {
            return res.redirect('/admin/')
 
      }catch (e){
-          console.log(e)
+          console.log(e.message)
      }
 }
 
-exports.dashboard = (req,res) => {
-     res.render('admin/dashboard',{success : req.flash('success'),error : req.flash('errors')}); 
+exports.dashboard = async(req,res) => {
+     const totalVerifiedUsers = await user.countDocuments({is_varify:true})
+     const totalUnVerifiedUsers = await user.countDocuments({is_varify:false})
+     const Totalproduct = await product.countDocuments()
+     const TotalSales = await orders.aggregate([
+                         { $match: { payment_status: "paid" } },
+                              {
+                                   $group: {
+                                        _id: { $month: "$createdAt" },
+                                        totalAmount: { $sum: "$total" }
+                                   }
+                              }
+                         ]);                   
+     const TotalOrders = await orders.countDocuments({ status: "delivered" })     
+     const TotalCancelledOrders = await orders.countDocuments({ status: "cancelled" })          
+     res.render('admin/dashboard',{totalVerifiedUsers,totalUnVerifiedUsers,Totalproduct,TotalSales,TotalOrders,TotalCancelledOrders,success : req.flash('success'),error : req.flash('errors')}); 
 }  
 
 exports.logout = (req,res) => {
