@@ -32,7 +32,10 @@ router.get('/',homeController.HomePage)
 router.get('/product-detail/:slug',ProductController.ProductDetail)
 router.post('/add-to-cart',CartController.AddToCart)
 router.post('/buynow',ProductController.Buynow)
-
+router.get('/email-verification',UserController.emailVerification)
+router.post('/email-varify',UserController.emailverify)
+router.get('/password-reset',UserController.passwordReset)
+router.post('/reset/:email',UserController.reset)
 
 router.use(CheckUserAuth)
 router.get('/logout',LoginController.logout)
@@ -48,6 +51,7 @@ router.get('/orders',OrderController.Orders)
 router.get('/success',OrderController.OrderSuccess)
 router.get('/view_order/:id',OrderController.ViewOrders)
 router.get('/order-track/:id',OrderController.track)
+
 
 
 

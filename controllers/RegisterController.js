@@ -66,12 +66,12 @@ exports.OtpVarify = async(req,res) => {
     const categories = await category.find();
     const cartCout = await cart.countDocuments({user_id:req.user._id}) 
     if(req.session.email != undefined || req.session.email != null){
-         res.render('otpverify',{user:req.user, categories, error: req.flash("errors"), success: req.flash("success"), email: req.session.email,cartcount : cartCout})
+        res.render('otpverify',{user:req.user || '', categories, error: req.flash("errors"), success: req.flash("success"), route: req.path || '', email: req.session.email,cartcount : cartCout})
     }
 
     if(req.user != undefined || req.user != null){
         if(req.user.is_varify == false){
-           res.render('otpverify',{user:req.user, categories, error: req.flash("errors"), success: req.flash("success"), email: req.session.email,cartcount : cartCout})
+           res.render('otpverify',{user:req.user || '', categories, error: req.flash("errors"), success: req.flash("success"),route: req.path || '', email: req.session.email,cartcount : cartCout})
         }
     }
    
@@ -118,6 +118,20 @@ exports.Varify = async(req,res) => {
       return res.redirect("/otp");
    }
 
+   const varified = await user.findOne({email : email})
+
+   if(varified.is_varify){
+      
+      await otp.findOneAndUpdate(
+        { email },
+        { $set: {otp : ''}},        
+      )
+
+       req.session.email = email
+       return res.redirect('/password-reset')
+   }
+   
+
    const User = await user.findOneAndUpdate(
 
       { email: email },   
@@ -125,7 +139,7 @@ exports.Varify = async(req,res) => {
       {
          new: true,                 
          upsert: true,              
-          runValidators: true
+         runValidators: true
       }
    );
 

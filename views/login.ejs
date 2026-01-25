@@ -37,6 +37,9 @@
         <div class="col-lg-5 col-md-7">
             <div class="bg-light p-30">
                 <h3 class="mb-4 text-center">Login to Your Account</h3>
+                <% if (success && success.length > 0) { success.forEach(function(e) { %>
+                    <div class="alert alert-success"><%= e %></div>
+                <% } ) }  %>
                 <% if (error && error.length > 0) { error.forEach(function(e) { %>
                     <div class="alert alert-danger"><%= e %></div>
                 <% } ) }  %>
@@ -56,7 +59,7 @@
                             <input type="checkbox" class="custom-control-input" id="remember">
                             <label class="custom-control-label" for="remember">Remember me</label>
                         </div>
-                        <a href="#">Forgot password?</a>
+                        <a href="/email-verification">Forgot password?</a>
                     </div>
 
                     <button class="btn btn-primary btn-block py-2 mb-3">
