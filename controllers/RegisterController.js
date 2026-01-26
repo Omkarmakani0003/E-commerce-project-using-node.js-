@@ -114,7 +114,7 @@ exports.Varify = async(req,res) => {
    }
 
    if(Otp.expiryAt < new Date()){
-      req.flash("errors", {message:'Otp Expired'})
+      req.flash("errors", 'Otp Expired')
       return res.redirect("/otp");
    }
 

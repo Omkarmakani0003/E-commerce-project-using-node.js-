@@ -2,28 +2,29 @@ const mail = require('nodemailer')
 const dotenv = require('dotenv')
 dotenv.config();
 
+
+
 exports.mailSender = async(Data) => {
     try{
-        const transporter = mail.createTransport({
-        service : 'gmail',
-        auth:{
-             user : process.env.EMAIL,
-             pass : process.env.PASSWORD,
-          } 
-        })
+    const { TransactionalEmailsApi, SendSmtpEmail } = require('@getbrevo/brevo');
+    const emailAPI = new TransactionalEmailsApi();
+    emailAPI.authentications.apiKey.apiKey = process.env.BREVO_API_KEY;
 
-    const send = {
-        from : process.env.EMAIL,
-        to : Data.email,
-        subject : Data.subject,
-        text : Data.text
-    }  
+    const message = new SendSmtpEmail();
+    message.subject =  Data.subject;
+    message.textContent = Data.text;
+    message.sender = { name: "E-shop", email: process.env.EMAIL };
+    message.to = [{ email: Data.email, name: Data.email }];
 
-    const sent = await transporter.sendMail(send)
+    await emailAPI.sendTransacEmail(message)
+   .then((res) => {
+        console.error(res.body) 
+    })
+   .catch((err) => {
+        console.error(err.response?.data || err) 
+    });
 
-    if(sent){
-        return true;
-    }
+    return true
 
     }catch(error){
         console.error(error.message)
