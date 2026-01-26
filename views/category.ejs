@@ -72,8 +72,8 @@
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <div>
-                                <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
-                                <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button>
+                                <button class="btn btn-sm btn-light"></button>
+                                <button class="btn btn-sm btn-light ml-2"></button>
                             </div>
                             <div class="ml-2">
                                 <div class="btn-group ml-2">
@@ -101,9 +101,9 @@
                         <div class="product-item bg-light mb-4">
                             <div class="product-img position-relative overflow-hidden">
                                 <% if(product.images[0].url[0]) { %>
-                                   <img class="" src="<%= product.images[0].url[0] %>" width="100%!important" height="300px!important" alt="">
+                                   <img class="" src="<%= product.images[0].url[0] %>" width="250px!important" height="300px!important" alt="">
                                 <% }else{ %>
-                                    <img class="" src="img/no-image-available-icon-vector.jpg" width="100%!important" height="300px!important" alt="">
+                                    <img class="" src="img/no-image-available-icon-vector.jpg" width="250px!important" height="300px!important" alt="">
                                 <% } %>    
                                 
                             </div>
@@ -111,14 +111,6 @@
                                 <a href="/product-detail/<%= product.slug %>" class="h6 text-decoration-none text-truncate"><%= shortTital(product.product_name) %></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
                                     <h5>Rs.<%= product.price - product.discount %></h5><h6 class="text-muted ml-2"><del><%= product.price %></del></h6>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
                                 </div>
                             </div>
                         </div>
@@ -191,15 +183,7 @@
                                             <div class="d-flex align-items-center justify-content-center mt-2">
                                                 <h5>Rs.${product.price - product.discount}</h5>
                                                 <h6 class="text-muted ml-2"><del>${product.price}</del></h6>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-center mb-1">
-                                                <small class="fa fa-star text-primary mr-1"></small>
-                                                <small class="fa fa-star text-primary mr-1"></small>
-                                                <small class="fa fa-star text-primary mr-1"></small>
-                                                <small class="fa fa-star text-primary mr-1"></small>
-                                                <small class="fa fa-star text-primary mr-1"></small>
-                                                <small>(99)</small>
-                                            </div>
+                                            </div>                           
                                         </div>
                                     </div>
                                     </a>
