@@ -34,7 +34,7 @@
     }).then(res => res.json())
       .then(data => {
         if(data.success){
-            document.getElementById('mobile-cartCount').innerText = data.cartCount 
+            // document.getElementById('mobile-cartCount').innerText = data.cartCount 
             document.getElementById('cartCount').innerText = data.cartCount
             document.getElementById('toastContainer').innerHTML  = `
              <div class="toast align-items-center text-bg-success border-0 show">

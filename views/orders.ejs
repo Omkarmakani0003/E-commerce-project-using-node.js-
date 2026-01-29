@@ -19,10 +19,10 @@
                 <h4 class="mb-4">My Orders</h4>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover text-center mb-0">
-                        <thead class="bg-secondary text-dark">
+                    <table class="order-table table table-bordered table-hover text-center mb-0">
+                        <thead class="bg-secondary text-dark thead-dark">
                             <tr>
-                                <th>Order ID</th>
+                                <th>Product</th>
                                 <th>Date</th>
                                 <th>Total</th>
                                 <th>Payment</th>
@@ -33,21 +33,26 @@
                         <tbody class="align-middle" id="orderTable">
                             <!-- Order Row -->
                              <% if(order){
-                                order.forEach((Order)=>{
+                                function shortTital(title){ 
+                                    const Title = title.split(' '); 
+                                    return Title.length > 1 ? `${Title[0]+' '+Title[1]}...` : Title[0];
+                                } 
+                                order.forEach((Order,index)=>{
                              %>        
-                            <tr>
-                                <td><%= Order.razorpay_order_id %></td>
-                                <td><%= new Date(Order.updatedAt).toLocaleDateString() %></td>
-                                <td>Rs.<%= Order.total %></td>
-                                <td><span class="p-2 badge <%= 
+                             
+                            <tr class="border border-none">
+                                <td class="align-middle py-2 d-flex justify-content-start"><a href="/product-detail/<%= Order.items[0].product_id.slug  %>" class="text-dark"><img src="<%= Order.items[0].product_id.images[0].url[0] %>" class="mr-3" alt="" style="width: 50px;"><%= shortTital(Order.items[0].product_id.product_name) %></a></td>
+                                <td ><span class="order-mobile" style="display: none;">Order Date : </span><span><%= new Date(Order.updatedAt).toLocaleDateString() %></span></td>
+                                <td ><span class="order-mobile" style="display: none;">Price : </span><span></span>Rs.<%= Order.total %></span></td>
+                                <td ><span class="order-mobile" style="display: none;">Payment status : </span> <span class="p-2 badge <%= 
                                                         (Order.payment_status == 'paid' || Order.payment_status == 'delivered') ? 'badge-success' : 
                                                         (Order.payment_status == 'cancelled' || Order.payment_status == 'failed') ? 'badge-danger' : 'badge-info' %>"><%= Order.payment_status %></span></td>
-                                <td><span class="p-2 badge <%= 
+                                <td ><span class="order-mobile" style="display: none;">Order status : </span><span class="p-2 badge <%= 
                                                         (Order.status == 'paid' || Order.status == 'delivered') ? 'badge-success' : 
                                                         (Order.status == 'cancelled') ? 'badge-danger' : 'badge-info' %>"><%= Order.status %></span></td>
-                                <td>
+                                <td class="order-view">
                                     <a href="/view_order/<%= Order._id %>" class="btn btn-sm btn-primary">
-                                        View
+                                        View Order
                                     </a>
                                 </td>
                             </tr>

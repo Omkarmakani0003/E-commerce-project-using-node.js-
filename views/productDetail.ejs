@@ -1,9 +1,9 @@
 <%- include('layouts/header') %>
 <!-- Breadcrumb Start -->
 <div class="container-fluid">
-    <div class="row px-xl-5">
+    <div class="row px-3 px-sm-5">
         <div class="col-12">
-            <nav class="breadcrumb bg-light mb-30">
+            <nav class="breadcrumb bg-light mb-3 mb-sm-4">
                 <a class="breadcrumb-item text-dark" href="/">Home</a>
                 <span class="breadcrumb-item active"><%= products.product_name %></span>
             </nav>
@@ -12,18 +12,17 @@
 </div>
 <!-- Breadcrumb End -->
 
-
 <!-- Shop Detail Start -->
 <div class="container-fluid pb-5">
-    <div class="row px-xl-5">
+    <div class="row px-3 px-sm-5">
 
         <!-- Product Images -->
-        <div class="col-lg-5 mb-30">
+        <div class="col-12 col-lg-5 mb-4 mb-lg-0">
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner bg-light">
                     <% if(products.images[0].url.length > 0) { products.images[0].url.forEach((img)=>{ %>
                         <div class="carousel-item <%= products.images[0].url[0] == img ?  'active' : '' %>">
-                           <img class="" src="<%= img %>" alt="Product Image" width="100%" >
+                           <img src="<%= img %>" class="d-block w-100" alt="Product Image" style="object-fit:cover;">
                         </div>
                     <% }) } %>
                 </div>
@@ -37,12 +36,17 @@
         </div>
 
         <!-- Product Info -->
-        <div class="col-lg-7 h-auto mb-30">
-            <div class="h-100 bg-light p-30">
+        <div class="col-12 col-lg-7">
+            <div class="bg-light p-3 p-md-4 h-100">
                 
-                <h3><%= products.product_name %></h3>
+                <h3 class="mb-2"><%= products.product_name %></h3>
                 <input type="hidden" name="product-id" value="<%= products._id %>">
+<<<<<<< HEAD
+                
+                <div class="d-flex flex-wrap align-items-center mb-2">
+=======
                 <!-- <div class="d-flex mb-3">
+>>>>>>> 42a73fc377c41192e0af8b8d340540e898178344
                     <div class="text-primary mr-2">
                         <small class="fas fa-star"></small>
                         <small class="fas fa-star"></small>
@@ -53,100 +57,92 @@
                     <small class="pt-1">(99 Reviews)</small>
                 </div> -->
 
-                <h3 class="font-weight-semi-bold mb-4">Rs. <%= products.price - products.discount %></h3>
-                  <input type="hidden" id="price" name ="price" value="<%= products.price - products.discount %>">
-                <p class="mb-4">
-                    <%= products.description %>
-                </p>
+                <h4 class="text-success font-weight-bold mb-3">Rs. <%= products.price - products.discount %></h4>
+                <input type="hidden" id="price" name ="price" value="<%= products.price - products.discount %>">
 
-                <!-- Sizes -->
+                <p class="mb-4"><%= products.description %></p>
+
+                <!-- Sizes / Variations -->
                 <% if(variations) { %>
                   <% variations.variation.forEach(function(variation){ %>
                     <% if(variation.type != 'Color'){  %>
-                      <div class="d-flex mb-3">
-                    
-                      <strong class="text-dark mr-3" id="variation_type"><%= variation.type %> :</strong>
-                      <input type="hidden" name="variation_type[]" value="<%= variation.type %>">
-                      
-                        <%
-                          variation.values.forEach((value,index)=>{   
-                        %>
-                        <div class="custom-control custom-radio custom-control-inline">
+                      <div class="mb-3 d-flex flex-wrap align-items-center">
+                        <strong class="text-dark mr-2 d-block"><%= variation.type %> :</strong>
+                        <% variation.values.forEach((value,index)=>{ %>
+                        <div class="custom-control custom-radio custom-control-inline mb-1">
                             <input type="radio" class="custom-control-input" id="<%= variation.type %>-<%= index %>" name="<%= variation.type %>" <%= index == 0 ? 'checked' : '' %>>
                             <label class="custom-control-label" for="<%= variation.type %>-<%= index %>"><%= value %></label>
                         </div>
-                        <%  }) %>
-                      
-                    </div>
-                  <% } %>
-                <% }) %>
-              <% } %>
-                <!-- Colors -->
-                <% if(variations) { %>
+                        <% }) %>
+                      </div>
+                    <% } %>
+                  <% }) %>
+
                   <% variations.variation.forEach(function(variation){ %>
                     <% if(variation.type == 'Color'){  %>
-                      <div class="d-flex mb-4">
-                        <strong class="text-dark mr-3"><%= variation.type %> :</strong>
-                        
-                          <%
-                            variation.values.forEach((value,index)=>{   
-                          %>
-                        <div class="custom-control custom-radio custom-control-inline">
+                      <div class="mb-3 d-flex flex-wrap align-items-center">
+                        <strong class="text-dark mr-2 d-block"><%= variation.type %> :</strong>
+                        <% variation.values.forEach((value,index)=>{ %>
+                        <div class="custom-control custom-radio custom-control-inline mb-1">
                             <input type="radio" class="custom-control-input" id="<%= variation.type %>-<%= index %>" name="<%= variation.type %>" <%= index == 0 ? 'checked' : '' %>>
-                            <label class="custom-control-label" for="<%= variation.type %>-<%= index %>" style="background-color: <%= value %>;width: 24px;border:1px solid;border-radius:50%;"></label>
+                            <label class="custom-control-label" for="<%= variation.type %>-<%= index %>" style="background-color: <%= value %>;width:24px;height:24px;border:1px solid #ddd;border-radius:50%;"></label>
                         </div>
-                        <%  }) %>
-                       
-                   </div>
+                        <% }) %>
+                      </div>
+                    <% } %>
+                  <% }) %>
                 <% } %>
-              <% }) %>
-            <% } %>
-                <div class="d-flex">
-                    <strong class="text-dark mr-3">Stock :</strong>
+
+                <div class="mb-3">
+                    <strong class="text-dark mr-2">Stock :</strong>
                     <% if(products.stock > 0){ %>
-                       <p class="text-dark"><%= products.stock %></p>
+                       <span class="text-dark"><%= products.stock %></span>
                     <% }else { %>
-                        <p class="text-danger">Out of stock</p>
+                        <span class="text-danger">Out of stock</span>
                     <% } %>
                 </div>
+
                 <!-- Quantity + Buttons -->
-                <div class="d-flex align-items-center mb-4 pt-2">
-                    <div class="input-group quantity mr-3" style="width: 130px;">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-minus">
-                                <i class="fa fa-minus"></i>
-                            </button>
+                <div class="d-flex flex-wrap align-items-center mb-3">
+                    <div class="input-group quantity mr-2 mb-2 mb-sm-0" style="width: 120px;">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-primary btn-minus"><i class="fa fa-minus"></i></button>
                         </div>
-                        <input type="text" class="form-control bg-secondary border-0 text-center" id="qty" value="1">
-                        <div class="input-group-btn">
-                            <button class="btn btn-primary btn-plus">
-                                <i class="fa fa-plus"></i>
-                            </button>
+                        <input type="text" class="form-control text-center" id="qty" value="1">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary btn-plus"><i class="fa fa-plus"></i></button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3 mr-1" onclick="buynow()">
+
+                    <button class="btn btn-primary mr-2 mb-2 mb-sm-0" onclick="buynow()">
                         <i class="fa fa-shopping-bag mr-1"></i> Buy Now
                     </button>
-                    
-                    <button class="btn btn-primary px-3 mr-1" onclick='addtocart()'>
+                    <button class="btn btn-outline-primary" onclick='addtocart()'>
                         <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
                     </button>
                     <input type="hidden" value="<%= products._id %>" id="productId">
                 </div>
 
-                <!-- <div class="d-flex pt-2">
-                    <strong class="text-dark mr-2">Share:</strong>
-                    <div class="d-inline-flex">
-                        <a class="text-dark px-2" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="text-dark px-2" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="text-dark px-2" href=""><i class="fab fa-linkedin-in"></i></a>
-                        <a class="text-dark px-2" href=""><i class="fab fa-pinterest"></i></a>
-                    </div>
-                </div> -->
-
             </div>
         </div>
     </div>
+
+
+    <!-- Tabs (Description, Info, Reviews) -->
+    <div class="row px-3 px-sm-5 mt-4">
+        <div class="col-12">
+            <div class="bg-light p-3 p-md-4">
+                <ul class="nav nav-tabs mb-3 flex-wrap">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab-pane-2">Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (2)</a>
+                    </li>
+                </ul>
 
     <!-- Tabs -->
     <div class="row px-xl-5">
@@ -158,17 +154,16 @@
                     <!-- <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (2)</a> -->
                 </div>
 
+
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
-                        <h4 class="mb-3">Product Description</h4>
-                        <p>
-                            <%= products.description %>
-                        </p>
+                        <h5 class="mb-2">Product Description</h5>
+                        <p><%= products.description %></p>
                     </div>
 
                     <div class="tab-pane fade" id="tab-pane-2">
-                        <h4 class="mb-3">Additional Information</h4>
-                        <ul>
+                        <h5 class="mb-2">Additional Information</h5>
+                        <ul class="mb-0">
                             <li>Material: Cotton & Polyester</li>
                             <li>Fit: Regular</li>
                             <li>Season: Winter</li>
@@ -176,13 +171,20 @@
                         </ul>
                     </div>
 
+
+                    <div class="tab-pane fade" id="tab-pane-3">
+                        <h5 class="mb-3">Customer Reviews</h5>
+                        <div class="media mb-3">
+                            <img src="/img/user.jpg" alt="Image" class="img-fluid mr-2 mt-1" style="width: 45px;">
+
                     <!-- <div class="tab-pane fade" id="tab-pane-3">
                         <h4 class="mb-4">Customer Reviews</h4>
                         <div class="media mb-4">
                             <img src="/img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+
                             <div class="media-body">
-                                <h6>John Doe<small> - <i>01 Jan 2025</i></small></h6>
-                                <div class="text-primary mb-2">
+                                <h6>John Doe <small>- <i>01 Jan 2025</i></small></h6>
+                                <div class="text-primary mb-1">
                                     <i class="fas fa-star"></i><i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i><i class="fas fa-star"></i>
                                     <i class="far fa-star"></i>
@@ -192,70 +194,113 @@
                         </div>
                     </div> -->
                 </div>
-
             </div>
         </div>
     </div>
-</div>
 
-<!-- Product Info Cards Start -->
-<div class="row px-xl-5 mt-4">
-
-    <!-- Product Specifications -->
-    <div class="col-lg-6 mb-30">
-        <div class="bg-light p-30 h-100">
-            <h5 class="mb-4 border-bottom pb-2">
-                <i class="fa fa-info-circle text-primary mr-2"></i>Product Specifications
-            </h5>
-
-            <div class="row mb-3">
-                <div class="col-6 text-muted">SKU</div>
-                <div class="col-6 font-weight-bold"><%= products.sku %></div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-6 text-muted">Brand</div>
-                <div class="col-6 font-weight-bold"><%= products.brand_name %></div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-6 text-muted">Category</div>
-                <% categories.forEach((category)=>{ 
-                    if(String(products.category_id) == String(category._id)){
-                %>
-                  <div class="col-6 font-weight-bold"><%= category.category_name %></div>
-                <% }}) %>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-6 text-muted">Availability</div>
-                <div class="col-6">
-                    <% if(products.stock > 0) { %>
-                       <span class="badge badge-success px-3 py-1">In Stock</span>
-                    <% }else{ %>
-                        <span class="badge badge-danger px-3 py-1">Out of Stock</span>
-                    <% } %>    
+    <!-- Product Info Cards (Specifications & Shipping) -->
+    <div class="row px-3 px-sm-5 mt-4">
+        <!-- Specifications -->
+        <div class="col-12 col-md-6 mb-3">
+            <div class="bg-light p-3 p-md-4 h-100">
+                <h5 class="mb-3 border-bottom pb-2"><i class="fa fa-info-circle text-primary mr-2"></i>Product Specifications</h5>
+                <div class="row mb-2"><div class="col-6 text-muted">SKU</div><div class="col-6 font-weight-bold"><%= products.sku %></div></div>
+                <div class="row mb-2"><div class="col-6 text-muted">Brand</div><div class="col-6 font-weight-bold"><%= products.brand_name %></div></div>
+                <div class="row mb-2"><div class="col-6 text-muted">Category</div>
+                    <% categories.forEach((category)=>{ if(String(products.category_id) == String(category._id)){ %>
+                        <div class="col-6 font-weight-bold"><%= category.category_name %></div>
+                    <% }}) %>
+                </div>
+                <div class="row mb-2"><div class="col-6 text-muted">Availability</div>
+                    <div class="col-6">
+                        <% if(products.stock > 0) { %>
+                           <span class="badge badge-success px-2 py-1">In Stock</span>
+                        <% }else{ %>
+                            <span class="badge badge-danger px-2 py-1">Out of Stock</span>
+                        <% } %>  
+                    </div>
+                </div>
+                <div class="row"><div class="col-6 text-muted">Tags</div>
+                    <div class="col-6">
+                        <% products.tags.split(',').forEach((tags)=>{ %>
+                            <span class="badge badge-secondary mr-1"><%= tags %></span>
+                        <% }) %>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-6 text-muted">Tags</div>
-                <div class="col-6">
-                    <% const tag = products.tags.split(',') 
-                        tag.forEach((tags)=>{
+        <!-- Shipping & Trust -->
+        <div class="col-12 col-md-6 mb-3">
+            <div class="bg-light p-3 p-md-4 h-100">
+                <h5 class="mb-3 border-bottom pb-2"><i class="fa fa-shipping-fast text-primary mr-2"></i>Shipping & Returns</h5>
+                <div class="d-flex align-items-center mb-2"><i class="fa fa-truck text-primary mr-2"></i>Free shipping on orders over <strong>$100</strong></div>
+                <div class="d-flex align-items-center mb-2"><i class="fa fa-clock text-primary mr-2"></i>Delivery within <strong>3–5 business days</strong></div>
+                <div class="d-flex align-items-center mb-2"><i class="fa fa-sync-alt text-primary mr-2"></i><strong>14-day</strong> easy return policy</div>
+                <div class="d-flex align-items-center"><i class="fa fa-lock text-primary mr-2"></i>100% secure payment guarantee</div>
+                <div class="d-flex flex-wrap mt-3">
+                    <span class="badge badge-light border mr-2 mb-2 px-3 py-2"><i class="fa fa-check text-success mr-1"></i>Quality Checked</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                        
-                    %>
+    <!-- Related Products Start -->
+    <div class="row px-sm-5 mt-4">
+        <h5 class="section-title position-relative text-uppercase mx-0 mb-3">
+            <span class="bg-secondary pr-2">Related Products</span>
+        </h5>
+        <div class="row m-auto">
+            <div class="col-12">
+                <div class="owl-carousel related-carousel">
+                    <% if(relatedProducts){
+                         relatedProducts.forEach((relatedProduct)=>{ 
+                         if(String(relatedProduct._id) != String(products._id)){
+                      %>
                     
-                    <span class="badge badge-secondary mr-1"><%= tags %></span>
-                    <% }) %>
-                    <!-- <span class="badge badge-secondary mr-1">Winter</span>
-                    <span class="badge badge-secondary">Men</span> -->
+                    <div class="product-item bg-light">
+                        <div class="product-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="<%= relatedProduct.images[0].url[0] %>" style="object-fit:cover; height:250px" alt="">
+                        </div>
+                        <div class="text-center py-3">
+                            <a class="h6 text-decoration-none text-truncate" href="/product-detail/<%= relatedProduct.slug %>"><%= relatedProduct.product_name %></a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h6>Rs. <%= relatedProduct.price %></h6>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <% } }) } %>
                 </div>
             </div>
         </div>
     </div>
+    <!-- Related Products End -->
 
+<<<<<<< HEAD
+    <!-- Featured Products Start -->
+    <div class="row px-sm-5 mt-4">
+        <h5 class="section-title position-relative text-uppercase mx-0 mb-3">
+            <span class="bg-secondary pr-2">Featured Products</span>
+        </h5>
+        <div class="row m-auto">
+            <div class="col-12">
+                <div class="owl-carousel featured-carousel">
+                    <% if(featuredProducts){
+                          featuredProducts.forEach((relatedProduct)=>{ 
+                           if(String(relatedProduct._id) != String(products._id)){
+                        %>
+                    <div class="product-item bg-light">
+                        <div class="product-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="<%= relatedProduct.images[0].url[0] %>" style="object-fit:cover; height:250px" alt="">
+                        </div>
+                        <div class="text-center py-3">
+                            <a class="h6 text-decoration-none text-truncate" href="/product-detail/<%= relatedProduct.slug %>"><%= relatedProduct.product_name %></a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h6>Rs. <%= relatedProduct.price %></h6>
+                            </div>
+                        </div>
+=======
     <!-- Shipping & Trust Info -->
     <div class="col-lg-6 mb-30">
         <div class="bg-light p-30 h-100">
@@ -321,16 +366,18 @@
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5>Rs. <%= relatedProduct.price %></h5>
                         </div>
+>>>>>>> 42a73fc377c41192e0af8b8d340540e898178344
                     </div>
+                    <% } }) } %>
                 </div>
-             <% } })} %>
-                <!-- Duplicate for more products -->
-                <!-- product-3, product-4, product-5 etc -->
-
             </div>
         </div>
     </div>
+    <!-- Featured Products End -->
+
 </div>
+<<<<<<< HEAD
+=======
 <!-- Related Products End -->
 <!-- Featured Products Slider Start -->
 <div class="container-fluid py-5">
@@ -365,17 +412,7 @@
 <!-- Featured Products Slider End -->
 
 
+>>>>>>> 42a73fc377c41192e0af8b8d340540e898178344
 <!-- Shop Detail End -->
-
-
-<!-- ================= FOOTER ================= -->
-<!-- Use EXACT same footer from index.html -->
-<!-- ================= END FOOTER ================= -->
-
-
-<!-- Back to Top -->
-<a href="#" class="btn btn-primary back-to-top">
-    <i class="fa fa-angle-double-up"></i>
-</a>
 
 <%- include('layouts/footer') %>

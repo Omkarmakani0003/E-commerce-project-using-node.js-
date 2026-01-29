@@ -1,50 +1,87 @@
 <%- include('layouts/header') %>
- <!-- Carousel Start -->
-    <div class="container-fluid mb-3">
-        <div class="toast-container position-fixed top-0 end-0 p-4">
-           <% if (success && success.length > 0) { success.forEach(function(e) { %>
-           <div class="toast align-items-center text-bg-success border-0 show">
-            <div class="d-flex align-items-center">
-              <div class="toast-body">
-                <%= e %>
-              </div>
-              <button type="button" class="btn-close btn-close-white ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
-             </div>
-          </div>
-       <% } ) }  %>
-    </div>
-        <div class="row">
-            <div class="col-lg-12 p-0">
-                <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
-                    <% if(sliders && sliders.length > 0){ %>
-                    <ol class="carousel-indicators">
-                        <% sliders.forEach((slider,index)=>{ %>
-                          <li data-target="#header-carousel" data-slide-to="<%= index %>" class="<%= index === 0 ? 'active' : '' %>"></li>
-                       <% }) %> 
-                    </ol>
 
-                    <div class="carousel-inner">
-                        <%
-                            sliders.forEach((slider,index)=>{
-                        %>
-                          
-                        <div class="carousel-item position-relative <%= index === 0 ? 'active' : '' %>" style="height: 500px;">
-                            <img class="position-absolute w-100 h-100" src="<%= slider.image[0].url %>" style="object-fit: cover;">
-                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                                <div class="p-3" style="max-width: 700px;">
-                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown"><%= slider.title %></h1>
-                                    <p class="text-white mb-3 animate__animated animate__fadeInDown"><%= slider.description %></p>
-                                    <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp" href="/category/<%= slider.category_id %>?s=<%= slider.subcategory_id %>">Shop Now</a>
-                                </div>
-                            </div>
-                        </div> 
-                     <%  }) } %>
-                    </div>
-                </div>
-            </div>
+<!-- ================= MOBILE CATEGORY SLIDER (ONLY MOBILE) ================= -->
+<div class="container-fluid bg-white py-2 border-bottom d-lg-none mt-5">
+  <div class="d-flex overflow-auto px-2 mobile-category-slider">
+    <% if(categories){ categories.forEach(category => { %>
+      <a href="/category/<%= category._id %>"
+         class="text-center text-decoration-none text-dark me-3 flex-shrink-0">
+        <div class="mobile-cat-circle mb-1">
+          <% if(category.image && category.image.length > 0){ %>
+            <img src="<%= category.image[0].url %>" alt="">
+          <% } else { %>
+            <img src="/img/no-image-available-icon-vector.jpg" alt="">
+          <% } %>
         </div>
+        <small class="d-block fw-semibold text-truncate" style="max-width:70px">
+          <%= category.category_name %>
+        </small>
+      </a>
+    <% }) } %>
+  </div>
+</div>
+<!-- ================= END MOBILE CATEGORY SLIDER ================= -->
+
+<!-- ================= TOAST ================= -->
+<div class="toast-container position-fixed top-0 end-0 p-4">
+  <% if (success && success.length > 0) { success.forEach(function(e) { %>
+    <div class="toast align-items-center text-bg-success border-0 show">
+      <div class="d-flex align-items-center">
+        <div class="toast-body"><%= e %></div>
+        <button type="button" class="btn-close btn-close-white ms-auto me-2"
+                data-bs-dismiss="toast"></button>
+      </div>
     </div>
-    <!-- Carousel End -->
+  <% }) } %>
+</div>
+
+<!-- ================= CAROUSEL ================= -->
+<div class="container-fluid mb-3">
+  <div class="row">
+    <div class="col-lg-12 p-0">
+      <div id="header-carousel"
+           class="carousel slide carousel-fade mb-30 mb-lg-0"
+           data-ride="carousel">
+
+        <% if(sliders && sliders.length > 0){ %>
+        <ol class="carousel-indicators">
+          <% sliders.forEach((slider,index)=>{ %>
+            <li data-target="#header-carousel"
+                data-slide-to="<%= index %>"
+                class="<%= index === 0 ? 'active' : '' %>"></li>
+          <% }) %>
+        </ol>
+
+        <div class="carousel-inner">
+          <% sliders.forEach((slider,index)=>{ %>
+            <div class="carousel-item position-relative <%= index === 0 ? 'active' : '' %>"
+                 style="height: 500px;">
+              <img class="position-absolute w-100 h-100"
+                   src="<%= slider.image[0].url %>"
+                   style="object-fit: cover;">
+              <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                <div class="p-3" style="max-width: 700px;">
+                  <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown slider-title">
+                    <%= slider.title %>
+                  </h1>
+                  <p class="text-white mb-3 animate__animated animate__fadeInDown slider-desc">
+                    <%= slider.description %>
+                  </p>
+                  <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
+                     href="/category/<%= slider.category_id %>?s=<%= slider.subcategory_id %>">
+                    Shop Now
+                  </a>
+                </div>
+              </div>
+            </div>
+          <% }) } %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ================= END CAROUSEL ================= -->
 
 
     <!-- Featured Start -->
