@@ -41,8 +41,12 @@
                 
                 <h3 class="mb-2"><%= products.product_name %></h3>
                 <input type="hidden" name="product-id" value="<%= products._id %>">
+<<<<<<< HEAD
                 
                 <div class="d-flex flex-wrap align-items-center mb-2">
+=======
+                <!-- <div class="d-flex mb-3">
+>>>>>>> 42a73fc377c41192e0af8b8d340540e898178344
                     <div class="text-primary mr-2">
                         <small class="fas fa-star"></small>
                         <small class="fas fa-star"></small>
@@ -51,7 +55,7 @@
                         <small class="far fa-star"></small>
                     </div>
                     <small class="pt-1">(99 Reviews)</small>
-                </div>
+                </div> -->
 
                 <h4 class="text-success font-weight-bold mb-3">Rs. <%= products.price - products.discount %></h4>
                 <input type="hidden" id="price" name ="price" value="<%= products.price - products.discount %>">
@@ -123,6 +127,7 @@
         </div>
     </div>
 
+
     <!-- Tabs (Description, Info, Reviews) -->
     <div class="row px-3 px-sm-5 mt-4">
         <div class="col-12">
@@ -138,6 +143,17 @@
                         <a class="nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (2)</a>
                     </li>
                 </ul>
+
+    <!-- Tabs -->
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="bg-light p-30">
+                <div class="nav nav-tabs mb-4">
+                    <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                    <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Information</a>
+                    <!-- <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (2)</a> -->
+                </div>
+
 
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-pane-1">
@@ -155,10 +171,17 @@
                         </ul>
                     </div>
 
+
                     <div class="tab-pane fade" id="tab-pane-3">
                         <h5 class="mb-3">Customer Reviews</h5>
                         <div class="media mb-3">
                             <img src="/img/user.jpg" alt="Image" class="img-fluid mr-2 mt-1" style="width: 45px;">
+
+                    <!-- <div class="tab-pane fade" id="tab-pane-3">
+                        <h4 class="mb-4">Customer Reviews</h4>
+                        <div class="media mb-4">
+                            <img src="/img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
+
                             <div class="media-body">
                                 <h6>John Doe <small>- <i>01 Jan 2025</i></small></h6>
                                 <div class="text-primary mb-1">
@@ -169,7 +192,7 @@
                                 <p>Excellent quality and very comfortable.</p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -254,6 +277,7 @@
     </div>
     <!-- Related Products End -->
 
+<<<<<<< HEAD
     <!-- Featured Products Start -->
     <div class="row px-sm-5 mt-4">
         <h5 class="section-title position-relative text-uppercase mx-0 mb-3">
@@ -276,6 +300,73 @@
                                 <h6>Rs. <%= relatedProduct.price %></h6>
                             </div>
                         </div>
+=======
+    <!-- Shipping & Trust Info -->
+    <div class="col-lg-6 mb-30">
+        <div class="bg-light p-30 h-100">
+            <h5 class="mb-4 border-bottom pb-2">
+                <i class="fa fa-shipping-fast text-primary mr-2"></i>Shipping & Returns
+            </h5>
+
+            <div class="d-flex align-items-center mb-3">
+                <i class="fa fa-truck text-primary fa-lg mr-3"></i>
+                <span>Free shipping on orders over <strong>$100</strong></span>
+            </div>
+
+            <div class="d-flex align-items-center mb-3">
+                <i class="fa fa-clock text-primary fa-lg mr-3"></i>
+                <span>Delivery within <strong>3–5 business days</strong></span>
+            </div>
+
+            <div class="d-flex align-items-center mb-3">
+                <i class="fa fa-sync-alt text-primary fa-lg mr-3"></i>
+                <span><strong>14-day</strong> easy return policy</span>
+            </div>
+
+            <div class="d-flex align-items-center">
+                <i class="fa fa-lock text-primary fa-lg mr-3"></i>
+                <span>100% secure payment guarantee</span>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="d-flex mt-4">
+                <span class="badge badge-light border mr-2 px-3 py-2">
+                    <i class="fa fa-check text-success mr-1"></i>Quality Checked
+                </span>
+                <!-- <span class="badge badge-light border px-3 py-2">
+                    <i class="fa fa-shield-alt text-success mr-1"></i>Buyer Protection
+                </span> -->
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Product Info Cards End -->
+
+
+<!-- Related Products Start -->
+<div class="container-fluid py-5">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+        <span class="bg-secondary pr-3">Related Products</span>
+    </h2>
+
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="owl-carousel related-carousel">
+              <% if(relatedProducts){
+                 relatedProducts.forEach((relatedProduct)=>{ 
+                 if(String(relatedProduct._id) != String(products._id)){
+              %>
+                <div class="product-item bg-light">
+                    <div class="product-img position-relative overflow-hidden">
+                        <img class="" src="<%= relatedProduct.images[0].url[0] %>" width="250px!important" height="300px!important" alt="">
+                    </div>
+                    <div class="text-center py-4">
+                        <a class="h6 text-decoration-none text-truncate" href="/product-detail/<%= relatedProduct.slug %>"><%= relatedProduct.product_name %></a>
+                        <div class="d-flex align-items-center justify-content-center mt-2">
+                            <h5>Rs. <%= relatedProduct.price %></h5>
+                        </div>
+>>>>>>> 42a73fc377c41192e0af8b8d340540e898178344
                     </div>
                     <% } }) } %>
                 </div>
@@ -285,6 +376,43 @@
     <!-- Featured Products End -->
 
 </div>
+<<<<<<< HEAD
+=======
+<!-- Related Products End -->
+<!-- Featured Products Slider Start -->
+<div class="container-fluid py-5">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+        <span class="bg-secondary pr-3">Featured Products</span>
+    </h2>
+
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="owl-carousel featured-carousel">
+                <% if(featuredProducts){
+                  featuredProducts.forEach((relatedProduct)=>{ 
+                   if(String(relatedProduct._id) != String(products._id)){
+                %>
+                <div class="product-item bg-light">
+                    <div class="product-img position-relative overflow-hidden">
+                        <img class="" src="<%= relatedProduct.images[0].url[0] %>" width="250px!important" height="300px!important" alt="">
+                    </div>
+                    <div class="text-center py-4">
+                        <a class="h6 text-decoration-none text-truncate" href="/product-detail/<%= relatedProduct.slug %>"><%= relatedProduct.product_name %></a>
+                        <div class="d-flex align-items-center justify-content-center mt-2">
+                            <h5>Rs. <%= relatedProduct.price %></h5>
+                        </div>
+                    </div>
+                </div>
+             <% } })} %>
+                <!-- Add more items -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Featured Products Slider End -->
+
+
+>>>>>>> 42a73fc377c41192e0af8b8d340540e898178344
 <!-- Shop Detail End -->
 
 <%- include('layouts/footer') %>

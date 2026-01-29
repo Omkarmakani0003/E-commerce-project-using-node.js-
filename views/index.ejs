@@ -83,159 +83,161 @@
 </div>
 <!-- ================= END CAROUSEL ================= -->
 
-<!-- ================= FEATURE ICONS ================= -->
-<div class="container-fluid pt-lg-5">
-  <div class="row px-xl-5 pb-3 text-center">
-    <div class="col-6 col-md-6 col-lg-3 pb-1">
-      <div class="d-flex align-items-center justify-content-center bg-light mb-4 p-3">
-        <h1 class="fa fa-check text-primary m-0 me-2 mr-lg-3 "></h1>
-        <h5 class="font-weight-semi-bold m-0" style="font-size: clamp(1rem, 1.2vw, 1rem);">Quality Product</h5>
-      </div>
-    </div>
-    <div class="col-6 col-md-6 col-lg-3 pb-1">
-      <div class="d-flex align-items-center justify-content-center bg-light mb-4 p-3">
-        <h1 class="fa fa-shipping-fast text-primary m-0 me-2 mr-lg-3 "></h1>
-        <h5 class="font-weight-semi-bold m-0" style="font-size: clamp(1rem, 1.2vw, 1rem);">Free Shipping</h5>
-      </div>
-    </div>
-    <div class="col-6 col-md-6 col-lg-3 pb-1">
-      <div class="d-flex align-items-center justify-content-center bg-light mb-4 p-3">
-        <h1 class="fas fa-exchange-alt text-primary m-0 me-2 mr-lg-3 "></h1>
-        <h5 class="font-weight-semi-bold m-0" style="font-size: clamp(1rem, 1.2vw, 1rem);">14-Day Return</h5>
-      </div>
-    </div>
-    <div class="col-6 col-md-6 col-lg-3 pb-1">
-      <div class="d-flex align-items-center justify-content-center bg-light mb-4 p-3">
-        <h1 class="fa fa-phone-volume text-primary m-0 me-2 mr-lg-3 "></h1>
-        <h5 class="font-weight-semi-bold m-0" style="font-size: clamp(1rem, 1.2vw, 1rem);">24/7 Support</h5>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- ================= CATEGORY GRID (DESKTOP ONLY) ================= -->
-<div class="container-fluid pt-5 d-none d-lg-block">
-  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
-    <span class="bg-secondary pr-3">Categories</span>
-  </h2>
-  <div class="row px-xl-5 pb-3">
-    <% let count = 0; categories?.forEach((category, index) => { if (++count < 9){ %>
-      <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-        <a class="text-decoration-none" href="/category/<%= category._id %>">
-          <div class="cat-item d-flex align-items-center mb-4">
-            <div class="overflow-hidden" style="width: 100px; height: 100px;">
-              <img class="img-fluid"
-                   src="<%= category.image?.[0]?.url || '/img/no-image-available-icon-vector.jpg' %>"
-                   style="width:100%; height:100%; object-fit:cover;" alt="">
+    <!-- Featured Start -->
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5 pb-3">
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Quality Product</h5>
+                </div>
             </div>
-            <div class="flex-fill pl-3">
-              <h6><%= category.category_name %></h6>
-              <small class="text-body"><%= productCount[index] %> Products</small>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
+                    <h5 class="font-weight-semi-bold m-0">Free Shipping</h5>
+                </div>
             </div>
-          </div>
-        </a>
-      </div>
-    <% }}) %>
-  </div>
-</div>
-
-<!-- ================= FEATURED PRODUCTS ================= -->
-<div class="container-fluid pt-lg-4 pb-3">
-  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4" 
-      style="font-size: clamp(1rem, 2vw, 1.5rem);">
-    <span class="bg-secondary pr-3">Featured Products</span>
-  </h2>
-  <div class="row px-xl-5">
-    <% if(products && products.length > 0){ 
-        function shortTital(title){ 
-          const Title = title.split(' '); 
-          return Title.length > 1 ? `${Title[0]+' '+Title[1]}...` : Title[0];
-        } 
-        products.forEach((product,index) => { if(index<8){ %>
-          <div class="col-6 col-md-4 col-lg-3 pb-1">
-            <a href="/product-detail/<%= product.slug %>">
-              <div class="product-item bg-light mb-4">
-                <div class="product-img position-relative overflow-hidden">
-                  <img src="<%= product.images[0].url[0] || '/img/no-image-available-icon-vector.jpg' %>"
-                       class="img-fluid" style="height:250px; width:100%; object-fit:cover;" alt="">
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                    <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">14-Day Return</h5>
                 </div>
-                <div class="text-center py-4">
-                  <a class="h6 text-decoration-none text-truncate"
-                     href="/product-detail/<%= product.slug %>"
-                     style="font-size: clamp(1rem, 1.5vw, 1rem);"><%= shortTital(product.product_name) %></a>
-                  <div class="d-flex align-items-center justify-content-center mt-2">
-                    <h5 style="font-size: clamp(0.9rem, 1.5vw, 1.2rem);">Rs. <%= product.price - product.discount %></h5>
-                    <h6 class="text-muted ml-2" style="font-size: clamp(0.8rem, 1.2vw, 1rem);"><del><%= product.price %></del></h6>
-                  </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                    <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
+                    <h5 class="font-weight-semi-bold m-0">24/7 Support</h5>
                 </div>
-              </div>
-            </a>
-          </div>
-    <% }}) } %>
-  </div>
-</div>
-
-
-<!-- ================= OFFERS ================= -->
-<div class="container-fluid pt-5 pb-3">
-  <div class="row px-xl-5">
-    <div class="col-md-6">
-      <div class="product-offer mb-30" style="height: 300px;">
-        <img class="img-fluid" src="img/offer-1.jpg" alt="">
-        <div class="offer-text">
-          <h6 class="text-white text-uppercase">Save 20%</h6>
-          <h3 class="text-white mb-3">Special Offer</h3>
-          <a href="" class="btn btn-primary">Shop Now</a>
+            </div>
         </div>
-      </div>
     </div>
-    <div class="col-md-6">
-      <div class="product-offer mb-30" style="height: 300px;">
-        <img class="img-fluid" src="img/offer-2.jpg" alt="">
-        <div class="offer-text">
-          <h6 class="text-white text-uppercase">Save 20%</h6>
-          <h3 class="text-white mb-3">Special Offer</h3>
-          <a href="" class="btn btn-primary">Shop Now</a>
+    <!-- Featured End -->
+<!-- Categories Start -->
+    <div class="container-fluid pt-5">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Categories</span></h2>
+        <div class="row px-xl-5 pb-3">   
+        <%  let count = 0
+            if(categories) { 
+            categories.forEach((category,index)=>{ 
+            count++
+            if(count < 9){
+            %> 
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <a class="text-decoration-none" href="/category/<%= category._id %>">
+                    <div class="cat-item d-flex align-items-center mb-4">
+                        <div class="overflow-hidden" style="width: 100px; height: 100px;">
+                            
+                        <% if(category.image && category.image.length > 0) { %> 
+                            <img class="img-fluid" src="<%= category.image[0].url %>"  style="width:100%; height:100%; object-fit:cover;"alt="">
+                        <% }else { %>    
+                            <img class="img-fluid" src="/img/no-image-available-icon-vector.jpg" alt="">
+                        <% } %>    
+                        </div>
+                        <div class="flex-fill pl-3">
+                            <h6><%= category.category_name %></h6>
+                            <small class="text-body"><%= productCount[index] %> Products</small>
+                        </div>
+                    </div>
+                  </a>
+               </div>
+           <%  } }) }%>
         </div>
-      </div>
     </div>
-  </div>
-</div>
+    <!-- Categories End -->
 
-<!-- ================= RECENT PRODUCTS ================= -->
-<div class="container-fluid pt-lg-4 pb-3">
-  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4" 
-      style="font-size: clamp(1rem, 2vw, 1.5rem);">
-    <span class="bg-secondary pr-3">Featured Products</span>
-  </h2>
-  <div class="row px-xl-5">
-    <% if(recentProducts && recentProducts.length > 0){ 
-        function shortTital(title){ 
-          const Title = title.split(' '); 
-          return Title.length > 1 ? `${Title[0]+' '+Title[1]}...` : Title[0];
-        } 
-        recentProducts.forEach((product,index) => { if(index<8){ %>
-          <div class="col-6 col-md-4 col-lg-3 pb-1">
-            <a href="/product-detail/<%= product.slug %>">
-              <div class="product-item bg-light mb-4">
-                <div class="product-img position-relative overflow-hidden">
-                  <img src="<%= product.images[0].url[0] || '/img/no-image-available-icon-vector.jpg' %>"
-                       class="img-fluid" style="height:250px; width:100%; object-fit:cover;" alt="">
-                </div>
-                <div class="text-center py-4">
-                  <a class="h6 text-decoration-none text-truncate"
-                     href="/product-detail/<%= product.slug %>"
-                     style="font-size: clamp(1rem, 1.5vw, 1rem);"><%= shortTital(product.product_name) %></a>
-                  <div class="d-flex align-items-center justify-content-center mt-2">
-                    <h5 style="font-size: clamp(0.9rem, 1.5vw, 1.2rem);">Rs. <%= product.price - product.discount %></h5>
-                    <h6 class="text-muted ml-2" style="font-size: clamp(0.8rem, 1.2vw, 1rem);"><del><%= product.price %></del></h6>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-    <% }}) } %>
-  </div>
-</div>
 
+    <!-- Products Start -->
+    <div class="container-fluid pt-5 pb-3">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
+        <div class="row px-xl-5">
+            <% if( products && products.length > 0 ) {
+                function shortTital(title){
+                    const Title =  title.split(' ')
+                    return `${Title[0]+' '+Title[1]}...`
+                }
+                products.forEach((product,index)=>{
+                if(index < 8){
+            %>      
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+               <a href="product-detail/<%= product.slug %>">  
+                <div class="product-item bg-light mb-4">
+                    <div class="product-img position-relative overflow-hidden">
+                        <img class="" src="<%= product.images[0].url[0] ? product.images[0].url[0] :'/img/no-image-available-icon-vector.jpg'%>" width="250px!important" height="300px!important" alt="">
+                    </div>
+                    <div class="text-center py-4">
+                        <a class="h6 text-decoration-none text-truncate" href="product-detail/<%= product.slug %>"><%= shortTital(product.product_name) %></a>
+                        <div class="d-flex align-items-center justify-content-center mt-2">
+                            <h5>Rs. <%= product.price - product.discount %></h5><h6 class="text-muted ml-2"><del><%= product.price %></del></h6>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+           <% }}) } %>
+        </div>
+    </div>
+    <!-- Products End -->
+
+
+    <!-- Offer Start -->
+    <div class="container-fluid pt-5 pb-3">
+        <div class="row px-xl-5">
+            <div class="col-md-6">
+                <div class="product-offer mb-30" style="height: 300px;">
+                    <img class="img-fluid" src="img/offer-1.jpg" alt="">
+                    <div class="offer-text">
+                        <h6 class="text-white text-uppercase">Save 20%</h6>
+                        <h3 class="text-white mb-3">Special Offer</h3>
+                        <a href="" class="btn btn-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="product-offer mb-30" style="height: 300px;">
+                    <img class="img-fluid" src="img/offer-2.jpg" alt="">
+                    <div class="offer-text">
+                        <h6 class="text-white text-uppercase">Save 20%</h6>
+                        <h3 class="text-white mb-3">Special Offer</h3>
+                        <a href="" class="btn btn-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Offer End -->
+
+
+    <!-- Products Start -->
+    <div class="container-fluid pt-5 pb-3">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Recent Products</span></h2>
+        <div class="row px-xl-5">
+           <% if( recentProducts && recentProducts.length > 0 ) {
+                 function shortTital(title){
+                    const Title =  title.split(' ')
+                    return `${Title[0]+' '+Title[1]}...`
+                 }
+                recentProducts.forEach((product,index)=>{
+                if(index < 8){
+            %>        
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+               <a href="product-detail/<%= product.slug %>">
+                <div class="product-item bg-light mb-4">
+                    <div class="product-img position-relative overflow-hidden">
+                        <img class="" src="<%= product.images[0].url[0] ? product.images[0].url[0] :'/img/no-image-available-icon-vector.jpg'%>" width="250px!important" height="300px!important" alt="">
+                    </div>
+                    <div class="text-center py-4">
+                        <a class="h6 text-decoration-none text-truncate" href="/product-detail/<%= product.slug %>"><%= shortTital(product.product_name) %></a>
+                        <div class="d-flex align-items-center justify-content-center mt-2">
+                            <h5>Rs. <%= product.price - product.discount %></h5><h6 class="text-muted ml-2"><del><%= product.price %></del></h6>
+                        </div>
+                    </div>
+                </div>
+              </a>
+            </div>
+           <% }}) } %>
+        </div>
+    </div>
+    <!-- Products End -->
 <%- include('layouts/footer') %>
