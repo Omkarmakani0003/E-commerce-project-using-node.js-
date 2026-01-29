@@ -48,7 +48,7 @@
             <div class="bg-light p-4 mb-4">
                 <div class="d-flex justify-content-between align-items-center py-2">
                     <h5 class="m-0">Ordered Items</h5>
-                    <a href="/order-track/<%= order._id %>" class="btn btn-warning">Order track</a>
+                    <a href="/order-track/<%= order._id %>" class="btn btn-primary">Order track</a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered text-center mb-0">
@@ -71,7 +71,7 @@
                             <tr>
                                 <td class="text-left">
                                     <img src="<%= item.product_id.images[0].url[0] %>" alt="" style="width: 50px;">
-                                    <%= item.product_id.product_name %>
+                                    <a href="/product-detail/item.product_id.slug"><%= item.product_id.product_name %></a>
                                 </td>
                                 <td>₹ <%= item.product_id.price - item.product_id.discount %></td>
                                 <td><%= item.quantity %></td>

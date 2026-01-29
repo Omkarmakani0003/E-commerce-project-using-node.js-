@@ -69,7 +69,7 @@
         smartSpeed: 1000,
         responsive: {
             0:{
-                items:1
+                items:2
             },
             576:{
                 items:2
@@ -95,7 +95,7 @@
         nav : false,
         responsive: {
             0:{
-                items:1
+                items:2
             },
             576:{
                 items:2
@@ -112,11 +112,13 @@
 
     // Product Quantity
     $('.quantity button').on('click', function () {
+        console.log('1')
         var button = $(this);
         var oldValue = button.parent().parent().find('input').val();
 
         if (button.hasClass('btn-plus')) {
             var newVal = parseFloat(oldValue) + 1;
+            console.log('2')
         } else {
             if (oldValue > 2) {
                 var newVal = parseFloat(oldValue) - 1;
@@ -139,7 +141,7 @@ function quantity(id,value){
     }).then(res => res.json())
       .then(data => {
         if(data.success){
-             document.getElementById(`total_${id}`).innerText = `Rs.${data.Quantity.quantity * data.Quantity.total}`
+             document.getElementById(`total_${id}`).innerHTML = `<span class="cart-mobile" style="display: none;">Total : </span> Rs.${data.Quantity.quantity * data.Quantity.total}`
              const amount = document.querySelectorAll('.amount')
              let totalAmount = 0
              Array.from(amount).forEach((item)=>{
@@ -190,7 +192,7 @@ $(".related-carousel").owlCarousel({
         '<i class="fa fa-angle-right"></i>'
     ],
     responsive: {
-        0:{ items:1 },
+        0:{ items:2 },
         576:{ items:2 },
         768:{ items:3 },
         992:{ items:4 }
@@ -210,7 +212,7 @@ $(".featured-carousel").owlCarousel({
         '<i class="fa fa-angle-right"></i>'
     ],
     responsive: {
-        0:{ items:1 },
+        0:{ items:2 },
         576:{ items:2 },
         768:{ items:3 },
         992:{ items:4 }

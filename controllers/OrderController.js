@@ -5,7 +5,8 @@ const {orders} = require('../models/order')
 exports.Orders = async(req,res) => {
     const cartCout = await cart.countDocuments({user_id:req.user._id}) 
     const categories = await category.find()
-    const order = await orders.find({user_id:req.user._id})   
+    const order = await orders.find({user_id:req.user._id}).populate('items.product_id')
+    console.log(order[0].items[0].product_id)
     res.render('orders',{user:req.user,categories,route: req.path || '',cartcount : cartCout,order})
 }
 

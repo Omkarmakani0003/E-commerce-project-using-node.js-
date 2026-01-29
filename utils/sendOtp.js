@@ -33,7 +33,7 @@ exports.SendOtp = async(email)=>{
                'text' : `Your otp is : ${generate_otp}`
             }
             const send = await mailSender(data)
-            console.log(`${send} otp`)
+ 
             if(send){
                return true 
             }
