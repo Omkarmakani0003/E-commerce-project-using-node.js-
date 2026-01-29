@@ -1,0 +1,46 @@
+.tracking-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .tracking-steps::before {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #e9ecef;
+            z-index: 1;
+        }
+
+        .tracking-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            width: 20%;
+        }
+
+        .tracking-step .icon {
+            width: 44px;
+            height: 44px;
+            line-height: 44px;
+            border-radius: 50%;
+            background: #e9ecef;
+            color: #6c757d;
+            margin: 0 auto 10px;
+            font-size: 16px;
+        }
+
+        .tracking-step.completed .icon,
+        .tracking-step.active .icon {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .tracking-step.failed .icon {
+            background: #dc3545;
+            color: #fff;
+        }
